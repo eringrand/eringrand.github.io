@@ -32,7 +32,7 @@ permalink: /about/
 ##<a name="research"></a>Research
 * Determining the formation mechanism for pillar structures found on the rims of HII regions  
 	* with Dr. Marc Pound and Dr. Lee Mundy
-	* Click HERE for my poster from the 2013 CARMA Symposium(https://kicp-workshops.uchicago.edu/carma2013/depot/poster-grand-erin.pdf)
+	* Click [HERE](https://kicp-workshops.uchicago.edu/carma2013/depot/poster-grand-erin.pdf) for my poster from the 2013 CARMA Symposium
 
 * [Ultraviolet Portrait of M31](http://www.nasa.gov/mission_pages/swift/bursts/uv_andromeda.html)
  	* with Dr. Stefan Immler
