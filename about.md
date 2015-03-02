@@ -22,7 +22,7 @@ permalink: /about/
 * BS Physics & Astronomy  (University of Maryland) 2011
 
 ###Links
-* [Resume/CV](https://www.linkedin.com/in/eringrand)
+<!-- * [Resume/CV](https://www.linkedin.com/in/eringrand) -->
 * [LinkedIn](https://www.linkedin.com/in/eringrand)
 * [Twitter](https://www.twitter.com/astroeringrand)
 
@@ -31,11 +31,14 @@ permalink: /about/
 ---
 ##<a name="research"></a>Research
 * Determining the formation mechanism for pillar structures found on the rims of HII regions  
-	* with Dr. Marc Pound and Dr. Lee Mundy
+	* Worked with Dr. Marc Pound and Dr. Lee Mundy at University of Maryland College Park
 	* Click [HERE](https://kicp-workshops.uchicago.edu/carma2013/depot/poster-grand-erin.pdf) for my poster from the 2013 CARMA Symposium
+	* Master thesis paper available at request 
 
 * [Ultraviolet Portrait of M31](http://www.nasa.gov/mission_pages/swift/bursts/uv_andromeda.html)
- 	* with Dr. Stefan Immler
+	* Collected images from the Ultra violet telescope aboard NASA's swift satellite in order to
+	form the final mosiac
+	* Worked with Dr. Stefan Immler at NASA Goddard Space Flight Center
 
 * Analyzing the Star Formation of Galaxies in the MIDGET survey 
 	* with Dr. Alberto Bolatto
@@ -52,8 +55,8 @@ permalink: /about/
 	and a physics tutor for friends in physics. 
 * Coding
 	* I am learning R and Python. Most of my past experience is in IDL and shell scripts.
-* Public Outreach
-	* 
+	
+<!-- * Public Outreach -->
 
 [Top](#top)
 
