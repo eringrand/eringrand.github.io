@@ -2,7 +2,7 @@
 layout: post
 title: Tab For a Cause
 description: my favorite chrome extension
-tags: chrome, tab for a cause
+tags: chrome charity extension
 ---
 
 
