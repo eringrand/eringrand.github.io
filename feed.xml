@@ -1,21 +1,196 @@
----
-layout: null
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{{ site.name | xml_escape }}</title>
-    <description>{{ site.description | xml_escape }}</description>
-    <link>{{ site.url }}</link>
-    <atom:link href="{{ site.url }}/feed.xml" rel="self" type="application/rss+xml" />
-    {% for post in site.posts limit:10 %}
+    <title>Erin Grand</title>
+    <description>Interested in data science, visualization, and education.</description>
+    <link>http://eringrand.github.io</link>
+    <atom:link href="http://eringrand.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    
       <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.content | xml_escape }}</description>
-        <pubDate>{{ post.date | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
-        <link>{{ site.url }}{{ post.url }}</link>
-        <guid isPermaLink="true">{{ site.url }}{{ post.url }}</guid>
+        <title>March Gladness at Tab For a Cause</title>
+        <description>&lt;p&gt;Starting March 13th the college groups on Tab for a Cause will be competing in a bracket style
+tournament for &amp;quot;charitable supremacy!&amp;quot;
+For more on the tournament: &lt;a href=&quot;http://www.tabforacause.org/blog/2015/03/02/march-gladness-tabbing-tournament-charity/&quot;&gt;click here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Uncertain by what Tab For a Cause is and why you should care? Continue reading! &lt;/p&gt;
+
+&lt;h2&gt;What is &lt;a href=&quot;http://www.tabforacause.org/?r=11041284&quot;&gt;Tab for a Cause&lt;/a&gt;?&lt;/h2&gt;
+
+&lt;p&gt;Tab for a Cause is a free browser extension that raises money for charity with every new tab a user opens. 
+After the user downloads the extension, the new tab page will be a customizable backdrop with widgets and 
+a couple of banner advertisements in the corner. 
+The money raised from these advertisements is donated to charity.&lt;/p&gt;
+
+&lt;p&gt;The Tab For a Cause FAWQ states:
+&amp;quot;No matter what our costs are, we give at least half of our revenue to charity. 
+Historically we’ve given upwards of 90%. &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;We use the rest of the revenue for two purposes: 
+
+(1) to cover costs, which include hosting/server costs and food for our 
+team;  
+(2) to reinvest in getting more Tabbers so that we can give more to 
+charity in the long term.&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;How Do Groups Work?&lt;/h2&gt;
+
+&lt;p&gt;Once you download the extension, you can see and join groups by going to your Dashboard (the speedometer button to the left on the page).&lt;br&gt;
+To find a group use the search bar on the top of the dashboard. 
+Once you have joined a group, your New Tab counts (heats) will be added to the group&amp;#39;s total 
+in attempt to climb the &amp;quot;Top Groups&amp;quot; leader board.
+You can also compete within your grop to see who is the &amp;quot;Top Tabber&amp;quot;.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a href=&quot;http://tabforacause.org/?r=11041284&quot;&gt;Join me in this crazy competition to raise money for charity and see which school spends the most time randomly clicking around on the internet!&lt;/a&gt;&lt;/h4&gt;
+</description>
+        <pubDate>Thu, 12 Mar 2015 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/tabforacause/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/tabforacause/</guid>
       </item>
-    {% endfor %}
+    
+      <item>
+        <title>Reading Suggestions from Feb 2015</title>
+        <description>&lt;p&gt;I&amp;#39;m going to start a new monthly post where I link to the most interesting articles, blog posts, tutorials and
+youtube videos I&amp;#39;ve found throughout the previous month. &lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h2&gt;Articles and Blog Posts:&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.countbayesie.com/blog/2015/2/18/bayes-theorem-with-lego&quot;&gt;Baye&amp;#39;s Theorem with Legos&lt;/a&gt;
+written by Will Kurt  of Count Bayesie 
+If you&amp;#39;ve been looking for away to visualize how Bayes Theorem works, Will Kurt has written 
+a piece using legos to picture the formula at work. &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.cnn.com/2015/02/02/opinion/kakaes-big-data/index.html&quot;&gt;The Problem With Data&lt;/a&gt;
+written by Konstantin Kakaes. 
+An interesting look into the future of big data.&lt;br&gt;
+Many of these problems mentioned are problems will data of ALL sizes. &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.cnet.com/news/what-would-spock-do-how-leonard-nimoy-helped-me-prosper/&quot;&gt;What Would Spock Do: How Leonard Nimoy Helped Me Prosper&lt;/a&gt;
+A lovely tribute to the late Leonard Nimoy written by CNET&amp;#39;s Bonnie Burton.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.dataschool.io/python-or-r-for-data-science/&quot;&gt;Python vs R&lt;/a&gt;
+An interesting look into whether teaching python or R for data science is more useful.
+(More personal opinion on this topic is that it&amp;#39;s useful to learn both.)   &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.edutopia.org/blog/whats-the-point-of-assessment-shira-loewenstein&quot;&gt;What&amp;#39;s the Point of Assessment?&lt;/a&gt;
+by Shira Loewenstein. 
+A look into the purpose of standardize testing and grades, and the challenges faced 
+by teachers and students alike.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.nytimes.com/2015/01/18/opinion/sunday/why-some-teams-are-smarter-than-others.html?src=twr&amp;amp;smid=fb-nytimes&amp;amp;bicmst=1409232722000&amp;amp;bicmet=1419773522000&amp;amp;bicmp=AD&amp;amp;smtyp=aut&amp;amp;bicmlukp=WT.mc_id&amp;amp;_r=1&quot;&gt;Why Some Teams ar Smarter Than Others&lt;/a&gt;
+Written by: Anita Woolley, Thomas W. Malone and Christopher Chabris.
+This is a great article about working with people without wasting time.
+It is a great read and useful for everyone who 
+ has experienced problems that can occur when human beings try 
+to work together in groups. &lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h2&gt;Tutorials:&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://kbroman.org/github_tutorial/&quot;&gt;Github&lt;/a&gt;
+Better your knowledge and use of github. &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://kbroman.org/knitr_knutshell/&quot;&gt;Knitr&lt;/a&gt;
+Lean how to use Knitr to change R code into blog posts. &lt;/p&gt;
+</description>
+        <pubDate>Tue, 03 Mar 2015 00:00:00 -0500</pubDate>
+        <link>http://eringrand.github.io/readlistfeb2015/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/readlistfeb2015/</guid>
+      </item>
+    
+      <item>
+        <title>Educational Content on YouTube</title>
+        <description>&lt;p&gt;YouTube is well known as the website that hosts illegal music videos and cats, and while the 
+cat videos are abundant and adorable, there&amp;#39;s been a new trend on YouTube toward channels 
+and videos that offer viewers educational content as well as entertainment. &lt;/p&gt;
+
+&lt;p&gt;My introduction to educational videos started with the general &amp;quot;How To&amp;quot; theme. 
+I was able to find solutions to every question I had, from building a website, to
+fixing the settings on my computer, 
+or to doing my own laundry. (Sorry Mom, but I totally learned that from the internet.)
+After spending years on YouTube mostly watching comedy bits and the aforementioned cat videos, 
+I was finally introduced to the &lt;a href=&quot;http://www.youtube.com/user/vlogbrothers&quot;&gt;Vlogbrothers&lt;/a&gt; 
+through their human sexuality &lt;a href=&quot;https://www.youtube.com/watch?v=xXAoG8vAyzI&quot;&gt;video&lt;/a&gt;. 
+In my mind, the John and Hank Green (of the Vlogbrothers) revolutionized YouTube. Their channel 
+started in 2007 with Brotherhood 2.0 as a experiment for the brothers and entertainment for their viewers. 
+As time went on, their videos started including more educational materials about history and current events.
+In 2011, the brothers started what would become a long list of educational channels each with a different theme.
+At the time of writing this, the Vlogbrothers have produced:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;www.youtube.com/user/scishow&quot;&gt;SciShow&lt;/a&gt; - a channel about all things science&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/scishowspace&quot;&gt;SciShow Space&lt;/a&gt; - a channel about all things astronomy&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/crashcourse&quot;&gt;Crash Course&lt;/a&gt; - a series of playlists for topics at the level of high school course, 
+so far there are playlists for:
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=lrk4oY7UxpQ&amp;amp;list=PL8dPuuaLjXtOfse2ncvffeelTrqvhrz8H&quot;&gt;US Government and Politics&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=Yocja_N5s1I&amp;amp;list=PLBDA2E52FB1EF80C9&quot;&gt;World History&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=FSyAehMdpyI&amp;amp;list=PL8dPuuaLjXtPHzzYuWy6fYEaX9mQQ8oGr&quot;&gt;Chemistry&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=sjE-Pkjp3u4&amp;amp;list=PL8dPuuaLjXtNdTKZkV_GiIYXpV9w4WxbX&quot;&gt;Ecology&lt;/a&gt; &lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=vo4pMVb0R6M&amp;amp;list=PL8dPuuaLjXtOPRKzVLY0jJY-uHOH9KVU6&quot;&gt;Psychology&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=QnQe0xW_JY4&amp;amp;list=PL3EED4C1D684D3ADF&quot;&gt;Biology&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=6E9WU9TGrec&amp;amp;list=PL8dPuuaLjXtMwmepBjTSG593eG7ObzO7s&quot;&gt;US History&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=MSYw502dJNY&amp;amp;list=PL8dPuuaLjXtOeEc9ME62zTfqc0h6Pe8vb&quot;&gt;Literture&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=tq6be-CZJ3w&amp;amp;list=PL8dPuuaLjXtMczXZUmjb3mZSU1Roxnrey&quot;&gt;Big History&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=0rHUDWjR5gg&amp;amp;list=PL8dPuuaLjXtPAJr1ysd5yGIyiSFuh0mIL&quot;&gt;Astronomy&lt;/a&gt; &lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=uBGl2BujkPQ&amp;amp;list=PL8dPuuaLjXtOAKed_MxxWBNaPno5h3Zs8&quot;&gt;Anatomy and Physiology&lt;/a&gt; &lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/thebrainscoop&quot;&gt;Brain Scoop&lt;/a&gt; - a channel from the Chief Curiosity Correspondent of The Field Museum in Chicago about animals, 
+biology, and other parts of science &lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/thehealthcaretriage&quot;&gt;Healthcare Triage&lt;/a&gt; - a channel that focuses on providing health information where research is the main source&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/learnhowtoadult&quot;&gt;How to Adult&lt;/a&gt; - a channel that teaches basic thing they don&amp;#39;t teach in school about being an adult&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Outside of the family of the Green brothers&amp;#39; channels, I also recommend: &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/minutephysics&quot;&gt;Minute Physics&lt;/a&gt; and &lt;a href=&quot;https://www.youtube.com/user/minuteearth&quot;&gt;Minute Earth&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/AsapSCIENCE&quot;&gt;AsapSCIENCE&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/1veritasium&quot;&gt;Veritasium&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/MentalFlossVideo&quot;&gt;Mental Floss&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/ERB&quot;&gt;Epic Rap Battles of History&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;While it&amp;#39;s easy for everyone to have a YouTube channel, many of these educational channels 
+have large operating costs which make them difficult to fund through advertising revenue alone. 
+SciShow and CrashCourse were originally funded by a YouTube grant. 
+As a way to support the operating costs of SciShow and CrashCourse after
+their initial year, the Green brothers started the Crowdfunding site: 
+&lt;a href=&quot;https://subbable.com/&quot;&gt;Subbable&lt;/a&gt;. Websites like Subbable and &lt;a href=&quot;https://www.patreon.com/&quot;&gt;Patreon&lt;/a&gt;
+allow for fans to support their favorite creators directly, and for creators to have 
+a regular income  for their projects.  &lt;/p&gt;
+
+&lt;p&gt;The popularity of these educational channels has not gone unnoticed by YouTube. The video hosting site
+recently put a great deal of advertisement backing behind SciShow causing the channel to
+grow substantially in viewship. &lt;/p&gt;
+
+&lt;p&gt;As educational content videos become more popular with viewers, educators 
+are beginning to look to YouTube for supporting materials in the class room. SciShow and CrashCourse are
+used in hundreds of classes around the world, and I often used Minuete Physics in my classes. 
+The structure of the videos allows for the students to find entertainment and intest in the subject and for 
+educators to expand upon their interest with activities related to the videos. &lt;/p&gt;
+
+&lt;p&gt;I spend more time on Youtube then I care to admit, but through my love of online video have found 
+a community of people who create great things and I&amp;#39;m happy to be a part of it. This past year 
+I was lucky enough to attend Vidcon, the annual online video convention. I was pleasantly 
+surprised that the educational content panel was one of the most packed
+panels that I went to. I think this speak to what creators want to create and what viewers 
+want to watch. I hope to see more educational based content being created in the near future. &lt;/p&gt;
+
+&lt;p&gt;In conclusion, there are hundreds of wonderful educational channels out there and I encourage 
+you to go look for them or to start your own. &lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;&lt;em&gt;I have produced one video on my channel so far, which you can watch &lt;a href=&quot;https://www.youtube.com/watch?v=leJuucunLak&quot;&gt;here&lt;/a&gt;! 
+I hope to one day return and post more.&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sun, 15 Feb 2015 00:00:00 -0500</pubDate>
+        <link>http://eringrand.github.io/educationvideos/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/educationvideos/</guid>
+      </item>
+    
   </channel>
 </rss>
