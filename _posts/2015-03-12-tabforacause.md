@@ -1,11 +1,9 @@
 ---
 layout: post
-title: Tab For a Cause
+title: March Gladness at Tab For a Cause
 description: my favorite chrome extension
 tags: chrome charity extension
 ---
-
-##March Gladness at Tab For a Cause
 
 Starting March 13th the college groups on Tab for a Cause will be competing in a bracket style
 tournament for "charitable supremacy!"
