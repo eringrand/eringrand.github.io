@@ -1,37 +1,22 @@
 ---
 layout: page
-title: tags
+title: Tags
 heads: posts by tag
 permalink: /tag/
 ---
-<h2 class="post_title">{{page.title}}</h2>
-<ul>
-	{% for post in site.posts %}
-	{% for tag in post.tags %}
-	{% if tag == page.tag %}
-	<li class="archive_list">
-		<h3 class="archive_list_header"><a class="archive_list_article_link" href='{{post.url}}'>{{post.title}}</a></h3>
-		<time class="archive_list_post_date" datetime='{{post.date | date: "%Y-%m-%d"}}'>{{post.date | date: "%m/%d/%y"}}</time>
-		<p class="summary">Summary: {{ post.description}}
-		<ul class="tag_list">
-			{% for tag in post.tags %}
-			<li class="inline archive_list"><a class="tag_list_link" href="/tag/{{ tag }}">{{ tag }}</a></li>
-			{% endfor %}
-		</ul>
-	</li>
-	{% endif %}
-	{% endfor %}
-	{% endfor %}
-</ul>
-
-<ul class="tag_box inline">
-  {% assign tags_list = site.tags %}  
-</ul>
-
-
 {% for tag in site.tags %} 
   <h2 id="{{ tag[0] }}-ref">{{ tag[0] }}</h2>
   <ul>
-    {% assign pages_list = tag[1] %}  
-  </ul>
+{% for post in site.posts %}
+{% for ptag in post.tags %}
+{% if ptag == tag[0] %}
+<li class="archive_list">
+		<h3 class="archive_list_header"><a class="archive_list_article_link" href='{{post.url}}'>{{post.title}}</a></h3>
+		<time class="archive_list_post_date" datetime='{{post.date | date: "%Y-%m-%d"}}'>{{post.date | date: "%m/%d/%y"}}</time>
+		<p class="summary">Summary: {{ post.description}}
+	</li>
+{% endif %}
+{% endfor %}
+{% endfor %}
+</ul>
 {% endfor %}
