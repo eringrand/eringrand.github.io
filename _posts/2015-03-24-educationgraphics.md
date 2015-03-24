@@ -32,8 +32,3 @@ For an example of commonly used well depicted graphic, we have this image showin
 
 This graphic shows the relative size difference between the planets as well as their inside makeup. It even manages to show where we have incomplete information. 
 There are lots of version of this graphic, but I think this one works the best because it uses labels and lines sparingly in place of a color coded legend. 
-
-As a flat image, it simplifies things since it doesn't compare volumes it compares areas.... 
-
-It works well as a teaching tool. 
-
