@@ -7,6 +7,193 @@
     <atom:link href="http://eringrand.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Graphics and Plots in Science</title>
+        <description>&lt;p&gt;Graphics and visualizations are used for promotion, advertisement to promote a product or idea. In science, graphics tend to fall into one of two categories: for use in education or a science journal.  For information on what makes a good educational graphic, or a teaching tool, I&amp;#39;ve written a piece earlier on this blog &lt;a href=&quot;http://eringrand.github.io/educationgraphics/&quot;&gt;here&lt;/a&gt;. 
+In the academic articles, graphics hold a special role in telling a compelling story of the data and results, however, the editing emphasis is often placed much more on text than making interesting and understable science graphics.  &lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;DISCLAIMER: I am coming from an astronomy and physics background, and am going to discuss problems found within these contexts.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3&gt;Academic Article Graphics&lt;/h3&gt;
+
+&lt;p&gt;We think of academics and especially science as being told through plots and graphs. In fact, Tufte explains that the history graphics begins with time series plots of the planets and the sun in the night sky. 
+Now a days, science articles use graphics to tell a story. We let the data speak for itself
+by representing it in a reproducible graphic. &lt;/p&gt;
+
+&lt;p&gt;In my time in academia (in physics and astronomy) I&amp;#39;ve come across several common problems such as: &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Missing or incorrect error bars (especially on log-log plots)&lt;/li&gt;
+&lt;li&gt;Missing or incorrect ticks marks and axis labels&lt;/li&gt;
+&lt;li&gt;Too much text - Keep notes and explanations outside the graphic and in the image caption&lt;/li&gt;
+&lt;li&gt;Overlap of lines or points&lt;/li&gt;
+&lt;li&gt;Wasting space or not using enough of it &lt;/li&gt;
+&lt;li&gt;Plots that should have been tables&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Some of these problems come from trying to show off too much of the data. You want the data to stand out, but you don&amp;#39;t always need to include all of it. This is hard because we spend so much time working with the data that we want to share everything, but the added complexity often takes away from the graph and the point you&amp;#39;re trying to make. &lt;/p&gt;
+
+&lt;p&gt;In the remainder of the blog, I will try to address each of these points and introduce a fast and easy way to correct them. &lt;/p&gt;
+
+&lt;h4&gt;Corrections to common problem with academic graphics:&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Log-log plots with missing or symmetric error bars can be fixed by forcing asymmetric error bars. When there are small errors, the log can show as a negative error, which often means that plot won&amp;#39;t do anything. In Matplotlib the default (for the y axis) is to map all negative values a very small positive one. The code for that is: &lt;code&gt;
+plt.yscale(&amp;#39;log&amp;#39;, nonposx=&amp;#39;clip&amp;#39;)
+&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Tick marks: The defaults for tick marks and labels are often too large, too small, facing the wrong direction or elsewise strange.  In ggplot in R this can be manipulated under theme:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For example, to make everything expect your points or lines disappear you&amp;#39;d use: &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt; theme(axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        legend.position=&amp;quot;none&amp;quot;,
+        panel.background=element_blank(),
+        panel.border=element_blank(),
+        panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        plot.background=element_blank()) 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Each of these could also be modified to make the text larger or smaller, change the font, rotate the labels...etc.&lt;/p&gt;
+
+&lt;p&gt;To change the direction and size of the tick labels you&amp;#39;d use something like:
+&lt;code&gt;
+theme(axis.text.x  = element_text(angle=90, vjust=0.5, size=16)
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;You can reduce clutter on the graph by using fewer (labeled) tick marks. &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Always remember to label your axes! 
+This is done in python with:&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;import matplotlib.pyplot as plt
+plt.xlabel(&amp;#39;X Label&amp;#39;)
+plt.ylabel(&amp;#39;Y Label&amp;#39;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;or in ggplot2 in R using:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;  labs(title = &amp;quot;Plot Title&amp;quot;) +
+  ylab(&amp;quot;X Label&amp;quot;) +
+  xlab(&amp;quot;Y Label&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;The problem of too many overlapping lines or points can be solved in various ways depending on the data. Sometimes, changing the colors and alpha of the points might be enough. 
+In other cases, it&amp;#39;s best to separate out the information into a table of plots.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For example, below is the orignal plot from my research showing the intensity of different molecules across velocities. The plot places all four molecules on the same graph with a key indicating which is which. In color, this graphic might make more sense, but it is still hard to make out the individual curves. Plus, the key is small and referring back to it is time consuming and annoying.&lt;/p&gt;
+
+&lt;div style=&quot;width:image width px; font-size:80%;text-align:center;&quot;&gt;&lt;img src=&quot;/assets/erinsimages/spectrapel.png&quot; alt=&quot;Velocity spectra for the Pelican Pillar.&quot;/&gt;
+&lt;figcaption&gt;Velocity spectra for the Pelican Pillar.&lt;/figcaption&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In fixing the graphic, while also including more information from my other sources,
+I separated out the each of the molecules and sources into a table of spectra. 
+This un-clutters the plot and allows you to more easily visualize trends in the sources. 
+(Notice how the plots is missing axes labels - shame on me!) &lt;/p&gt;
+
+&lt;div style=&quot;width:image width px; font-size:80%;text-align:center;&quot;&gt;&lt;img src=&quot;/assets/erinsimages/spectra2.png&quot; alt=&quot;Velocity spectra for the pillars show brightness temperature against velocity in km/s. The spectra were taken in the heads of the pillars at the peak brightness and averaged over a beam size.&quot;/&gt;
+&lt;figcaption&gt;Velocity spectra for the pillars show brightness temperature against velocity in km/s. The spectra were taken in the heads of the pillars at the peak brightness and averaged over a beam size.&lt;/figcaption&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The code for this plot was done in IDL - a language mostly used only by astronomers (after looking at the code, you&amp;#39;ll see why no one else joined in the fun...)
+If you&amp;#39;re interested, you can check it out &lt;a href=&quot;https://github.com/eringrand/idlcodes/blob/master/plotspectra.pro&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For the future, I want to try and remake some of my research plots in R for better practice with R and ggplot2, using something along these lines:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;data %&amp;gt;%
+ggplot(aes(x=vel,y=tb)) + 
+geom_line() + 
+facet_wrap(~pillar)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;In attempts to not waste space, you should examine the size and scale of the axes. This often shows up as a problem when an outlier or two that expand the axes such that much of the plot is empty. In these cases, you can crop the plot to the main data and include an arrow to show where the outlier is. &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Most importantly, don&amp;#39;t display empty plots like &lt;a href=&quot;https://www.biostat.wisc.edu/~kbroman/topten_worstgraphs/wittke_thompson_fig1CD.jpg&quot;&gt;this infamous plot &lt;/a&gt; from Wittke-Thompson JK and Pluzhnikov A, Cox NJ (2005). &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Sometimes, to save room or otherwise, it&amp;#39;s best to display the information in a table format instead of bar graphs. For example, this plot from a science article titled &lt;a href=&quot;http://arxiv.org/abs/1403.3091&quot;&gt;&amp;quot;Studying Gender in Conference Talks -- data from the 223rd meeting of the American Astronomical Society&amp;quot;&lt;/a&gt; shows the large difference in number questions asked by males vs number asked by females, given a male or female chair. 
+This plot displays the most significant finding from the analysis: a strong dependence on session chair gender. Still, this information could have easily been shown in a table instead of a graph.  This would be a useful plot for a presentation on the subject, but not needed in the article.&lt;br&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/erinsimages/chairs_questions.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h3&gt;Color in academic graphics:&lt;/h3&gt;
+
+&lt;p&gt;Color can be a huge issue in scientific articles. This is largely because most journals charge more for printing in color, but will present colored versions of plots in the online versions on the articles. This means that authors need to make sure that they have plots that work well in color and in black and white, which gives way to some graphics which are very hard to read. &lt;/p&gt;
+
+&lt;h4&gt;Common color problems.&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Eye piercing bight colors and/or use of rainbow colors.
+We&amp;#39;ve discussed the problems with the rainbow in class, but as a reminder: 
+the rainbow color scheme includes colors which are hard to see, doesn&amp;#39;t have a universally understood order, artificially exaggerates differences in color while softening the differences between others and (importantly for print) doesn&amp;#39;t convert well to black and white. &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Contrast is one of THE biggest problems I see in academic figures.  Things like cyan or yellow on white, red on blue, navy on black... these cause major problems (and headaches) when reading text or trying to discern between lines. Your plot doesn&amp;#39;t have to be pretty, but it does have to be legible!&lt;/p&gt;
+
+&lt;p&gt;Color in astronomy maps often tags along with Colour-coded image of the molecular cloud&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h3&gt;Graph Critique and Fix&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/erinsimages/bad.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;The image from an article titled &amp;quot;MOLECULAR CLOUDS IN THE NORTH AMERICAN AND PELICAN NEBULAE: STRUCTURES&amp;quot; by Shaobo Zhang, Ye Xu and Ji Yang,
+displays the locations of clumps, as well as their velocity and size. From the image caption &amp;quot;The circles indicate the clump positions on the integrated intensity map of 13 CO. The colors of the circles represent the velocities the clumps, while the circles are scaled according to the sizes of clumps.&amp;quot; &lt;/p&gt;
+
+&lt;p&gt;This is a perfect example of trying to show too much in one plot such that it&amp;#39;s no longer understandable. A different color scheme would help the eye more easily see the trends in velocity. I would also like to see the circles filled in, and the background map a bit darker. Also, The graph extends too far up so that the color legend is clear, but leaves too much empty space in the graph. The axes and tick marks could also be smaller. &lt;/p&gt;
+
+&lt;p&gt;I didn&amp;#39;t have their data, but I remade a similar type of plot pulling points, velocities and sizes from normal distributions (see code below). 
+&lt;img src=&quot;http://eringrand.github.io/assets/erinsimages/Rplot.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;This image fixes some of the problem by using GGPLOT default color scheme, which keeps the hue in blue and changes the brightness. I&amp;#39;ve filled in the circle in make the difference in sizes more clear, and I made sure that the circles are scaled by area, as to not conflate radius and area. &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(ggplot2) 
+
+xvar &amp;lt;- sample(-100:100,100,replace=T)
+yvar &amp;lt;- sample(-100:100,100,replace=T)
+v &amp;lt;-  sort(rnorm(100,0,1))
+s &amp;lt;- abs(rnorm(100))
+
+data &amp;lt;- data.frame(xvar,yvar,v,s)
+data &amp;lt;- data[order(data$v),]
+data$x &amp;lt;- rnorm(100,0,50)
+data$y &amp;lt;- rnorm(100,0,50)
+
+ggplot(data,aes(x=x,y=y), legend=FALSE)+
+  stat_density2d(aes(alpha=..level..), geom=&amp;quot;polygon&amp;quot;, show_guide=FALSE) +
+  scale_alpha_continuous(limits=c(-2,10), breaks=seq(0,1,by=1)) + 
+  geom_point(aes(x=xvar, y=yvar, size=s, color=v), alpha=0.8, show_guide=FALSE) + 
+  scale_colour_gradient(limits=c(-4,4)) +
+  scale_size_area(max_size=10)   + 
+  theme_bw() + 
+  theme(legend.title=element_blank()) 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;hr&gt;
+
+&lt;h3&gt;Conclusions:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Always remember to think about the story your telling and how your graphic fits in. &lt;/li&gt;
+&lt;li&gt;Label your plots correctly, but don&amp;#39;t clog the plot with text. Keep your labels short, and rotate them if needed to to be read. &lt;/li&gt;
+&lt;li&gt;If displaying all of your data looks cluttered, think about if you really need to show all of it, and if so if there&amp;#39;s a better way to display it. &lt;/li&gt;
+&lt;li&gt;Watch out for color! We like pretty graphs, but only if we can stil read them. &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 24 Mar 2015 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/sciencegraphics/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/sciencegraphics/</guid>
+      </item>
+    
+      <item>
         <title>Educational Graphics in Science</title>
         <description>&lt;h2&gt;Educational graphics:&lt;/h2&gt;
 
