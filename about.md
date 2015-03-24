@@ -22,9 +22,9 @@ permalink: /about/
 * BS Physics & Astronomy  (University of Maryland) 2011
 
 ###Links
-<!-- * [Resume/CV](https://www.linkedin.com/in/eringrand) -->
 * [LinkedIn](https://www.linkedin.com/in/eringrand)
 * [Twitter](https://www.twitter.com/astroeringrand)
+* [Resume](https://www.dropbox.com/s/0g1c5oc7it65gzn/resume.pdf?dl=0)
 
 [Top](#top)
 
