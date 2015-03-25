@@ -37,13 +37,11 @@ by representing it in a reproducible graphic. &lt;/p&gt;
 &lt;h4&gt;Corrections to common problem with academic graphics:&lt;/h4&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Log-log plots with missing or symmetric error bars can be fixed by forcing asymmetric error bars. When there are small errors, the log can show as a negative error, which often means that plot won&amp;#39;t do anything. In Matplotlib the default (for the y axis) is to map all negative values a very small positive one. The code for that is: &lt;code&gt;
+&lt;li&gt;&lt;p&gt;Log-log plots with missing or symmetric error bars can be fixed by forcing asymmetric error bars. When there are small errors, the log can show as a negative error, which often means that plot won&amp;#39;t do anything. In Matplotlib the default (for the y axis) is to map all negative values a very small positive one. The code for that is: 
+&lt;code&gt;
 plt.yscale(&amp;#39;log&amp;#39;, nonposx=&amp;#39;clip&amp;#39;)
-&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Tick marks: The defaults for tick marks and labels are often too large, too small, facing the wrong direction or elsewise strange.  In ggplot in R this can be manipulated under theme:&lt;/li&gt;
+&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Tick marks: The defaults for tick marks and labels are often too large, too small, facing the wrong direction or elsewise strange.  In ggplot in R this can be manipulated under theme:&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;For example, to make everything expect your points or lines disappear you&amp;#39;d use: &lt;/p&gt;

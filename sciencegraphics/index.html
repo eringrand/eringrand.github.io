@@ -110,13 +110,11 @@ by representing it in a reproducible graphic. </p>
 <h4>Corrections to common problem with academic graphics:</h4>
 
 <ul>
-<li>Log-log plots with missing or symmetric error bars can be fixed by forcing asymmetric error bars. When there are small errors, the log can show as a negative error, which often means that plot won&#39;t do anything. In Matplotlib the default (for the y axis) is to map all negative values a very small positive one. The code for that is: <code>
+<li><p>Log-log plots with missing or symmetric error bars can be fixed by forcing asymmetric error bars. When there are small errors, the log can show as a negative error, which often means that plot won&#39;t do anything. In Matplotlib the default (for the y axis) is to map all negative values a very small positive one. The code for that is: 
+<code>
 plt.yscale(&#39;log&#39;, nonposx=&#39;clip&#39;)
-</code></li>
-</ul>
-
-<ul>
-<li>Tick marks: The defaults for tick marks and labels are often too large, too small, facing the wrong direction or elsewise strange.  In ggplot in R this can be manipulated under theme:</li>
+</code></p></li>
+<li><p>Tick marks: The defaults for tick marks and labels are often too large, too small, facing the wrong direction or elsewise strange.  In ggplot in R this can be manipulated under theme:</p></li>
 </ul>
 
 <p>For example, to make everything expect your points or lines disappear you&#39;d use: </p>
