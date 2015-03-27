@@ -183,7 +183,7 @@ ggplot(data,aes(x=x,y=y), legend=FALSE)+
 &lt;li&gt;Always remember to think about the story your telling and how your graphic fits in. &lt;/li&gt;
 &lt;li&gt;Label your plots correctly, but don&amp;#39;t clog the plot with text. Keep your labels short, and rotate them if needed to to be read. &lt;/li&gt;
 &lt;li&gt;If displaying all of your data looks cluttered, think about if you really need to show all of it, and if so if there&amp;#39;s a better way to display it. &lt;/li&gt;
-&lt;li&gt;Watch out for color! We like pretty graphs, but only if we can stil read them. &lt;/li&gt;
+&lt;li&gt;Watch out for color! We like pretty graphs, but only if we can still read them. &lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 24 Mar 2015 00:00:00 -0400</pubDate>
