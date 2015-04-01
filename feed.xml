@@ -7,6 +7,48 @@
     <atom:link href="http://eringrand.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Reading Suggestions from March 2015</title>
+        <description>&lt;h2&gt;Articles and Blog posts&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://arxiv.org/pdf/1503.01104v2.pdf&quot;&gt;The Epidemiology and Statistical Mechanics of Zombies&lt;/a&gt;
+by Alexander A. Alemi, Matthew Bierbaum, Christopher R. Myers, James P. Sethna
+Laboratory of Atomic and Solid State Physics, Cornell University, Ithaca, NY 14853
+A research paper about zombies!&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://technology.stitchfix.com/blog/2015/03/17/grammar-of-data-science/?utm_content=buffer2b99d&amp;amp;utm_medium=social&amp;amp;utm_source=twitter.com&amp;amp;utm_campaign=buffer&quot;&gt;The Grammar of Data Science&lt;/a&gt;
+by Deep Ganguli: 
+Another look into using Python vs R as a data scientist from the perspective of a Pandas to dpylr converter. &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.citylab.com/housing/2015/03/why-most-twitter-maps-cant-be-trusted/388586/?utm_source=SFTwitter&quot;&gt;Why Most Twitter Maps Can&amp;#39;t Be Trusted&lt;/a&gt;
+by Aarian Marshall: 
+A look into the perils of drawing information from Twitter maps. 
+Twitter is an easy, cheap way to make social, political, and other claims about from data from the Twitter API.  However, makers of twitter maps aren&amp;#39;t always as representative of the &amp;quot;real world&amp;quot; as we&amp;#39;d like. &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.christianpeccei.com/musicmap/&quot;&gt;Mapping Your Music Collection&lt;/a&gt;
+by Christian Peccei:
+How to make a pretty visualization of similarity measures of your iTunes music collection. &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.improbable.com/2015/03/24/the-physics-of-a-falling-slinky/&quot;&gt;The physics of a falling slinky&lt;/a&gt;
+by Marc Abrahams:
+Slinkies! &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://enterprise.import.io/why-data-science-is-the-fastest-growing-industry-in-tech-right-now/&quot;&gt;Why Data Science Is the Fastest Growing Industry in Tech Right Now&lt;/a&gt;
+Even if employers don&amp;#39;t seem to have a universal defintion of what makes someone a data scientist, it cannot be argued that the field in growing, so much so that it is one of the few fields in which there are more available jobs than applicants. &lt;/p&gt;
+
+&lt;h2&gt;Youtube Videos:&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=jexnhNfOzHg&quot;&gt;Science of that Dress&lt;/a&gt; 
+Remember &amp;quot;the dress&amp;quot; that was everywhere at the beginning of the month? If you are still wondering why you see the dress one way and not another, watch this SciShow episode to see why people can see the thing thing differently. &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=LKnqECcg6Gw&quot;&gt;Computer Colors&lt;/a&gt;
+Colors on computers don&amp;#39;t work the same way we&amp;#39;re taught in 5th grade art class. With so much of our data/results/pictures being shown widely on computers, it&amp;#39;s important to understand how it all works. &lt;/p&gt;
+</description>
+        <pubDate>Wed, 01 Apr 2015 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/suggestionsfrommarch/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/suggestionsfrommarch/</guid>
+      </item>
+    
+      <item>
         <title>Graphics and Plots in Science</title>
         <description>&lt;p&gt;Graphics and visualizations are used for promotion, advertisement to promote a product or idea. In science, graphics tend to fall into one of two categories: for use in education or a science journal.  For information on what makes a good educational graphic, or a teaching tool, I&amp;#39;ve written a piece earlier on this blog &lt;a href=&quot;http://eringrand.github.io/educationgraphics/&quot;&gt;here&lt;/a&gt;. 
 In the academic articles, graphics hold a special role in telling a compelling story of the data and results, however, the editing emphasis is often placed much more on text than making interesting and understable science graphics.  &lt;/p&gt;
