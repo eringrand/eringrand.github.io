@@ -5,6 +5,7 @@ description: Trying to form some sort of definition for data science and why you
 tags: data science
 ---
 
+http://www.datasciencecentral.com/profiles/blogs/do-data-scientists-need-to-be-domain-experts-to-deliver-good?xg_source=activity
 
 
 
@@ -21,6 +22,8 @@ converge on questions that data can answer
 how will anlnysis be useful? what does that change about the world?
 what's weird enough to tell someone about? (find cool things in the noise)
 keep to the story
+
+
 
 
 Tools amd cool uses of data:

@@ -31,7 +31,8 @@ Some of these problems come from trying to show off too much of the data. You wa
 In the remainder of the blog, I will try to address each of these points and introduce a fast and easy way to correct them. 
 
 ####Corrections to common problem with academic graphics:
-* Log-log plots with missing or symmetric error bars can be fixed by forcing asymmetric error bars. When there are small errors, the log can show as a negative error, which often means that plot won't do anything. In Matplotlib the default (for the y axis) is to map all negative values a very small positive one. The code for that is: ```
+* Log-log plots with missing or symmetric error bars can be fixed by forcing asymmetric error bars. When there are small errors, the log can show as a negative error, which often means that plot won't do anything. In Matplotlib the default (for the y axis) is to map all negative values a very small positive one. The code for that is: 
+```
 plt.yscale('log', nonposx='clip')
 ```
 
@@ -180,7 +181,7 @@ ggplot(data,aes(x=x,y=y), legend=FALSE)+
 * Always remember to think about the story your telling and how your graphic fits in. 
 * Label your plots correctly, but don't clog the plot with text. Keep your labels short, and rotate them if needed to to be read. 
 * If displaying all of your data looks cluttered, think about if you really need to show all of it, and if so if there's a better way to display it. 
-* Watch out for color! We like pretty graphs, but only if we can stil read them. 
+* Watch out for color! We like pretty graphs, but only if we can still read them. 
 
 
 
