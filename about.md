@@ -49,7 +49,7 @@ permalink: /about/
 
 ##<a name="hire"></a>Hire
 <!--  make this about yourself  -->
-
+* [Resume](https://www.dropbox.com/s/0g1c5oc7it65gzn/resume.pdf?dl=0)
 * Teaching
 	*  I've been a teachers assistant for several introductory astronomy classes 
 	and a physics tutor for friends in physics. 

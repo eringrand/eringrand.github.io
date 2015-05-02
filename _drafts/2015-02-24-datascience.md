@@ -36,3 +36,9 @@ How to be data scientist:
 
 CrimeMap - from the safest route from A to B
 
+
+usefully there's a thing your trying to predict, see what correlates best 
+when nature hands you a graph, it doesn't draw it for you
+
+some things done in R, some things in Python 
+ggplot in R, networkX in python
