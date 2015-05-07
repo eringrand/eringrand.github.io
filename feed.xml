@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Erin Grand</title>
-    <description>Interested in data science, visualization, and education. Yay!</description>
+    <description>Interested in data science, visualization, and education.</description>
     <link>http://eringrand.github.io</link>
     <atom:link href="http://eringrand.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
