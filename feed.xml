@@ -135,7 +135,7 @@ In other cases, it&amp;#39;s best to separate out the information into a table o
 &lt;p&gt;In fixing the graphic, while also including more information from my other sources,
 I separated out the each of the molecules and sources into a table of spectra. 
 This un-clutters the plot and allows you to more easily visualize trends in the sources. 
-(Notice how the plots is missing axes labels - shame on me!) &lt;/p&gt;
+(Notice how the plot is missing axes labels - shame on me!) &lt;/p&gt;
 
 &lt;div style=&quot;width:image width px; font-size:80%;text-align:center;&quot;&gt;&lt;img src=&quot;/images/spectra2.png&quot; alt=&quot;Velocity spectra for the pillars show brightness temperature against velocity in km/s. The spectra were taken in the heads of the pillars at the peak brightness and averaged over a beam size.&quot;/&gt;
 &lt;figcaption&gt;Velocity spectra for the pillars show brightness temperature against velocity in km/s. The spectra were taken in the heads of the pillars at the peak brightness and averaged over a beam size.&lt;/figcaption&gt;
