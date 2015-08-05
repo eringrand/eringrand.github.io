@@ -89,7 +89,7 @@ For example, below is the orignal plot from my research showing the intensity of
 In fixing the graphic, while also including more information from my other sources,
 I separated out the each of the molecules and sources into a table of spectra. 
 This un-clutters the plot and allows you to more easily visualize trends in the sources. 
-(Notice how the plots is missing axes labels - shame on me!) 
+(Notice how the plot is missing axes labels - shame on me!) 
 
 {% include {{ site.baseurl }}/image.html url="/images/spectra2.png" description="Velocity spectra for the pillars show brightness temperature against velocity in km/s. The spectra were taken in the heads of the pillars at the peak brightness and averaged over a beam size." %}
 

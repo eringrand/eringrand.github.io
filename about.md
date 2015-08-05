@@ -6,6 +6,7 @@ permalink: /about/
 
 ###<a name="top"></a>*Menu*
 * [Info](#info)
+* [Experience](#experience)
 * [Research](#research)
 * [Hire](#hire)
 * [Teaching](#teaching)
@@ -25,6 +26,13 @@ permalink: /about/
 * [LinkedIn](https://www.linkedin.com/in/eringrand)
 * [Twitter](https://www.twitter.com/astroeringrand)
 * [Resume](https://www.dropbox.com/s/0g1c5oc7it65gzn/resume.pdf?dl=0)
+
+[Top](#top)
+
+
+---
+##<a name="experience"></a>Currently Working 
+* Working at Crisis Text Line as a data intern.  
 
 [Top](#top)
 
@@ -73,7 +81,8 @@ My [teaching information](https://eringrand.github.io/teaching/) can be found [h
 
 ####Things I do for fun:
 * I spent many years playing bass clarinet in the Gamer Symphony Orchestra. 
-* I have since graduated to singing in choir of the Washington Metro Gamer Symphony Orchestra. 
+* I then graduated to singing in choir of the Washington Metro Gamer Symphony Orchestra. 
+* I love royal Scottish country dancing! (It's like contra, but bouncier.) 
 
 [Top](#top)
 
