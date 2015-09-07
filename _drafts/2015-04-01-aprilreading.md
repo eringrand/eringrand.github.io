@@ -3,6 +3,7 @@ layout: post
 title: Suggested Links from Spring and Summer
 tags: youtube astronomy data science columbia
 ---
+
 Oh look, I forgot to post my list. Instead of going back and separating it out, 
 I've decided to combine my suggestions for all the months I've missed. 
 
