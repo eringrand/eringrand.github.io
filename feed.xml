@@ -7,6 +7,38 @@
     <atom:link href="http://eringrand.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>My Internship With Crisis Text Line</title>
+        <description>&lt;p&gt;In the beginning of summer, I sent in my application to DoSomething.org for their Data Intern position. I found out about the position through a communication that started over Github, and thought it sounded interesting enough. I sent in my resume and cover letter and waited to see what would happen. I made it through to the next rounds. The last step was a phone interview where I gave a quick presentation on my analysis on some data, and talked about what the internship was about and what I was interested in. I mentioned that what brought me to Data Science was teaching, and how I hoped to be involved with research and education technology in the future. I didn&amp;#39;t get the job. &lt;/p&gt;
+
+&lt;p&gt;Instead, I got an email directing me to a Data Intern position available at (Crisis Text Line)[http://crisistextline.org], where I could work on data related to training crisis counselors. After an interview with Bob Filbin, Chief Data Scientist at CTL, I accepted the internship, and it was the most amazing job I&amp;#39;ve ever had (and I still work for NASA). &lt;/p&gt;
+
+&lt;p&gt;Crisis Text Line was born out of DosSomething.org, and the two companies share an office space. Crisis Text Line does two things: (1) provides free, 24/7 emotional support to people in crisis, by text. And, (2) uses the data to improve the service and the crisis space as a whole. As the Data Intern, I worked in providing data and metrics for products to make the service better. More specifically, I focused in two areas (1) getting more people through the volunteer application and (2) increasing the lifetime number of conversations our counselors take. I used hard numbers and ethnographic research such as interviews and observations to determine user needs and then suggested solutions to solve them. Over the 10 weeks, I successfully researched the major pain points in our application, determined the best way to remove them, wrote a new application, and launched it!&lt;/p&gt;
+
+&lt;p&gt;The experience I have gained from this internship has been invaluable to my career and to my person. I&amp;#39;ve gotten to work with the most wonderful people, and spent every day feeling I was doing meaningful work. &lt;/p&gt;
+
+&lt;p&gt;In addition to the experience I was given through this internship, I also made amazing friends with the DoSomething.org interns. The interns at both DS and CTL shared the same middle table, ate together, had meetings together... etc Getting to know these folks was my absolute favorite part of the intership, and I miss them dearly.  To quote Kelvin (the data intern at DS) &amp;quot;I don’t think I’ve ever met people so interesting, relatable, and devoted to social change. As great as the professional growth provided by this internship was, these people were really the highlight.&amp;quot; &lt;/p&gt;
+
+&lt;p&gt;With the summer having ended, we&amp;#39;ve moved back to school, or other internships. Some have remained in the city (and we still hang out), but others I&amp;#39;ll only see over the internet. That doesn&amp;#39;t change the fact that these people are amazing, and I can&amp;#39;t wait to spend time with them again. &lt;/p&gt;
+
+&lt;p&gt;There were rough spots at the beginning of the internship as I was trying to get a hold of the flow of a tech based not-for-profit start-up, but I got there quick enough. We worked fast, very fast. At a regular internship, interns are given jobs that managers may not want to do because they are time consuming or boring. At Crisis Text Line, interns were treated (and acted) like staff. We were given important projects with lasting effects for the company. I used the chance to dive deep into my projects, working hard to get them done correctly. &lt;/p&gt;
+
+&lt;p&gt;I dived so deep into my work, that I couldn&amp;#39;t be pulled out. Luckily, I don&amp;#39;t have to stop! As of a couple weeks ago, I began my official job with Crisis Text Line as a part-time Data Scientist while I finish my last year of graduate school at Columbia. I feel so lucky to have been given this opportunity to continue working with these amazing people!&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;If you have more questions on Crisis Text Line, and how you can get involved please visit 
+&lt;a href=&quot;http://www.crisistextline.org/join-our-efforts/volunteer/&quot;&gt;crisistextline.org/volunteer&lt;/a&gt;.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Disclaimer: This was written at midnight and has not been spell-checked or grammar-checked. Please excuse all mistakes until further notice when I edit this.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 06 Sep 2015 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/ctlinternship/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/ctlinternship/</guid>
+      </item>
+    
+      <item>
         <title>What Name Do Grad Students Refer to Their Professors As?</title>
         <description>&lt;p&gt;At some point this past week, I came to the realization that of the professors I&amp;#39;ve had this year, I&amp;#39;ve only referred to the female professor by her first name in conversation with other students. I wondered if this was indicative of some larger issue, or if it&amp;#39;s just because she&amp;#39;s also our class advisor.&lt;/p&gt;
 
