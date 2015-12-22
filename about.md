@@ -32,7 +32,8 @@ permalink: /about/
 
 ---
 ##<a name="experience"></a>Currently Working 
-* Working at Crisis Text Line as a data intern.  
+* Working at Crisis Text Line as a Data Scientist.
+* You can read about my transistion to Data Science at Crisis Text Line [here](http://datascience.columbia.edu/q-erin-grand-data-scientist-crisis-text-line).
 
 [Top](#top)
 
@@ -44,12 +45,11 @@ permalink: /about/
 	* Master thesis paper available at request 
 
 * [Ultraviolet Portrait of M31](http://www.nasa.gov/mission_pages/swift/bursts/uv_andromeda.html)
-	* Collected images from the Ultra violet telescope aboard NASA's swift satellite in order to
+	* Collected images from the ultraviolet telescope aboard NASA's swift satellite in order to
 	form the final mosiac
 	* Worked with Dr. Stefan Immler at NASA Goddard Space Flight Center
 
-* Analyzing the Star Formation of Galaxies in the MIDGET survey 
-	* with Dr. Alberto Bolatto
+* Analyzing the Star Formation of Galaxies in the MIDGET survey with Dr. Alberto Bolatto
 
 [Top](#top)
 
@@ -59,11 +59,10 @@ permalink: /about/
 <!--  make this about yourself  -->
 * [Resume](https://www.dropbox.com/s/0g1c5oc7it65gzn/resume.pdf?dl=0)
 * Teaching
-	*  I've been a teachers assistant for several introductory astronomy classes 
+	*  I've been a teacher's assistant for several introductory astronomy classes 
 	and a physics tutor for friends in physics. 
 * Coding
-	* I am learning R and Python. Most of my past experience is in IDL and shell scripts.
-	
+	* Proficient in R and Python. Most of my past experience is in IDL and shell scripts. Learning SQL.
 <!-- * Public Outreach -->
 
 [Top](#top)
@@ -71,7 +70,7 @@ permalink: /about/
 ---
 
 ##<a name="teaching"></a>Teaching
-My [teaching information](https://eringrand.github.io/teaching/) can be found [here](https://eringrand.github.io/teaching/). 
+I am not currently teaching anything. My past [teaching information](https://eringrand.github.io/teaching/) can be found [here](https://eringrand.github.io/teaching/). 
 
 [Top](#top)
 
@@ -80,9 +79,9 @@ My [teaching information](https://eringrand.github.io/teaching/) can be found [h
 ###<a name="misc"></a>Misc
 
 ####Things I do for fun:
-* I spent many years playing bass clarinet in the Gamer Symphony Orchestra. 
+* I spent many years playing bass clarinet in the University of Maryland Gamer Symphony Orchestra. 
 * I then graduated to singing in choir of the Washington Metro Gamer Symphony Orchestra. 
-* I love royal Scottish country dancing! (It's like contra, but bouncier.) 
+* I love royal Scottish country dancing! (It's like contra, but bouncier.)
 
 [Top](#top)
 
