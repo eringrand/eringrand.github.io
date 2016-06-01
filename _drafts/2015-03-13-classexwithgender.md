@@ -5,7 +5,10 @@ description:
 tags: data science statistics gender
 ---
 
-netflix more of a girl movie or boy movie
-height of people
-under clusters discussion: classify man or women, k = 2
-referring to computers as masters, slaves, and "he" 
+I often introduce myself as a "Profesional Student", this is because I have been in school, without a break longer than summer, for the last 9 years. Over this time period, one aspect of lectures has bugged me more than the rest. Why is world is every class example, involving people, based on GENDER?
+
+Ie. 
+- In a discussion of a netflix recomendation system, looking at "boy" movies and "girl" movies.
+- Predicting the height of students, by looking at gender.
+- Clustering communities into men and women 
+- Refering to inanimate objects as "he" (mostly applied to computers - in the master, slave context which itself has problems)

@@ -1,11 +1,8 @@
 ---
 layout: post
-title: Suggested Links from Spring and Summer
+title: Suggested Links from Spring and Summer 2015
 tags: youtube astronomy data science columbia
 ---
-
-Oh look, I forgot to post my list. Instead of going back and separating it out, 
-I've decided to combine my suggestions for all the months I've missed. 
 
 ## Articles: 
 * This article is about a year old, but I still find it fascinating. 
