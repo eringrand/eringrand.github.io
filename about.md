@@ -25,7 +25,7 @@ permalink: /about/
 ###Links
 * [LinkedIn](https://www.linkedin.com/in/eringrand)
 * [Twitter](https://www.twitter.com/astroeringrand)
-* [Resume](https://www.dropbox.com/s/0g1c5oc7it65gzn/resume.pdf?dl=0)
+* [Resume](https://www.dropbox.com/s/8vit837qrfepnpq/resume.pdf?dl=0)
 
 [Top](#top)
 
@@ -58,7 +58,7 @@ permalink: /about/
 ---
 
 ##<a name="hire"></a>Hire
-* [Resume](https://www.dropbox.com/s/0g1c5oc7it65gzn/resume.pdf?dl=0)
+* [Resume](https://www.dropbox.com/s/8vit837qrfepnpq/resume.pdf?dl=0)
 * Teaching
 	*  I've been a teacher's assistant for several introductory astronomy classes 
 	and a physics tutor for friends in physics. 
