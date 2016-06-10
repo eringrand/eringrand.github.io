@@ -12,3 +12,5 @@ Ie.
 - Predicting the height of students, by looking at gender.
 - Clustering communities into men and women 
 - Refering to inanimate objects as "he" (mostly applied to computers - in the master, slave context which itself has problems)
+
+I believe this is because we're so used to thinking about gender as a binary, these examples easily come to mind for binary classification problems. However, gender is and has never really been a binary. Transgender men and women are making history as actors and actoress fighting for fair rights.  

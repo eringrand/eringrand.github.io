@@ -42,3 +42,7 @@ when nature hands you a graph, it doesn't draw it for you
 
 some things done in R, some things in Python 
 ggplot in R, networkX in python
+
+
+telling a story with data
+are models are wrong, but some are useful

@@ -8,7 +8,7 @@ description: ""
 ##Current Classes
 
 I am not currently teaching anything, but I am available for 
-tutoring in math, astronomy and physics. 
+tutoring in math, astronomy, statistics and physics. Contact me at eringrand@gmail.com for more information.
 
 ---
 ##Past Classes

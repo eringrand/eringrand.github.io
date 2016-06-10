@@ -5,20 +5,20 @@ permalink: /about/
 ---
 
 ###<a name="top"></a>*Menu*
-* [Info](#info)
+* [Basic Info](#info)
 * [Experience](#experience)
 * [Research](#research)
-* [Hire](#hire)
+* [Hiring](#hire)
 * [Teaching](#teaching)
-* [Misc](#misc)
+* [In the News](#press)
 
 ---
 
-##<a name="info"></a>Info
+##<a name="info"></a>Basic Information
 <!--  This would be a great space to explain yourself --> 
   
 ###Degrees: 
-* MS Data Science (Columbia Univiersity) - in progress 
+* MS Data Science (Columbia Univiersity) 2016
 * MS Astronomy (University of Maryland) 2014
 * BS Physics & Astronomy  (University of Maryland) 2011
 
@@ -32,8 +32,7 @@ permalink: /about/
 
 ---
 ##<a name="experience"></a>Currently Working 
-* Working at Crisis Text Line as a Data Scientist.
-* You can read about my transistion to Data Science at Crisis Text Line [here](http://datascience.columbia.edu/q-erin-grand-data-scientist-crisis-text-line).
+* Working at Crisis Text Line as a Data Scientist. You can read about my transistion to Data Science at Crisis Text Line [here](http://datascience.columbia.edu/q-erin-grand-data-scientist-crisis-text-line).
 * Built and shipped a new volunteer application which has been used by 7600 applicants. Increased the completion rate from 40% to 90%.
 * My work has focused on identifing drop off points for trainers and supervisors. I producied cohort reports of training metrics and identified key differences among cohorts to provide trainers with new solutions. I identified counselor churn as the largest organizational priority, and setup tracking, reporting, and analysis of key metrics.
 
@@ -57,7 +56,7 @@ permalink: /about/
 
 ---
 
-##<a name="hire"></a>Hire
+##<a name="hire"></a>Hiring
 * [Resume](https://www.dropbox.com/s/8vit837qrfepnpq/resume.pdf?dl=0)
 * Teaching
 	*  I've been a teacher's assistant for several introductory astronomy classes 
@@ -70,19 +69,18 @@ permalink: /about/
 ---
 
 ##<a name="teaching"></a>Teaching
-I am not currently teaching anything. My past [teaching information](https://eringrand.github.io/teaching/) can be found [here](https://eringrand.github.io/teaching/). 
+I am not currently teaching.  Check out my [teaching information](https://eringrand.github.io/teaching/) for information on what I've taught in the past.
 
 [Top](#top)
 
 ---
 		
-###<a name="misc"></a>Misc
+###<a name="press"></a>In the News
 
-####Things I do for fun:
-* I spent many years playing bass clarinet in the University of Maryland Gamer Symphony Orchestra. 
-* I then graduated to singing in choir of the Washington Metro Gamer Symphony Orchestra. 
-* I love royal Scottish country dancing! (It's like contra, but bouncier.)
+* [A Q & A with Erin Grand, Data Scientist at Crisis Text Line](http://datascience.columbia.edu/q-erin-grand-data-scientist-crisis-text-line)
+* [Tamer Center for Social Enterprise Summer Fellowship Interview](http://columbiasocialenterprise.org/sesummerfellows/student/erin-grand/)
+* [Swift Makes Best-ever Ultraviolet Portrait of Andromeda Galaxy](http://www.nasa.gov/mission_pages/swift/bursts/uv_andromeda.html)
 
 [Top](#top)
 
----
+
