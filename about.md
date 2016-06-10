@@ -34,6 +34,8 @@ permalink: /about/
 ##<a name="experience"></a>Currently Working 
 * Working at Crisis Text Line as a Data Scientist.
 * You can read about my transistion to Data Science at Crisis Text Line [here](http://datascience.columbia.edu/q-erin-grand-data-scientist-crisis-text-line).
+* Built and shipped a new volunteer application which has been used by 7600 applicants. Increased the completion rate from 40% to 90%.
+* My work has focused on identifing drop off points for trainers and supervisors. I producied cohort reports of training metrics and identified key differences among cohorts to provide trainers with new solutions. I identified counselor churn as the largest organizational priority, and setup tracking, reporting, and analysis of key metrics.
 
 [Top](#top)
 
@@ -56,14 +58,12 @@ permalink: /about/
 ---
 
 ##<a name="hire"></a>Hire
-<!--  make this about yourself  -->
 * [Resume](https://www.dropbox.com/s/0g1c5oc7it65gzn/resume.pdf?dl=0)
 * Teaching
 	*  I've been a teacher's assistant for several introductory astronomy classes 
 	and a physics tutor for friends in physics. 
 * Coding
 	* Proficient in R and Python. Most of my past experience is in IDL and shell scripts. Learning SQL.
-<!-- * Public Outreach -->
 
 [Top](#top)
 
