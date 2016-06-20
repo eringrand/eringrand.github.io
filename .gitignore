@@ -3,3 +3,6 @@
 ### 
 .sass-cache/
 _site
+_drafts/*
+.gitignore
+CNAME
