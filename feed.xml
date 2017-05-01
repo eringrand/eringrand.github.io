@@ -7,6 +7,437 @@
     <atom:link href="http://eringrand.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Text Analysis of The Lizzie Bennet Diaries</title>
+        <description>&lt;h1&gt;Inspiration&lt;/h1&gt;
+
+&lt;p&gt;Inspired by &lt;a href=&quot;http://juliasilge.com/&quot;&gt;Julia&amp;#39;s Silge&amp;#39;s&lt;/a&gt; recent talk on
+&lt;a href=&quot;http://tidytextmining.com/&quot;&gt;Tidytext&lt;/a&gt; as part of &lt;a href=&quot;https://open.nasa.gov/explore/datanauts/&quot;&gt;NASA
+Datanauts&lt;/a&gt;, and her blog
+posts, I decided to try my hand at some text analysis. Julia&amp;#39;s examples
+focus on the works of Jane Austen. As Jane Austen has been adapted so
+many time, I decided to &amp;quot;adapt&amp;quot; Julia&amp;#39;s talk for the modern works of
+Austen&amp;#39;s book - specifically the Lizzie Bennet Diaries.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.pemberleydigital.com/wp-content/uploads/2012/04/LBD-FacebookCover-Emmy.png&quot; alt=&quot;&quot;&gt;
+&lt;a href=&quot;http://www.pemberleydigital.com/&quot;&gt;Image source&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;The Lizzie Bennet Diaries&lt;/h1&gt;
+
+&lt;p&gt;The &lt;a href=&quot;http://www.pemberleydigital.com/the-lizzie-bennet-diaries/&quot;&gt;Lizzie Bennet
+Diaries&lt;/a&gt; is
+a modern adaptation of Jane Austen&amp;#39;s Pride and Prejudice for YouTube.
+The story is told through a series of Vlogs by Lizzie Bennet as part of
+a school project. The series, created by Hank Green and Bernie Su, first
+aired on April 9, 2012, making this year the &lt;strong&gt;5th Anniversary&lt;/strong&gt; of the
+series! Altogether, the series filmed more than 100 video episodes with
+over 9.5 hours of video making it the longest adaption of Pride and
+Prejudice to date.&lt;/p&gt;
+
+&lt;p&gt;Along with the main LBD channel, there are also some supporting
+channels. These allow others characters to tell parts of the story that
+Lizzie doesn&amp;#39;t take part in. For example, Lydia&amp;#39;s Vlogs include the
+story on how she meets George Wickham and their budding relationship.
+While not required viewing, these extra videos help round out the
+experience.&lt;/p&gt;
+
+&lt;p&gt;Since the series ended, 2 books have come out from the creators and
+writers of the original videos: one that follows the videos but adds
+some more detail to Lizzie&amp;#39;s life, and one that focuses on Lydia&amp;#39;s story
+after the series ends.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/10329014_10202570761053579_3130716185504613915_n.jpg?oh=d6dce9e54a81d5d7864d68dfa2f6269c&amp;amp;oe=596C631F&quot; alt=&quot;&quot;&gt;
+The Secret Diary of Lizzie Bennet, signed by most of the cast and
+writers&lt;/p&gt;
+
+&lt;p&gt;In honor of LBD&amp;#39;s 5th Anniversary, let&amp;#39;s do some LBD text analysis!
+&lt;strong&gt;Happy Anniversary LBD!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://media3.giphy.com/media/10MjSRjJxjc6XK/giphy-downsized.gif&quot; alt=&quot;celebration+lizzie+bennet&quot;&gt;&lt;br&gt;
+(&lt;a href=&quot;http://elizabethgillies.tumblr.com/post/44897897466&quot;&gt;Source link&lt;/a&gt;)&lt;/p&gt;
+
+&lt;h1&gt;Analysis&lt;/h1&gt;
+
+&lt;h2&gt;Gathering Data&lt;/h2&gt;
+
+&lt;p&gt;The first part of this analysis is grabbing all the text from YouTube.
+To access the API, I use the &lt;a href=&quot;https://soodoku.github.io/tuber/&quot;&gt;&lt;code&gt;tuber&lt;/code&gt;&lt;/a&gt;
+package by Gaurav Sood.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(tidyverse)
+library(tuber)
+
+yt_oauth(app_id, app_password)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The fist step was to find the channel id to access the LBD playlist. I
+do a quick search for &lt;code&gt;lizziebennet&lt;/code&gt; to find some videos that I know are
+part of the series.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;search &amp;lt;- yt_search(&amp;quot;lizziebennet&amp;quot;)[1:5, ] 
+search %&amp;gt;% select(title, channelId)
+
+##                                                       title
+## 1                         My Name is Lizzie Bennet  - Ep: 1
+## 2 The Lizzie Bennet Diaries - Episódio 98 (LEGENDADO PT-BR)
+## 3                                      Yeah I Know - Ep: 61
+## 4                                 Introducing Lizzie Bennet
+## 5                                  The Lizzie Trap - Ep: 78
+##                  channelId
+## 1 UCXfbQAimgtbk4RAUHtIAUww
+## 2 UCfhdE-vIhW9GD0eGdd300ag
+## 3 UCXfbQAimgtbk4RAUHtIAUww
+## 4 UCGaVdbSav8xWuFWTadK6loA
+## 5 UCXfbQAimgtbk4RAUHtIAUww
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;With the channel ID in hand, I can now access the channel&amp;#39;s resources to
+find the playlist ID, which I will use to access all the videos in that
+playlist. &lt;code&gt;list_channel_resources&lt;/code&gt; for &lt;code&gt;tuber&lt;/code&gt; creates a list of channel
+attributes and buried in that list in the playlist ID.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;# Channel Information
+a &amp;lt;- list_channel_resources(filter = c(channel_id=&amp;quot;UCXfbQAimgtbk4RAUHtIAUww&amp;quot;), part=&amp;quot;contentDetails&amp;quot;)
+
+# Uploaded playlists:
+playlist_id &amp;lt;- a$items[[1]]$contentDetails$relatedPlaylists$uploads
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The YouTube API atomically pages videos so the max you get per page is
+50. I know I need more than that, so I created a function that I can use
+recursively to get all the videos. (This code is not a simple way of
+doing what I need it to, but it works. I would love any comments on how
+to clean it up.)&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;# Get videos on the playlist
+vids &amp;lt;- get_playlist_items(filter= c(playlist_id=playlist_id), max_results = 50) 
+  vid_ids &amp;lt;- map(vids$items, &amp;quot;contentDetails&amp;quot;) %&amp;gt;%
+  map(&amp;quot;videoId&amp;quot;)  %&amp;gt;%
+  unlist()
+vid_info &amp;lt;- tibble(ids = vid_ids, page = vids$nextPageToken)
+
+getVideos &amp;lt;- function(vid_info){
+  pageToken &amp;lt;- vid_info$page[length(vid_info$page)]
+  vids &amp;lt;- get_playlist_items(filter= c(playlist_id=playlist_id), page_token = pageToken)
+  vid_ids &amp;lt;- map(vids$items, &amp;quot;contentDetails&amp;quot;) %&amp;gt;%
+    map(&amp;quot;videoId&amp;quot;)  %&amp;gt;%
+    unlist()
+  nextPageToken = ifelse(!is.null(vids$nextPageToken), vids$nextPageToken, NA)
+  vid_info_new &amp;lt;- tibble(ids = vid_ids, page = nextPageToken)
+  return(vid_info %&amp;gt;% bind_rows(vid_info_new) )
+}
+
+vid_info &amp;lt;- getVideos(vid_info)
+vid_info &amp;lt;- getVideos(vid_info)
+
+# check that I have all 112 videos
+nrow(vid_info)
+
+## [1] 112
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now that I have a list of video IDs, I can use &lt;code&gt;get_captions&lt;/code&gt; to access
+the text of the videos. I also use &lt;code&gt;xmlTreeParse&lt;/code&gt; and &lt;code&gt;xmlToList&lt;/code&gt; to
+covert the caption into into an easily accessible lines of text. I put
+the text, video ID, and video title in a tibble for use in tidydata.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(XML)
+
+getText &amp;lt;- function(id){
+  x &amp;lt;- get_captions(id, lang = &amp;quot;en&amp;quot;)
+  title &amp;lt;- get_video_details(id)$title
+  a &amp;lt;- xmlTreeParse(x)
+  text &amp;lt;- a$doc$children$transcript
+  text &amp;lt;- xmlToList(text, simplify = TRUE, addAttributes = FALSE) %&amp;gt;% 
+    tibble() %&amp;gt;%
+    mutate( id = id, title = title)
+  return(text) 
+}
+
+vid_ids &amp;lt;- vid_info$ids[3:112]
+text &amp;lt;- map_df(vid_ids, getText) %&amp;gt;% set_names(c(&amp;quot;text&amp;quot;, &amp;quot;vid_id&amp;quot;, &amp;quot;title&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I don&amp;#39;t actually want to refer to each video by it&amp;#39;s full title, so I do
+some data munching to get each episode&amp;#39;s number (1-100). Notice, the 10
+Q&amp;amp;A videos do not get a episode number assigned to them. For the sake of
+this analysis, I&amp;#39;ve decided to only work with the main 100 episodes.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;titles &amp;lt;- text %&amp;gt;%
+  distinct(title) %&amp;gt;%
+  mutate(title = ifelse(title == &amp;quot;Question and Answers #3 (ft. Caroline Lee)&amp;quot;, &amp;quot;Questions and Answers #3 (ft. Caroline Lee)&amp;quot;, title),
+         ep.num = gsub(&amp;quot;[- .)(+!&amp;#39;,/]|[a-zA-Z]*:?&amp;quot;,&amp;quot;&amp;quot;, title),
+         ep.num = ifelse(title == &amp;quot;2 + 1 - Ep: 73&amp;quot;, 73, ep.num),
+         ep.num = ifelse(title == &amp;quot;25 Douchebags and a Gentleman - Ep:18&amp;quot;, 18, ep.num),
+         ep.num = ifelse(title == &amp;quot;Bing Lee and His 500 Teenage Prostitutes - Ep: 4&amp;quot;, 4, ep.num),
+         ep.num = parse_number(ep.num)
+         ) %&amp;gt;%
+  filter(!grepl(&amp;quot;Questions and Answers&amp;quot;, title)) %&amp;gt;%
+  arrange(ep.num) 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;One of the problems with using captions, is the messy text. I used a
+simple set of &lt;code&gt;gsub&lt;/code&gt; to transform obvious punctuation marks into their
+English counterparts. I also pulled out the character SPEAKING the words
+from the text itself. I left this column alone in the dataset, but might
+one day go back and focus an analysis on speaking characters.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(tidytext)
+library(stringr)
+
+lizziebennet &amp;lt;- text %&amp;gt;%
+  left_join(titles, by=&amp;quot;title&amp;quot;) %&amp;gt;%
+  filter(!is.na(ep.num)) %&amp;gt;%
+  arrange(ep.num) %&amp;gt;%
+  mutate(linenumber = row_number()) %&amp;gt;%
+  mutate(text = gsub(&amp;quot;&amp;amp;#39;&amp;quot;, &amp;quot;&amp;#39;&amp;quot;, text),
+         text = gsub(&amp;quot;&amp;amp;quot;&amp;quot;, &amp;#39;\&amp;quot;&amp;#39;, text),
+         text = gsub(&amp;quot;&amp;amp;amp;&amp;quot;, &amp;quot;and&amp;quot;, text),
+         character = str_extract(text, &amp;quot;^[a-zA-Z]*:&amp;quot;),
+         text = sub(&amp;quot;^[a-zA-Z]*:&amp;quot;, &amp;quot;&amp;quot;, text)
+         ) %&amp;gt;%
+  arrange(ep.num, linenumber)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Okay, so now the text is mostly... in place. The first thing I did was
+look at word counts. The most common words are not surprising, it&amp;#39;s just
+a list of the characters.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;lizziebennet %&amp;gt;%
+  tidytext::unnest_tokens(word, text) %&amp;gt;%
+  anti_join(stop_words, by=&amp;quot;word&amp;quot;) %&amp;gt;%
+  count(word, sort=TRUE) %&amp;gt;%
+  top_n(10)
+## # A tibble: 10 × 2
+##         word     n
+##        &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
+## 1     lizzie   460
+## 2       jane   301
+## 3      darcy   243
+## 4       bing   232
+## 5    collins   220
+## 6      lydia   196
+## 7     bennet   194
+## 8  charlotte   180
+## 9       yeah   178
+## 10      time   176
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The ngrams are also good to look at. Not surprisingly, the most common
+tri-gram is from the phrase, &amp;quot;My name is Lizzie Bennet and...&amp;quot;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;lizziebennet %&amp;gt;%
+  tidytext::unnest_tokens(word, text, token=&amp;quot;ngrams&amp;quot;, n=3) %&amp;gt;%
+  count(word, sort=TRUE) %&amp;gt;%
+  top_n(10)
+
+## # A tibble: 10 × 2
+##                 word     n
+##                &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
+## 1         my name is   106
+## 2   is lizzie bennet    96
+## 3     name is lizzie    96
+## 4  lizzie bennet and    84
+## 5       i don&amp;#39;t know    40
+## 6          oh my god    36
+## 7           a lot of    33
+## 8        going to be    31
+## 9       what are you    29
+## 10     mr collins oh    28
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I&amp;#39;m especially amused by THE MOST AWKWARD DANCE EVER being in the top 10
+5-grams.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;## # A tibble: 12 × 2
+##                           word     n
+##                          &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
+## 1     my name is lizzie bennet    95
+## 2    name is lizzie bennet and    83
+## 3       is lizzie bennet and i    19
+## 4    is lizzie bennet and this    14
+## 5    lizzie bennet and this is    11
+## 6           so good to see you     9
+## 7       had nothing to do with     5
+## 8     is lizzie bennet and i&amp;#39;m     5
+## 9       lizzie bennet and i am     5
+## 10 the most awkward dance ever     5
+## 11     what are you doing here     5
+## 12      you want to talk about     5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Sentiment Analysis&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#39;ve chosen to use the Bing lexicon (because of Bing Lee, get it?). In
+Tidydata sentiment analysis is easy because you just join the dictionary
+against your tokenzied words.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;bing &amp;lt;- sentiments %&amp;gt;%
+        filter(lexicon == &amp;quot;bing&amp;quot;) %&amp;gt;%
+        select(-score)
+
+lbwordcount &amp;lt;- lizziebennet %&amp;gt;%
+  tidytext::unnest_tokens(word, text) %&amp;gt;%
+  anti_join(stop_words) %&amp;gt;%
+  count(title)
+
+lbsentiment &amp;lt;- lizziebennet %&amp;gt;%
+  tidytext::unnest_tokens(word, text) %&amp;gt;%
+  anti_join(stop_words) %&amp;gt;%
+  inner_join(bing) %&amp;gt;% 
+  count(title, index=ep.num, sentiment) %&amp;gt;% 
+  spread(sentiment, n, fill = 0) %&amp;gt;% 
+  left_join(lbwordcount) %&amp;gt;%
+  mutate(sentiment = positive - negative,
+         sentiment = sentiment / n)  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Most positive sentiment episodes&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;## # A tibble: 5 × 2
+##                                       title  sentiment
+##                                       &amp;lt;chr&amp;gt;      &amp;lt;dbl&amp;gt;
+## 1                    Care Packages - Ep: 58 0.09623431
+## 2                         The End - Ep: 100 0.09375000
+## 3                   Jane Chimes In - Ep: 12 0.09132420
+## 4 My Parents: Opposingly Supportive - Ep: 3 0.08415842
+## 5      Wishing Something Universal - Ep: 76 0.08018868
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Most negative sentiment episodes&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;## # A tibble: 5 × 2
+##                            title   sentiment
+##                            &amp;lt;chr&amp;gt;       &amp;lt;dbl&amp;gt;
+## 1   Turn About the Room - Ep: 32 -0.15217391
+## 2        How About That - Ep: 91 -0.09937888
+## 3          Staff Spirit - Ep: 59 -0.09745763
+## 4 How to Hold a Grudge  - Ep: 74 -0.09352518
+## 5      Meeting Bing Lee - Ep: 28 -0.07614213
+
+library(viridis)
+theme_set(theme_bw()) # a theme with a white background
+
+ggplot(lbsentiment, aes(x=index, sentiment, fill=as.factor(index))) +
+        geom_bar(stat = &amp;quot;identity&amp;quot;, show.legend = FALSE) +
+        theme_minimal(base_size = 13) +
+        geom_text(data=plot_text, aes(x=index, y=sentiment, label=index), size=3.5) + 
+        labs(title = &amp;quot;Sentiment in Lizzie Bennet Diaries&amp;quot;,
+             y = &amp;quot;Sentiment&amp;quot;
+             ) +
+        scale_fill_viridis(end = 0.75, discrete=TRUE, direction = -1) +
+        scale_x_discrete(expand=c(0.02,0)) +
+        theme(strip.text=element_text(hjust=0)) +
+        theme(strip.text=element_text(face = &amp;quot;italic&amp;quot;)) +
+        theme(axis.title.x=element_blank()) +
+        theme(axis.ticks.x=element_blank()) +
+        theme(axis.text.x=element_blank())
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/images/lizziebennet_textmining_files/figure-markdown_github/unnamed-chunk-17-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;Julia&amp;#39;s sentiment analysis of the original text is much more positive
+than the LBD analysis, with two negative portions relating to Darcy
+proposing to Elizabeth and Lydia running away with Wickham. I had
+expected a similar &amp;quot;Wickham&amp;quot; negative spike, and while that section of
+Wickham related episodes (Ep 84 to Ep 89) is surely negative it&amp;#39;s not
+more negative than some of the introductory episodes. One could argue,
+that most of the Lydia - Wickham story line happens off screen and in
+Lydia&amp;#39;s blogs. Which could explain that lack of a clear negative spike.&lt;/p&gt;
+
+&lt;h2&gt;More sentiment&lt;/h2&gt;
+
+&lt;p&gt;Continuing the analysis, I wanted to look at which words were causing
+the largest effect on the overall sentiment.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;bing_word_counts &amp;lt;- lizziebennet %&amp;gt;%
+  tidytext::unnest_tokens(word, text) %&amp;gt;%
+  anti_join(stop_words, by=&amp;quot;word&amp;quot;) %&amp;gt;%
+  inner_join(bing) %&amp;gt;%
+  count(word, sentiment, sort = TRUE) %&amp;gt;%
+  ungroup()
+
+bing_word_counts %&amp;gt;%
+  group_by(sentiment) %&amp;gt;%
+  top_n(10) %&amp;gt;%
+  mutate(word = reorder(word, n)) %&amp;gt;%
+  ggplot(aes(word, n, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = &amp;quot;free_y&amp;quot;) +
+  labs(y = &amp;quot;Contribution to sentiment&amp;quot;,
+       x = NULL) +
+  coord_flip()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/images/lizziebennet_textmining_files/figure-markdown_strict/unnamed-chunk-18-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;Given that this is a modern adaption, it&amp;#39;s interesting that much like
+the analysis done on the original &amp;quot;miss&amp;quot; is the top contribution to
+negative sentiment. In the original text I would assume a higher count
+of &amp;quot;Miss Bennet&amp;#39;s&amp;quot; to the modernized version. However, Lizzie does talk
+about you she&amp;#39;ll miss Charlotte, or she misses her home... etc, so it&amp;#39;s
+not too surprising to see it have a considerable contribution here.&lt;/p&gt;
+
+&lt;p&gt;I did a bit of an investigation into this with bigrams.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;lizziebennet %&amp;gt;%
+  tidytext::unnest_tokens(bigram, text, token=&amp;quot;ngrams&amp;quot;, n=2) %&amp;gt;%
+  separate(bigram, c(&amp;quot;word1&amp;quot;, &amp;quot;word2&amp;quot;), sep = &amp;quot; &amp;quot;) %&amp;gt;%
+  filter(word1 == &amp;quot;miss&amp;quot;) %&amp;gt;%
+  mutate(miss_in_name = ifelse(word2 %in% c(&amp;quot;bennet&amp;quot;, &amp;quot;lu&amp;quot;), &amp;quot;Yes&amp;quot;, &amp;quot;No&amp;quot;)) %&amp;gt;%
+  count(miss_in_name)
+
+## # A tibble: 2 × 2
+##   miss_in_name     n
+##          &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
+## 1           No    26
+## 2          Yes    27
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And oddly enough, the use of the word &amp;quot;miss&amp;quot; is about half and half
+between &amp;quot;I miss [person/thing]&amp;quot; and &amp;quot;Miss Bennet&amp;quot; type phrases. Interesting! (Anyone want to guess who refers to Lizzie as Miss Bennet the most? Unsurprisingly, it&amp;#39;s Ricky Collins.)&lt;/p&gt;
+
+&lt;h2&gt;More with Bigrams&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;bigrams_separated &amp;lt;- lizziebennet %&amp;gt;%
+  tidytext::unnest_tokens(bigram, text, token=&amp;quot;ngrams&amp;quot;, n=2) %&amp;gt;%
+  separate(bigram, c(&amp;quot;word1&amp;quot;, &amp;quot;word2&amp;quot;), sep = &amp;quot; &amp;quot;) %&amp;gt;%
+  filter(!word1 %in% stop_words$word, 
+         !word2 %in% stop_words$word) %&amp;gt;%
+  count(word1, word2, sort = TRUE)
+
+bigrams_separated %&amp;gt;% 
+  ungroup() %&amp;gt;%
+  top_n(10) 
+
+## # A tibble: 11 × 3
+##      word1   word2     n
+##      &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
+## 1   lizzie  bennet   132
+## 2     bing     lee    43
+## 3   george wickham    24
+## 4      hey  lizzie    24
+## 5       de  bourgh    22
+## 6    ricky collins    21
+## 7      los angeles    20
+## 8     miss  bennet    19
+## 9     tour  leader    18
+## 10   video    blog    17
+## 11 william   darcy    17
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Not surprisingly, the common bigrams are first and last names of
+characters, but there&amp;#39;s also some fun other popular bigrams with &amp;quot;tour
+leader&amp;quot; and &amp;quot;video blog.&amp;quot; I guess &lt;em&gt;vlog&lt;/em&gt; wasn&amp;#39;t super popular to use on
+it&amp;#39;s own yet.&lt;/p&gt;
+
+&lt;h2&gt;Network of Words&lt;/h2&gt;
+
+&lt;p&gt;One of my favorite part of tidytext is the example on making a bigram
+network. It&amp;#39;s just so fun!&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(igraph)
+library(ggraph)
+
+set.seed(42)
+
+bigrams_separated %&amp;gt;%
+  filter(n &amp;gt; 5) %&amp;gt;%
+  graph_from_data_frame() %&amp;gt;%
+  ggraph(layout = &amp;quot;fr&amp;quot;) +
+  geom_edge_link() +
+  geom_node_point() +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1) +
+  theme(axis.title.x=element_blank()) +
+  theme(axis.ticks.x=element_blank()) +
+  theme(axis.text.x=element_blank()) +
+  theme(axis.title.y=element_blank()) +
+  theme(axis.ticks.y=element_blank()) +
+  theme(axis.text.y=element_blank())
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/images/lizziebennet_textmining_files/figure-markdown_github/unnamed-chunk-21-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;I especially enjoy the Bennet sister cluster in the left corner.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;I leave you with this last picture.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/1908336_10202570761373587_7013966634375610561_n.jpg?oh=1a5119c2ae93bbd9b01060523cc7e43c&amp;amp;oe=59733FEF&quot; alt=&quot;&quot;&gt;
+The cast of LBD and me - Vidcon 2014&lt;/p&gt;
+</description>
+        <pubDate>Sun, 30 Apr 2017 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/lizziebennet_textmining/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/lizziebennet_textmining/</guid>
+      </item>
+    
+      <item>
         <title>My Internship With Crisis Text Line</title>
         <description>&lt;p&gt;At the end of spring semester, I sent in my application to &lt;a href=&quot;https://www.dosomething.org/&quot;&gt;DoSomething.org&lt;/a&gt; for their Data Intern position. I found out about the position through a communication that started over Github, and thought it sounded interesting. I sent in my resume and cover letter and waited to see what would happen. I made it through to the next rounds. The last step was a phone interview where I gave a quick presentation on my analysis on some data, and talked about what the internship was about and what I was interested in. I mentioned that what brought me to Data Science was teaching, and how I hoped to be involved with research and education technology in the future. I didn&amp;#39;t get the job. &lt;/p&gt;
 
