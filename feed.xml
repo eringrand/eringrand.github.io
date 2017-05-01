@@ -208,7 +208,7 @@ a list of the characters.&lt;/p&gt;
 ## 10      time   176
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The ngrams are also good to look at. Not surprisingly, the most common
-trigram is from the phrase, &amp;quot;My name is Lizzie Bennet and...&amp;quot;&lt;/p&gt;
+trigrams are from the phrase, &amp;quot;My name is Lizzie Bennet and...&amp;quot;&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;lizziebennet %&amp;gt;%
   tidytext::unnest_tokens(word, text, token=&amp;quot;ngrams&amp;quot;, n=3) %&amp;gt;%
   count(word, sort=TRUE) %&amp;gt;%
@@ -228,7 +228,7 @@ trigram is from the phrase, &amp;quot;My name is Lizzie Bennet and...&amp;quot;&
 ## 9       what are you    29
 ## 10     mr collins oh    28
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;I&amp;#39;m especially amused by THE MOST AWKWARD DANCE EVER being in the top 10
+&lt;p&gt;I&amp;#39;m especially amused by *So good to see you&amp;quot; and THE MOST AWKWARD DANCE EVER being in the top 10
 5-grams.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;## # A tibble: 12 × 2
 ##                           word     n
@@ -249,7 +249,7 @@ trigram is from the phrase, &amp;quot;My name is Lizzie Bennet and...&amp;quot;&
 &lt;h2&gt;Sentiment Analysis&lt;/h2&gt;
 
 &lt;p&gt;I&amp;#39;ve chosen to use the Bing lexicon (because of Bing Lee, get it?). In
-Tidydata sentiment analysis is easy because you just join the dictionary
+Tidydata sentiment analysis is easy because you just join the lexicon
 against your tokenzied words.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;bing &amp;lt;- sentiments %&amp;gt;%
         filter(lexicon == &amp;quot;bing&amp;quot;) %&amp;gt;%
@@ -312,7 +312,7 @@ ggplot(lbsentiment, aes(x=index, sentiment, fill=as.factor(index))) +
 &lt;p&gt;&lt;img src=&quot;/images/lizziebennet_textmining_files/figure-markdown_github/unnamed-chunk-17-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;Julia&amp;#39;s sentiment analysis of the original text is much more positive
-than the LBD analysis, with two negative portions relating to Darcy
+than my LBD analysis, with two negative portions relating to Darcy
 proposing to Elizabeth and Lydia running away with Wickham. I had
 expected a similar &amp;quot;Wickham&amp;quot; negative spike in this plot, and while the section of
 Wickham related episodes (Ep 84 to Ep 89) is surely negative it&amp;#39;s not
