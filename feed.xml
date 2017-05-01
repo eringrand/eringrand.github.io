@@ -207,7 +207,7 @@ a list of the characters.&lt;/p&gt;
 ## 10      time   176
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The ngrams are also good to look at. Not surprisingly, the most common
-tri-gram is from the phrase, &amp;quot;My name is Lizzie Bennet and...&amp;quot;&lt;/p&gt;
+trigram is from the phrase, &amp;quot;My name is Lizzie Bennet and...&amp;quot;&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;lizziebennet %&amp;gt;%
   tidytext::unnest_tokens(word, text, token=&amp;quot;ngrams&amp;quot;, n=3) %&amp;gt;%
   count(word, sort=TRUE) %&amp;gt;%
@@ -269,7 +269,7 @@ lbsentiment &amp;lt;- lizziebennet %&amp;gt;%
   mutate(sentiment = positive - negative,
          sentiment = sentiment / n)  
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Most positive sentiment episodes&lt;/p&gt;
+&lt;p&gt;Most positive sentiment episodes:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;## # A tibble: 5 × 2
 ##                                       title  sentiment
 ##                                       &amp;lt;chr&amp;gt;      &amp;lt;dbl&amp;gt;
@@ -279,7 +279,7 @@ lbsentiment &amp;lt;- lizziebennet %&amp;gt;%
 ## 4 My Parents: Opposingly Supportive - Ep: 3 0.08415842
 ## 5      Wishing Something Universal - Ep: 76 0.08018868
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Most negative sentiment episodes&lt;/p&gt;
+&lt;p&gt;Most negative sentiment episodes:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;## # A tibble: 5 × 2
 ##                            title   sentiment
 ##                            &amp;lt;chr&amp;gt;       &amp;lt;dbl&amp;gt;

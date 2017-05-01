@@ -278,7 +278,7 @@ a list of the characters.</p>
 ## 10      time   176
 </code></pre></div>
 <p>The ngrams are also good to look at. Not surprisingly, the most common
-tri-gram is from the phrase, &quot;My name is Lizzie Bennet and...&quot;</p>
+trigram is from the phrase, &quot;My name is Lizzie Bennet and...&quot;</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">lizziebennet %&gt;%
   tidytext::unnest_tokens(word, text, token=&quot;ngrams&quot;, n=3) %&gt;%
   count(word, sort=TRUE) %&gt;%
@@ -340,7 +340,7 @@ lbsentiment &lt;- lizziebennet %&gt;%
   mutate(sentiment = positive - negative,
          sentiment = sentiment / n)  
 </code></pre></div>
-<p>Most positive sentiment episodes</p>
+<p>Most positive sentiment episodes:</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">## # A tibble: 5 × 2
 ##                                       title  sentiment
 ##                                       &lt;chr&gt;      &lt;dbl&gt;
@@ -350,7 +350,7 @@ lbsentiment &lt;- lizziebennet %&gt;%
 ## 4 My Parents: Opposingly Supportive - Ep: 3 0.08415842
 ## 5      Wishing Something Universal - Ep: 76 0.08018868
 </code></pre></div>
-<p>Most negative sentiment episodes</p>
+<p>Most negative sentiment episodes:</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">## # A tibble: 5 × 2
 ##                            title   sentiment
 ##                            &lt;chr&gt;       &lt;dbl&gt;
