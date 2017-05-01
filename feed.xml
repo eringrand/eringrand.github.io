@@ -184,7 +184,7 @@ lizziebennet &amp;lt;- text %&amp;gt;%
          ) %&amp;gt;%
   arrange(ep_num, linenumber)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Okay, so now the text is mostly... in place. The first thing I did was
+&lt;p&gt;Okay, so now the text is &lt;em&gt;mostly&lt;/em&gt; in place. The first thing I did was
 look at word counts. The most common words are not surprising, it&amp;#39;s just
 a list of the characters.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;lizziebennet %&amp;gt;%
@@ -207,7 +207,7 @@ a list of the characters.&lt;/p&gt;
 ## 9       yeah   178
 ## 10      time   176
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;The ngrams are also good to look at. Not surprisingly, the most common
+&lt;p&gt;Not surprisingly, the most common
 trigrams are from the phrase, &amp;quot;My name is Lizzie Bennet and...&amp;quot;&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;lizziebennet %&amp;gt;%
   tidytext::unnest_tokens(word, text, token=&amp;quot;ngrams&amp;quot;, n=3) %&amp;gt;%
@@ -228,7 +228,7 @@ trigrams are from the phrase, &amp;quot;My name is Lizzie Bennet and...&amp;quot
 ## 9       what are you    29
 ## 10     mr collins oh    28
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;I&amp;#39;m especially amused by *So good to see you&amp;quot; and THE MOST AWKWARD DANCE EVER being in the top 10
+&lt;p&gt;I was also especially amused by &lt;em&gt;So good to see you&lt;/em&gt; and THE MOST AWKWARD DANCE EVER being in the top 10
 5-grams.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;## # A tibble: 12 × 2
 ##                           word     n
