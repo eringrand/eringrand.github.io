@@ -8,9 +8,7 @@
     
       <item>
         <title>Text Analysis of The Lizzie Bennet Diaries</title>
-        <description>&lt;h1&gt;Inspiration&lt;/h1&gt;
-
-&lt;p&gt;Inspired by &lt;a href=&quot;http://juliasilge.com/&quot;&gt;Julia&amp;#39;s Silge&amp;#39;s&lt;/a&gt; recent talk on
+        <description>&lt;p&gt;Inspired by &lt;a href=&quot;http://juliasilge.com/&quot;&gt;Julia&amp;#39;s Silge&amp;#39;s&lt;/a&gt; recent talk on
 &lt;a href=&quot;http://tidytextmining.com/&quot;&gt;Tidytext&lt;/a&gt; as part of &lt;a href=&quot;https://open.nasa.gov/explore/datanauts/&quot;&gt;NASA
 Datanauts&lt;/a&gt;, and her blog
 posts, I decided to try my hand at some text analysis. Julia&amp;#39;s examples
