@@ -321,14 +321,7 @@ Lydia&amp;#39;s blogs, that would explain that lack of a clear negative spike in
 
 &lt;p&gt;Continuing the analysis, I wanted to look at which words were causing
 the largest effect on the overall sentiment.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;bing_word_counts &amp;lt;- lizziebennet %&amp;gt;%
-  tidytext::unnest_tokens(word, text) %&amp;gt;%
-  anti_join(stop_words, by=&amp;quot;word&amp;quot;) %&amp;gt;%
-  inner_join(bing) %&amp;gt;%
-  count(word, sentiment, sort = TRUE) %&amp;gt;%
-  ungroup()
-
-bing_word_counts %&amp;gt;%
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;bing_word_counts %&amp;gt;%
   group_by(sentiment) %&amp;gt;%
   top_n(10) %&amp;gt;%
   mutate(word = reorder(word, n)) %&amp;gt;%
