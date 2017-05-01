@@ -207,8 +207,7 @@ a list of the characters.&lt;/p&gt;
 ## 9       yeah   178
 ## 10      time   176
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Not surprisingly, the most common
-trigrams are from the phrase, &amp;quot;My name is Lizzie Bennet and...&amp;quot;&lt;/p&gt;
+&lt;p&gt;Not surprisingly, the most common trigrams are from the phrase, &amp;quot;My name is Lizzie Bennet and...&amp;quot;&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;lizziebennet %&amp;gt;%
   tidytext::unnest_tokens(word, text, token=&amp;quot;ngrams&amp;quot;, n=3) %&amp;gt;%
   count(word, sort=TRUE) %&amp;gt;%
@@ -228,8 +227,7 @@ trigrams are from the phrase, &amp;quot;My name is Lizzie Bennet and...&amp;quot
 ## 9       what are you    29
 ## 10     mr collins oh    28
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;I was also especially amused by &lt;em&gt;So good to see you&lt;/em&gt; and THE MOST AWKWARD DANCE EVER being in the top 10
-5-grams.&lt;/p&gt;
+&lt;p&gt;I was also especially amused by &lt;em&gt;So good to see you&lt;/em&gt; and THE MOST AWKWARD DANCE EVER being in the Top 10 5-grams.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;## # A tibble: 12 × 2
 ##                           word     n
 ##                          &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
