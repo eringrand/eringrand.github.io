@@ -225,7 +225,6 @@ getText &lt;- function(id){
   return(text) 
 }
 
-vid_ids &lt;- vid_info$ids[3:112]
 text &lt;- map_df(vid_ids, getText) %&gt;% set_names(c(&quot;text&quot;, &quot;vid_id&quot;, &quot;title&quot;))
 </code></pre></div>
 <p>I don&#39;t actually want to refer to each video by it&#39;s full title, so I do
