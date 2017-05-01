@@ -192,6 +192,7 @@ a list of the characters.&lt;/p&gt;
   anti_join(stop_words, by=&amp;quot;word&amp;quot;) %&amp;gt;%
   count(word, sort=TRUE) %&amp;gt;%
   top_n(10)
+
 ## # A tibble: 10 × 2
 ##         word     n
 ##        &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
