@@ -239,7 +239,6 @@ a list of the characters.&lt;/p&gt;
 ## 9       lizzie bennet and i am     5
 ## 10 the most awkward dance ever     5
 ## 11     what are you doing here     5
-## 12      you want to talk about     5
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h2&gt;Sentiment Analysis&lt;/h2&gt;
 
@@ -421,7 +420,7 @@ bigrams_separated %&amp;gt;%
 &lt;p&gt;I leave you with this last picture.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/1908336_10202570761373587_7013966634375610561_n.jpg?oh=1a5119c2ae93bbd9b01060523cc7e43c&amp;amp;oe=59733FEF&quot; alt=&quot;&quot;&gt;
-The cast of LBD and me - Vidcon 2014&lt;/p&gt;
+Some of cast of Lizzie Bennet Diaries and me. Vidcon 2014&lt;/p&gt;
 </description>
         <pubDate>Sun, 30 Apr 2017 00:00:00 -0400</pubDate>
         <link>http://eringrand.github.io/lizziebennet_textmining/</link>
