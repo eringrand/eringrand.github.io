@@ -288,8 +288,9 @@ lbsentiment &amp;lt;- lizziebennet %&amp;gt;%
 ## 3          Staff Spirit - Ep: 59 -0.09745763
 ## 4 How to Hold a Grudge  - Ep: 74 -0.09352518
 ## 5      Meeting Bing Lee - Ep: 28 -0.07614213
-
-library(viridis)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The next step was to visualize this in a way where you can look at the sentiment over the episodes. &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(viridis)
 theme_set(theme_bw()) # a theme with a white background
 
 ggplot(lbsentiment, aes(x=index, sentiment, fill=as.factor(index))) +
