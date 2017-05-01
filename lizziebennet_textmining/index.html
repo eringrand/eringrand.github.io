@@ -225,14 +225,14 @@ this analysis, I&#39;ve decided to only work with the main 100 episodes.</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">titles &lt;- text %&gt;%
   distinct(title) %&gt;%
   mutate(title = ifelse(title == &quot;Question and Answers #3 (ft. Caroline Lee)&quot;, &quot;Questions and Answers #3 (ft. Caroline Lee)&quot;, title),
-         ep.num = gsub(&quot;[- .)(+!&#39;,/]|[a-zA-Z]*:?&quot;,&quot;&quot;, title),
-         ep.num = ifelse(title == &quot;2 + 1 - Ep: 73&quot;, 73, ep.num),
-         ep.num = ifelse(title == &quot;25 Douchebags and a Gentleman - Ep:18&quot;, 18, ep.num),
-         ep.num = ifelse(title == &quot;Bing Lee and His 500 Teenage Prostitutes - Ep: 4&quot;, 4, ep.num),
-         ep.num = parse_number(ep.num)
+         ep_num = gsub(&quot;[- .)(+!&#39;,/]|[a-zA-Z]*:?&quot;,&quot;&quot;, title),
+         ep_num = ifelse(title == &quot;2 + 1 - Ep: 73&quot;, 73, ep_num),
+         ep_num = ifelse(title == &quot;25 Douchebags and a Gentleman - Ep:18&quot;, 18, ep_num),
+         ep_num = ifelse(title == &quot;Bing Lee and His 500 Teenage Prostitutes - Ep: 4&quot;, 4, ep_num),
+         ep_num = parse_number(ep.num)
          ) %&gt;%
   filter(!grepl(&quot;Questions and Answers&quot;, title)) %&gt;%
-  arrange(ep.num) 
+  arrange(ep_num) 
 </code></pre></div>
 <p>One of the problems with using captions, is the messy text. I used a
 simple set of <code>gsub</code> to transform obvious punctuation marks into their
@@ -244,8 +244,8 @@ library(stringr)
 
 lizziebennet &lt;- text %&gt;%
   left_join(titles, by=&quot;title&quot;) %&gt;%
-  filter(!is.na(ep.num)) %&gt;%
-  arrange(ep.num) %&gt;%
+  filter(!is.na(ep_num)) %&gt;%
+  arrange(ep_num) %&gt;%
   mutate(linenumber = row_number()) %&gt;%
   mutate(text = gsub(&quot;&amp;#39;&quot;, &quot;&#39;&quot;, text),
          text = gsub(&quot;&amp;quot;&quot;, &#39;\&quot;&#39;, text),
@@ -253,7 +253,7 @@ lizziebennet &lt;- text %&gt;%
          character = str_extract(text, &quot;^[a-zA-Z]*:&quot;),
          text = sub(&quot;^[a-zA-Z]*:&quot;, &quot;&quot;, text)
          ) %&gt;%
-  arrange(ep.num, linenumber)
+  arrange(ep_num, linenumber)
 </code></pre></div>
 <p>Okay, so now the text is mostly... in place. The first thing I did was
 look at word counts. The most common words are not surprising, it&#39;s just
@@ -335,7 +335,7 @@ lbsentiment &lt;- lizziebennet %&gt;%
   tidytext::unnest_tokens(word, text) %&gt;%
   anti_join(stop_words) %&gt;%
   inner_join(bing) %&gt;% 
-  count(title, index=ep.num, sentiment) %&gt;% 
+  count(title, index=ep_num, sentiment) %&gt;% 
   spread(sentiment, n, fill = 0) %&gt;% 
   left_join(lbwordcount) %&gt;%
   mutate(sentiment = positive - negative,

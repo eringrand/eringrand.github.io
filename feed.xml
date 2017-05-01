@@ -154,14 +154,14 @@ this analysis, I&amp;#39;ve decided to only work with the main 100 episodes.&lt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;titles &amp;lt;- text %&amp;gt;%
   distinct(title) %&amp;gt;%
   mutate(title = ifelse(title == &amp;quot;Question and Answers #3 (ft. Caroline Lee)&amp;quot;, &amp;quot;Questions and Answers #3 (ft. Caroline Lee)&amp;quot;, title),
-         ep.num = gsub(&amp;quot;[- .)(+!&amp;#39;,/]|[a-zA-Z]*:?&amp;quot;,&amp;quot;&amp;quot;, title),
-         ep.num = ifelse(title == &amp;quot;2 + 1 - Ep: 73&amp;quot;, 73, ep.num),
-         ep.num = ifelse(title == &amp;quot;25 Douchebags and a Gentleman - Ep:18&amp;quot;, 18, ep.num),
-         ep.num = ifelse(title == &amp;quot;Bing Lee and His 500 Teenage Prostitutes - Ep: 4&amp;quot;, 4, ep.num),
-         ep.num = parse_number(ep.num)
+         ep_num = gsub(&amp;quot;[- .)(+!&amp;#39;,/]|[a-zA-Z]*:?&amp;quot;,&amp;quot;&amp;quot;, title),
+         ep_num = ifelse(title == &amp;quot;2 + 1 - Ep: 73&amp;quot;, 73, ep_num),
+         ep_num = ifelse(title == &amp;quot;25 Douchebags and a Gentleman - Ep:18&amp;quot;, 18, ep_num),
+         ep_num = ifelse(title == &amp;quot;Bing Lee and His 500 Teenage Prostitutes - Ep: 4&amp;quot;, 4, ep_num),
+         ep_num = parse_number(ep.num)
          ) %&amp;gt;%
   filter(!grepl(&amp;quot;Questions and Answers&amp;quot;, title)) %&amp;gt;%
-  arrange(ep.num) 
+  arrange(ep_num) 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;One of the problems with using captions, is the messy text. I used a
 simple set of &lt;code&gt;gsub&lt;/code&gt; to transform obvious punctuation marks into their
@@ -173,8 +173,8 @@ library(stringr)
 
 lizziebennet &amp;lt;- text %&amp;gt;%
   left_join(titles, by=&amp;quot;title&amp;quot;) %&amp;gt;%
-  filter(!is.na(ep.num)) %&amp;gt;%
-  arrange(ep.num) %&amp;gt;%
+  filter(!is.na(ep_num)) %&amp;gt;%
+  arrange(ep_num) %&amp;gt;%
   mutate(linenumber = row_number()) %&amp;gt;%
   mutate(text = gsub(&amp;quot;&amp;amp;#39;&amp;quot;, &amp;quot;&amp;#39;&amp;quot;, text),
          text = gsub(&amp;quot;&amp;amp;quot;&amp;quot;, &amp;#39;\&amp;quot;&amp;#39;, text),
@@ -182,7 +182,7 @@ lizziebennet &amp;lt;- text %&amp;gt;%
          character = str_extract(text, &amp;quot;^[a-zA-Z]*:&amp;quot;),
          text = sub(&amp;quot;^[a-zA-Z]*:&amp;quot;, &amp;quot;&amp;quot;, text)
          ) %&amp;gt;%
-  arrange(ep.num, linenumber)
+  arrange(ep_num, linenumber)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Okay, so now the text is mostly... in place. The first thing I did was
 look at word counts. The most common words are not surprising, it&amp;#39;s just
@@ -264,7 +264,7 @@ lbsentiment &amp;lt;- lizziebennet %&amp;gt;%
   tidytext::unnest_tokens(word, text) %&amp;gt;%
   anti_join(stop_words) %&amp;gt;%
   inner_join(bing) %&amp;gt;% 
-  count(title, index=ep.num, sentiment) %&amp;gt;% 
+  count(title, index=ep_num, sentiment) %&amp;gt;% 
   spread(sentiment, n, fill = 0) %&amp;gt;% 
   left_join(lbwordcount) %&amp;gt;%
   mutate(sentiment = positive - negative,
