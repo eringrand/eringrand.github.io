@@ -190,7 +190,7 @@ vids <span class="o">&lt;-</span> get_playlist_items<span class="p">(</span>filt
   <span class="kp">unlist</span><span class="p">()</span>
 vid_info <span class="o">&lt;-</span> tibble<span class="p">(</span>ids <span class="o">=</span> vid_ids<span class="p">,</span> page <span class="o">=</span> vids<span class="o">$</span>nextPageToken<span class="p">)</span>
 
-getVideos <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vid_info<span class="p">){</span>
+getMoreVideos <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vid_info<span class="p">){</span>
   pageToken <span class="o">&lt;-</span> vid_info<span class="o">$</span>page<span class="p">[</span><span class="kp">length</span><span class="p">(</span>vid_info<span class="o">$</span>page<span class="p">)]</span>
   vids <span class="o">&lt;-</span> get_playlist_items<span class="p">(</span>filter<span class="o">=</span> <span class="kt">c</span><span class="p">(</span>playlist_id<span class="o">=</span>playlist_id<span class="p">),</span> page_token <span class="o">=</span> pageToken<span class="p">)</span>
   vid_ids <span class="o">&lt;-</span> map<span class="p">(</span>vids<span class="o">$</span>items<span class="p">,</span> <span class="s">&quot;contentDetails&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
@@ -201,8 +201,8 @@ getVideos <span class="o">&lt;-</span> <span class="kr">function</span><span cla
   <span class="kr">return</span><span class="p">(</span>vid_info <span class="o">%&gt;%</span> bind_rows<span class="p">(</span>vid_info_new<span class="p">)</span> <span class="p">)</span>
 <span class="p">}</span>
 
-vid_info <span class="o">&lt;-</span> getVideos<span class="p">(</span>vid_info<span class="p">)</span>
-vid_info <span class="o">&lt;-</span> getVideos<span class="p">(</span>vid_info<span class="p">)</span>
+vid_info <span class="o">&lt;-</span> getMoreVideos<span class="p">(</span>vid_info<span class="p">)</span>
+vid_info <span class="o">&lt;-</span> getMoreVideos<span class="p">(</span>vid_info<span class="p">)</span>
 
 <span class="c1"># check that I have all 112 videos</span>
 <span class="kp">nrow</span><span class="p">(</span>vid_info<span class="p">)</span>

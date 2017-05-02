@@ -106,7 +106,7 @@ vids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; get_playlist_items&l
   &lt;span class=&quot;kp&quot;&gt;unlist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; tibble&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ids &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; vid_ids&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; page &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;nextPageToken&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-getVideos &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+getMoreVideos &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
   pageToken &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; vid_info&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;page&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;page&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
   vids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; get_playlist_items&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;filter&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;playlist_id&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;playlist_id&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; page_token &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; pageToken&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
   vid_ids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;items&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;contentDetails&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
@@ -117,8 +117,8 @@ getVideos &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=
   &lt;span class=&quot;kr&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; bind_rows&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info_new&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; getVideos&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; getVideos&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; getMoreVideos&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; getMoreVideos&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;c1&quot;&gt;# check that I have all 112 videos&lt;/span&gt;
 &lt;span class=&quot;kp&quot;&gt;nrow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
