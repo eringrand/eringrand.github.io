@@ -143,29 +143,29 @@ writers</p>
 <p>The first part of this analysis is grabbing all the text from YouTube.
 To access the API, I use the <a href="https://soodoku.github.io/tuber/"><code>tuber</code></a>
 package by Gaurav Sood.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">  <span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span>
-  <span class="kn">library</span><span class="p">(</span>tuber<span class="p">)</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>tuber<span class="p">)</span>
 
-  yt_oauth<span class="p">(</span>app_id<span class="p">,</span> app_password<span class="p">)</span>
+yt_oauth<span class="p">(</span>app_id<span class="p">,</span> app_password<span class="p">)</span>
 </code></pre></div>
 <p>The fist step was to find the channel id to access the LBD playlist. I
 do a quick search for <code>lizziebennet</code> to find some videos that I know are
 part of the series.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">    search <span class="o">&lt;-</span> yt_search<span class="p">(</span><span class="s">&quot;lizziebennet&quot;</span><span class="p">)[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="p">]</span> 
-    search <span class="o">%&gt;%</span> select<span class="p">(</span>title<span class="p">,</span> channelId<span class="p">)</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r">search <span class="o">&lt;-</span> yt_search<span class="p">(</span><span class="s">&quot;lizziebennet&quot;</span><span class="p">)[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="p">]</span> 
+search <span class="o">%&gt;%</span> select<span class="p">(</span>title<span class="p">,</span> channelId<span class="p">)</span>
 
-    <span class="c1">##                                                       title</span>
-    <span class="c1">## 1                         My Name is Lizzie Bennet  - Ep: 1</span>
-    <span class="c1">## 2 The Lizzie Bennet Diaries - Episódio 98 (LEGENDADO PT-BR)</span>
-    <span class="c1">## 3                                      Yeah I Know - Ep: 61</span>
-    <span class="c1">## 4                                 Introducing Lizzie Bennet</span>
-    <span class="c1">## 5                                  The Lizzie Trap - Ep: 78</span>
-    <span class="c1">##                  channelId</span>
-    <span class="c1">## 1 UCXfbQAimgtbk4RAUHtIAUww</span>
-    <span class="c1">## 2 UCfhdE-vIhW9GD0eGdd300ag</span>
-    <span class="c1">## 3 UCXfbQAimgtbk4RAUHtIAUww</span>
-    <span class="c1">## 4 UCGaVdbSav8xWuFWTadK6loA</span>
-    <span class="c1">## 5 UCXfbQAimgtbk4RAUHtIAUww</span>
+<span class="c1">##                                                       title</span>
+<span class="c1">## 1                         My Name is Lizzie Bennet  - Ep: 1</span>
+<span class="c1">## 2 The Lizzie Bennet Diaries - Episódio 98 (LEGENDADO PT-BR)</span>
+<span class="c1">## 3                                      Yeah I Know - Ep: 61</span>
+<span class="c1">## 4                                 Introducing Lizzie Bennet</span>
+<span class="c1">## 5                                  The Lizzie Trap - Ep: 78</span>
+<span class="c1">##                  channelId</span>
+<span class="c1">## 1 UCXfbQAimgtbk4RAUHtIAUww</span>
+<span class="c1">## 2 UCfhdE-vIhW9GD0eGdd300ag</span>
+<span class="c1">## 3 UCXfbQAimgtbk4RAUHtIAUww</span>
+<span class="c1">## 4 UCGaVdbSav8xWuFWTadK6loA</span>
+<span class="c1">## 5 UCXfbQAimgtbk4RAUHtIAUww</span>
 </code></pre></div>
 <p>With the channel ID in hand, I can now access the channel&#39;s resources to
 find the playlist ID, which I will use to access all the videos in that
@@ -370,23 +370,23 @@ lbsentiment <span class="o">&lt;-</span> lizziebennet <span class="o">%&gt;%</sp
 ## 5      Meeting Bing Lee - Ep: 28 -0.07614213
 </code></pre></div>
 <p>The next step was to visualize this in a way where you can look at the sentiment over the episodes. </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">library(viridis)
-theme_set(theme_bw()) # a theme with a white background
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>viridis<span class="p">)</span>
+theme_set<span class="p">(</span>theme_bw<span class="p">())</span> <span class="c1"># a theme with a white background</span>
 
-ggplot(lbsentiment, aes(x=index, sentiment, fill=as.factor(index))) +
-        geom_bar(stat = &quot;identity&quot;, show.legend = FALSE) +
-        theme_minimal(base_size = 13) +
-        geom_text(data=plot_text, aes(x=index, y=sentiment, label=index), size=3.5) + 
-        labs(title = &quot;Sentiment in Lizzie Bennet Diaries&quot;,
-             y = &quot;Sentiment&quot;
-             ) +
-        scale_fill_viridis(end = 0.75, discrete=TRUE, direction = -1) +
-        scale_x_discrete(expand=c(0.02,0)) +
-        theme(strip.text=element_text(hjust=0)) +
-        theme(strip.text=element_text(face = &quot;italic&quot;)) +
-        theme(axis.title.x=element_blank()) +
-        theme(axis.ticks.x=element_blank()) +
-        theme(axis.text.x=element_blank())
+ggplot<span class="p">(</span>lbsentiment<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>index<span class="p">,</span> sentiment<span class="p">,</span> fill<span class="o">=</span><span class="kp">as.factor</span><span class="p">(</span>index<span class="p">)))</span> <span class="o">+</span>
+        geom_bar<span class="p">(</span>stat <span class="o">=</span> <span class="s">&quot;identity&quot;</span><span class="p">,</span> show.legend <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span> <span class="o">+</span>
+        theme_minimal<span class="p">(</span>base_size <span class="o">=</span> <span class="m">13</span><span class="p">)</span> <span class="o">+</span>
+        geom_text<span class="p">(</span>data<span class="o">=</span>plot_text<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>index<span class="p">,</span> y<span class="o">=</span>sentiment<span class="p">,</span> label<span class="o">=</span>index<span class="p">),</span> size<span class="o">=</span><span class="m">3.5</span><span class="p">)</span> <span class="o">+</span> 
+        labs<span class="p">(</span>title <span class="o">=</span> <span class="s">&quot;Sentiment in Lizzie Bennet Diaries&quot;</span><span class="p">,</span>
+             y <span class="o">=</span> <span class="s">&quot;Sentiment&quot;</span>
+             <span class="p">)</span> <span class="o">+</span>
+        scale_fill_viridis<span class="p">(</span>end <span class="o">=</span> <span class="m">0.75</span><span class="p">,</span> discrete<span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> direction <span class="o">=</span> <span class="m">-1</span><span class="p">)</span> <span class="o">+</span>
+        scale_x_discrete<span class="p">(</span>expand<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="m">0.02</span><span class="p">,</span><span class="m">0</span><span class="p">))</span> <span class="o">+</span>
+        theme<span class="p">(</span>strip.text<span class="o">=</span>element_text<span class="p">(</span>hjust<span class="o">=</span><span class="m">0</span><span class="p">))</span> <span class="o">+</span>
+        theme<span class="p">(</span>strip.text<span class="o">=</span>element_text<span class="p">(</span>face <span class="o">=</span> <span class="s">&quot;italic&quot;</span><span class="p">))</span> <span class="o">+</span>
+        theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span> <span class="o">+</span>
+        theme<span class="p">(</span>axis.ticks.x<span class="o">=</span>element_blank<span class="p">())</span> <span class="o">+</span>
+        theme<span class="p">(</span>axis.text.x<span class="o">=</span>element_blank<span class="p">())</span>
 </code></pre></div>
 <p><img src="/images/lizziebennet_textmining_files/figure-markdown_github/unnamed-chunk-17-1.png" alt=""></p>
 
@@ -404,16 +404,16 @@ Lydia&#39;s blogs, that would explain that lack of a clear negative spike in the
 
 <p>Continuing the analysis, I wanted to look at which words were causing
 the largest effect on the overall sentiment.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">bing_word_counts %&gt;%
-  group_by(sentiment) %&gt;%
-  top_n(10) %&gt;%
-  mutate(word = reorder(word, n)) %&gt;%
-  ggplot(aes(word, n, fill = sentiment)) +
-  geom_col(show.legend = FALSE) +
-  facet_wrap(~sentiment, scales = &quot;free_y&quot;) +
-  labs(y = &quot;Contribution to sentiment&quot;,
-       x = NULL) +
-  coord_flip()
+<div class="highlight"><pre><code class="language-r" data-lang="r">bing_word_counts <span class="o">%&gt;%</span>
+  group_by<span class="p">(</span>sentiment<span class="p">)</span> <span class="o">%&gt;%</span>
+  top_n<span class="p">(</span><span class="m">10</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  mutate<span class="p">(</span>word <span class="o">=</span> reorder<span class="p">(</span>word<span class="p">,</span> n<span class="p">))</span> <span class="o">%&gt;%</span>
+  ggplot<span class="p">(</span>aes<span class="p">(</span>word<span class="p">,</span> n<span class="p">,</span> fill <span class="o">=</span> sentiment<span class="p">))</span> <span class="o">+</span>
+  geom_col<span class="p">(</span>show.legend <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span> <span class="o">+</span>
+  facet_wrap<span class="p">(</span><span class="o">~</span>sentiment<span class="p">,</span> scales <span class="o">=</span> <span class="s">&quot;free_y&quot;</span><span class="p">)</span> <span class="o">+</span>
+  labs<span class="p">(</span>y <span class="o">=</span> <span class="s">&quot;Contribution to sentiment&quot;</span><span class="p">,</span>
+       x <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span> <span class="o">+</span>
+  coord_flip<span class="p">()</span>
 </code></pre></div>
 <p><img src="/images/lizziebennet_textmining_files/figure-markdown_strict/unnamed-chunk-18-1.png" alt=""></p>
 
@@ -425,48 +425,48 @@ about you she&#39;ll miss Charlotte, or she misses her home... etc, so it&#39;s
 not too surprising to see it have a considerable contribution here.</p>
 
 <p>I did a bit of an investigation into this with bigrams.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">lizziebennet %&gt;%
-  tidytext::unnest_tokens(bigram, text, token=&quot;ngrams&quot;, n=2) %&gt;%
-  separate(bigram, c(&quot;word1&quot;, &quot;word2&quot;), sep = &quot; &quot;) %&gt;%
-  filter(word1 == &quot;miss&quot;) %&gt;%
-  mutate(miss_in_name = ifelse(word2 %in% c(&quot;bennet&quot;, &quot;lu&quot;), &quot;Yes&quot;, &quot;No&quot;)) %&gt;%
-  count(miss_in_name)
+<div class="highlight"><pre><code class="language-r" data-lang="r">lizziebennet <span class="o">%&gt;%</span>
+  tidytext<span class="o">::</span>unnest_tokens<span class="p">(</span>bigram<span class="p">,</span> text<span class="p">,</span> token<span class="o">=</span><span class="s">&quot;ngrams&quot;</span><span class="p">,</span> n<span class="o">=</span><span class="m">2</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  separate<span class="p">(</span>bigram<span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;word1&quot;</span><span class="p">,</span> <span class="s">&quot;word2&quot;</span><span class="p">),</span> sep <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  filter<span class="p">(</span>word1 <span class="o">==</span> <span class="s">&quot;miss&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  mutate<span class="p">(</span>miss_in_name <span class="o">=</span> <span class="kp">ifelse</span><span class="p">(</span>word2 <span class="o">%in%</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;bennet&quot;</span><span class="p">,</span> <span class="s">&quot;lu&quot;</span><span class="p">),</span> <span class="s">&quot;Yes&quot;</span><span class="p">,</span> <span class="s">&quot;No&quot;</span><span class="p">))</span> <span class="o">%&gt;%</span>
+  count<span class="p">(</span>miss_in_name<span class="p">)</span>
 
-## # A tibble: 2 × 2
-##   miss_in_name     n
-##          &lt;chr&gt; &lt;int&gt;
-## 1           No    26
-## 2          Yes    27
+<span class="c1">## # A tibble: 2 × 2</span>
+<span class="c1">##   miss_in_name     n</span>
+<span class="c1">##          &lt;chr&gt; &lt;int&gt;</span>
+<span class="c1">## 1           No    26</span>
+<span class="c1">## 2          Yes    27</span>
 </code></pre></div>
 <p>And oddly enough, the use of the word &quot;miss&quot; is about half and half
 between &quot;I miss [person/thing]&quot; and &quot;Miss Bennet&quot; type phrases. Interesting! (Anyone want to guess who refers to Lizzie as Miss Bennet the most? Unsurprisingly, it&#39;s Ricky Collins.)</p>
 
 <h2>More with Bigrams</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">bigrams_separated &lt;- lizziebennet %&gt;%
-  tidytext::unnest_tokens(bigram, text, token=&quot;ngrams&quot;, n=2) %&gt;%
-  separate(bigram, c(&quot;word1&quot;, &quot;word2&quot;), sep = &quot; &quot;) %&gt;%
-  filter(!word1 %in% stop_words$word, 
-         !word2 %in% stop_words$word) %&gt;%
-  count(word1, word2, sort = TRUE)
+<div class="highlight"><pre><code class="language-r" data-lang="r">bigrams_separated <span class="o">&lt;-</span> lizziebennet <span class="o">%&gt;%</span>
+  tidytext<span class="o">::</span>unnest_tokens<span class="p">(</span>bigram<span class="p">,</span> text<span class="p">,</span> token<span class="o">=</span><span class="s">&quot;ngrams&quot;</span><span class="p">,</span> n<span class="o">=</span><span class="m">2</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  separate<span class="p">(</span>bigram<span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;word1&quot;</span><span class="p">,</span> <span class="s">&quot;word2&quot;</span><span class="p">),</span> sep <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  filter<span class="p">(</span><span class="o">!</span>word1 <span class="o">%in%</span> stop_words<span class="o">$</span>word<span class="p">,</span> 
+         <span class="o">!</span>word2 <span class="o">%in%</span> stop_words<span class="o">$</span>word<span class="p">)</span> <span class="o">%&gt;%</span>
+  count<span class="p">(</span>word1<span class="p">,</span> word2<span class="p">,</span> sort <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 
-bigrams_separated %&gt;% 
-  ungroup() %&gt;%
-  top_n(10) 
+bigrams_separated <span class="o">%&gt;%</span> 
+  ungroup<span class="p">()</span> <span class="o">%&gt;%</span>
+  top_n<span class="p">(</span><span class="m">10</span><span class="p">)</span> 
 
-## # A tibble: 11 × 3
-##      word1   word2     n
-##      &lt;chr&gt;   &lt;chr&gt; &lt;int&gt;
-## 1   lizzie  bennet   132
-## 2     bing     lee    43
-## 3   george wickham    24
-## 4      hey  lizzie    24
-## 5       de  bourgh    22
-## 6    ricky collins    21
-## 7      los angeles    20
-## 8     miss  bennet    19
-## 9     tour  leader    18
-## 10   video    blog    17
-## 11 william   darcy    17
+<span class="c1">## # A tibble: 11 × 3</span>
+<span class="c1">##      word1   word2     n</span>
+<span class="c1">##      &lt;chr&gt;   &lt;chr&gt; &lt;int&gt;</span>
+<span class="c1">## 1   lizzie  bennet   132</span>
+<span class="c1">## 2     bing     lee    43</span>
+<span class="c1">## 3   george wickham    24</span>
+<span class="c1">## 4      hey  lizzie    24</span>
+<span class="c1">## 5       de  bourgh    22</span>
+<span class="c1">## 6    ricky collins    21</span>
+<span class="c1">## 7      los angeles    20</span>
+<span class="c1">## 8     miss  bennet    19</span>
+<span class="c1">## 9     tour  leader    18</span>
+<span class="c1">## 10   video    blog    17</span>
+<span class="c1">## 11 william   darcy    17</span>
 </code></pre></div>
 <p>Not surprisingly, the common bigrams are first and last names of
 characters, but there&#39;s also some fun other popular bigrams with &quot;tour
@@ -477,24 +477,24 @@ it&#39;s own yet.</p>
 
 <p>One of my favorite part of tidytext is the example on making a bigram
 network. It&#39;s just so fun!</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">library(igraph)
-library(ggraph)
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>igraph<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>ggraph<span class="p">)</span>
 
-set.seed(42)
+<span class="kp">set.seed</span><span class="p">(</span><span class="m">42</span><span class="p">)</span>
 
-bigrams_separated %&gt;%
-  filter(n &gt; 5) %&gt;%
-  graph_from_data_frame() %&gt;%
-  ggraph(layout = &quot;fr&quot;) +
-  geom_edge_link() +
-  geom_node_point() +
-  geom_node_text(aes(label = name), vjust = 1, hjust = 1) +
-  theme(axis.title.x=element_blank()) +
-  theme(axis.ticks.x=element_blank()) +
-  theme(axis.text.x=element_blank()) +
-  theme(axis.title.y=element_blank()) +
-  theme(axis.ticks.y=element_blank()) +
-  theme(axis.text.y=element_blank())
+bigrams_separated <span class="o">%&gt;%</span>
+  filter<span class="p">(</span>n <span class="o">&gt;</span> <span class="m">5</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  graph_from_data_frame<span class="p">()</span> <span class="o">%&gt;%</span>
+  ggraph<span class="p">(</span>layout <span class="o">=</span> <span class="s">&quot;fr&quot;</span><span class="p">)</span> <span class="o">+</span>
+  geom_edge_link<span class="p">()</span> <span class="o">+</span>
+  geom_node_point<span class="p">()</span> <span class="o">+</span>
+  geom_node_text<span class="p">(</span>aes<span class="p">(</span>label <span class="o">=</span> name<span class="p">),</span> vjust <span class="o">=</span> <span class="m">1</span><span class="p">,</span> hjust <span class="o">=</span> <span class="m">1</span><span class="p">)</span> <span class="o">+</span>
+  theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span> <span class="o">+</span>
+  theme<span class="p">(</span>axis.ticks.x<span class="o">=</span>element_blank<span class="p">())</span> <span class="o">+</span>
+  theme<span class="p">(</span>axis.text.x<span class="o">=</span>element_blank<span class="p">())</span> <span class="o">+</span>
+  theme<span class="p">(</span>axis.title.y<span class="o">=</span>element_blank<span class="p">())</span> <span class="o">+</span>
+  theme<span class="p">(</span>axis.ticks.y<span class="o">=</span>element_blank<span class="p">())</span> <span class="o">+</span>
+  theme<span class="p">(</span>axis.text.y<span class="o">=</span>element_blank<span class="p">())</span>
 </code></pre></div>
 <p><img src="/images/lizziebennet_textmining_files/figure-markdown_github/unnamed-chunk-21-1.png" alt=""></p>
 

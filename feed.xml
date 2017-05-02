@@ -59,29 +59,29 @@ writers&lt;/p&gt;
 &lt;p&gt;The first part of this analysis is grabbing all the text from YouTube.
 To access the API, I use the &lt;a href=&quot;https://soodoku.github.io/tuber/&quot;&gt;&lt;code&gt;tuber&lt;/code&gt;&lt;/a&gt;
 package by Gaurav Sood.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;  &lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tidyverse&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tuber&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tidyverse&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tuber&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-  yt_oauth&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;app_id&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; app_password&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+yt_oauth&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;app_id&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; app_password&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The fist step was to find the channel id to access the LBD playlist. I
 do a quick search for &lt;code&gt;lizziebennet&lt;/code&gt; to find some videos that I know are
 part of the series.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;    search &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; yt_search&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;lizziebennet&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
-    search &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; channelId&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;search &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; yt_search&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;lizziebennet&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
+search &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; channelId&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-    &lt;span class=&quot;c1&quot;&gt;##                                                       title&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;## 1                         My Name is Lizzie Bennet  - Ep: 1&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;## 2 The Lizzie Bennet Diaries - Episódio 98 (LEGENDADO PT-BR)&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;## 3                                      Yeah I Know - Ep: 61&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;## 4                                 Introducing Lizzie Bennet&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;## 5                                  The Lizzie Trap - Ep: 78&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;##                  channelId&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;## 1 UCXfbQAimgtbk4RAUHtIAUww&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;## 2 UCfhdE-vIhW9GD0eGdd300ag&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;## 3 UCXfbQAimgtbk4RAUHtIAUww&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;## 4 UCGaVdbSav8xWuFWTadK6loA&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;## 5 UCXfbQAimgtbk4RAUHtIAUww&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;##                                                       title&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 1                         My Name is Lizzie Bennet  - Ep: 1&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 2 The Lizzie Bennet Diaries - Episódio 98 (LEGENDADO PT-BR)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 3                                      Yeah I Know - Ep: 61&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 4                                 Introducing Lizzie Bennet&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 5                                  The Lizzie Trap - Ep: 78&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;##                  channelId&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 1 UCXfbQAimgtbk4RAUHtIAUww&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 2 UCfhdE-vIhW9GD0eGdd300ag&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 3 UCXfbQAimgtbk4RAUHtIAUww&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 4 UCGaVdbSav8xWuFWTadK6loA&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 5 UCXfbQAimgtbk4RAUHtIAUww&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;With the channel ID in hand, I can now access the channel&amp;#39;s resources to
 find the playlist ID, which I will use to access all the videos in that
@@ -286,23 +286,23 @@ lbsentiment &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; lizziebennet 
 ## 5      Meeting Bing Lee - Ep: 28 -0.07614213
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The next step was to visualize this in a way where you can look at the sentiment over the episodes. &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(viridis)
-theme_set(theme_bw()) # a theme with a white background
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;viridis&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+theme_set&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;theme_bw&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# a theme with a white background&lt;/span&gt;
 
-ggplot(lbsentiment, aes(x=index, sentiment, fill=as.factor(index))) +
-        geom_bar(stat = &amp;quot;identity&amp;quot;, show.legend = FALSE) +
-        theme_minimal(base_size = 13) +
-        geom_text(data=plot_text, aes(x=index, y=sentiment, label=index), size=3.5) + 
-        labs(title = &amp;quot;Sentiment in Lizzie Bennet Diaries&amp;quot;,
-             y = &amp;quot;Sentiment&amp;quot;
-             ) +
-        scale_fill_viridis(end = 0.75, discrete=TRUE, direction = -1) +
-        scale_x_discrete(expand=c(0.02,0)) +
-        theme(strip.text=element_text(hjust=0)) +
-        theme(strip.text=element_text(face = &amp;quot;italic&amp;quot;)) +
-        theme(axis.title.x=element_blank()) +
-        theme(axis.ticks.x=element_blank()) +
-        theme(axis.text.x=element_blank())
+ggplot&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;lbsentiment&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; aes&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;x&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;index&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; sentiment&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; fill&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;as.factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;index&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+        geom_bar&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;stat &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;identity&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; show.legend &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+        theme_minimal&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;base_size &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+        geom_text&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;data&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;plot_text&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; aes&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;x&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;index&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; y&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;sentiment&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; label&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;index&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; size&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;3.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; 
+        labs&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Sentiment in Lizzie Bennet Diaries&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+             y &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Sentiment&amp;quot;&lt;/span&gt;
+             &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+        scale_fill_viridis&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;end &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.75&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; discrete&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; direction &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;-1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+        scale_x_discrete&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;expand&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.02&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+        theme&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;strip.text&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;element_text&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;hjust&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+        theme&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;strip.text&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;element_text&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;face &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;italic&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+        theme&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;axis.title.x&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;element_blank&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+        theme&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;axis.ticks.x&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;element_blank&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+        theme&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;axis.text.x&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;element_blank&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;img src=&quot;/images/lizziebennet_textmining_files/figure-markdown_github/unnamed-chunk-17-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
@@ -320,16 +320,16 @@ Lydia&amp;#39;s blogs, that would explain that lack of a clear negative spike in
 
 &lt;p&gt;Continuing the analysis, I wanted to look at which words were causing
 the largest effect on the overall sentiment.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;bing_word_counts %&amp;gt;%
-  group_by(sentiment) %&amp;gt;%
-  top_n(10) %&amp;gt;%
-  mutate(word = reorder(word, n)) %&amp;gt;%
-  ggplot(aes(word, n, fill = sentiment)) +
-  geom_col(show.legend = FALSE) +
-  facet_wrap(~sentiment, scales = &amp;quot;free_y&amp;quot;) +
-  labs(y = &amp;quot;Contribution to sentiment&amp;quot;,
-       x = NULL) +
-  coord_flip()
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;bing_word_counts &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  group_by&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;sentiment&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  top_n&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; reorder&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; n&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  ggplot&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;aes&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; n&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; fill &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; sentiment&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+  geom_col&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;show.legend &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+  facet_wrap&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;sentiment&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; scales &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;free_y&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+  labs&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;y &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Contribution to sentiment&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+       x &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+  coord_flip&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;img src=&quot;/images/lizziebennet_textmining_files/figure-markdown_strict/unnamed-chunk-18-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
@@ -341,48 +341,48 @@ about you she&amp;#39;ll miss Charlotte, or she misses her home... etc, so it&am
 not too surprising to see it have a considerable contribution here.&lt;/p&gt;
 
 &lt;p&gt;I did a bit of an investigation into this with bigrams.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;lizziebennet %&amp;gt;%
-  tidytext::unnest_tokens(bigram, text, token=&amp;quot;ngrams&amp;quot;, n=2) %&amp;gt;%
-  separate(bigram, c(&amp;quot;word1&amp;quot;, &amp;quot;word2&amp;quot;), sep = &amp;quot; &amp;quot;) %&amp;gt;%
-  filter(word1 == &amp;quot;miss&amp;quot;) %&amp;gt;%
-  mutate(miss_in_name = ifelse(word2 %in% c(&amp;quot;bennet&amp;quot;, &amp;quot;lu&amp;quot;), &amp;quot;Yes&amp;quot;, &amp;quot;No&amp;quot;)) %&amp;gt;%
-  count(miss_in_name)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;lizziebennet &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  tidytext&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;unnest_tokens&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;bigram&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; token&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;ngrams&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; n&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  separate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;bigram&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;word1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;word2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; sep &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word1 &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;miss&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;miss_in_name &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;ifelse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word2 &lt;span class=&quot;o&quot;&gt;%in%&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;bennet&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;lu&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Yes&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;No&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  count&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;miss_in_name&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-## # A tibble: 2 × 2
-##   miss_in_name     n
-##          &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
-## 1           No    26
-## 2          Yes    27
+&lt;span class=&quot;c1&quot;&gt;## # A tibble: 2 × 2&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;##   miss_in_name     n&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;##          &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 1           No    26&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 2          Yes    27&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;And oddly enough, the use of the word &amp;quot;miss&amp;quot; is about half and half
 between &amp;quot;I miss [person/thing]&amp;quot; and &amp;quot;Miss Bennet&amp;quot; type phrases. Interesting! (Anyone want to guess who refers to Lizzie as Miss Bennet the most? Unsurprisingly, it&amp;#39;s Ricky Collins.)&lt;/p&gt;
 
 &lt;h2&gt;More with Bigrams&lt;/h2&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;bigrams_separated &amp;lt;- lizziebennet %&amp;gt;%
-  tidytext::unnest_tokens(bigram, text, token=&amp;quot;ngrams&amp;quot;, n=2) %&amp;gt;%
-  separate(bigram, c(&amp;quot;word1&amp;quot;, &amp;quot;word2&amp;quot;), sep = &amp;quot; &amp;quot;) %&amp;gt;%
-  filter(!word1 %in% stop_words$word, 
-         !word2 %in% stop_words$word) %&amp;gt;%
-  count(word1, word2, sort = TRUE)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;bigrams_separated &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; lizziebennet &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  tidytext&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;unnest_tokens&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;bigram&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; token&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;ngrams&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; n&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  separate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;bigram&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;word1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;word2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; sep &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;word1 &lt;span class=&quot;o&quot;&gt;%in%&lt;/span&gt; stop_words&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+         &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;word2 &lt;span class=&quot;o&quot;&gt;%in%&lt;/span&gt; stop_words&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  count&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word1&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; word2&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; sort &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-bigrams_separated %&amp;gt;% 
-  ungroup() %&amp;gt;%
-  top_n(10) 
+bigrams_separated &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; 
+  ungroup&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  top_n&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
 
-## # A tibble: 11 × 3
-##      word1   word2     n
-##      &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
-## 1   lizzie  bennet   132
-## 2     bing     lee    43
-## 3   george wickham    24
-## 4      hey  lizzie    24
-## 5       de  bourgh    22
-## 6    ricky collins    21
-## 7      los angeles    20
-## 8     miss  bennet    19
-## 9     tour  leader    18
-## 10   video    blog    17
-## 11 william   darcy    17
+&lt;span class=&quot;c1&quot;&gt;## # A tibble: 11 × 3&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;##      word1   word2     n&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;##      &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 1   lizzie  bennet   132&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 2     bing     lee    43&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 3   george wickham    24&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 4      hey  lizzie    24&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 5       de  bourgh    22&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 6    ricky collins    21&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 7      los angeles    20&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 8     miss  bennet    19&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 9     tour  leader    18&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 10   video    blog    17&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 11 william   darcy    17&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Not surprisingly, the common bigrams are first and last names of
 characters, but there&amp;#39;s also some fun other popular bigrams with &amp;quot;tour
@@ -393,24 +393,24 @@ it&amp;#39;s own yet.&lt;/p&gt;
 
 &lt;p&gt;One of my favorite part of tidytext is the example on making a bigram
 network. It&amp;#39;s just so fun!&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(igraph)
-library(ggraph)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;igraph&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ggraph&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-set.seed(42)
+&lt;span class=&quot;kp&quot;&gt;set.seed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-bigrams_separated %&amp;gt;%
-  filter(n &amp;gt; 5) %&amp;gt;%
-  graph_from_data_frame() %&amp;gt;%
-  ggraph(layout = &amp;quot;fr&amp;quot;) +
-  geom_edge_link() +
-  geom_node_point() +
-  geom_node_text(aes(label = name), vjust = 1, hjust = 1) +
-  theme(axis.title.x=element_blank()) +
-  theme(axis.ticks.x=element_blank()) +
-  theme(axis.text.x=element_blank()) +
-  theme(axis.title.y=element_blank()) +
-  theme(axis.ticks.y=element_blank()) +
-  theme(axis.text.y=element_blank())
+bigrams_separated &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;n &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  graph_from_data_frame&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  ggraph&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;layout &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;fr&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+  geom_edge_link&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+  geom_node_point&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+  geom_node_text&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;aes&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;label &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; name&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; vjust &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; hjust &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+  theme&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;axis.title.x&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;element_blank&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+  theme&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;axis.ticks.x&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;element_blank&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+  theme&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;axis.text.x&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;element_blank&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+  theme&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;axis.title.y&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;element_blank&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+  theme&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;axis.ticks.y&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;element_blank&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
+  theme&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;axis.text.y&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;element_blank&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;img src=&quot;/images/lizziebennet_textmining_files/figure-markdown_github/unnamed-chunk-21-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
