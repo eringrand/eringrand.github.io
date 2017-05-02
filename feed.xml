@@ -185,45 +185,45 @@ lizziebennet &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; text &lt;spa
 &lt;p&gt;Okay, so now the text is &lt;em&gt;mostly&lt;/em&gt; in place. The first thing I did was
 look at word counts. The most common words are not surprising, it&amp;#39;s just
 a list of the characters.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;lizziebennet %&amp;gt;%
-  tidytext::unnest_tokens(word, text) %&amp;gt;%
-  anti_join(stop_words, by=&amp;quot;word&amp;quot;) %&amp;gt;%
-  count(word, sort=TRUE) %&amp;gt;%
-  top_n(10)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;lizziebennet &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  tidytext&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;unnest_tokens&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  anti_join&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;stop_words&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; by&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;word&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  count&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; sort&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  top_n&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-## # A tibble: 10 × 2
-##         word     n
-##        &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
-## 1     lizzie   460
-## 2       jane   301
-## 3      darcy   243
-## 4       bing   232
-## 5    collins   220
-## 6      lydia   196
-## 7     bennet   194
-## 8  charlotte   180
-## 9       yeah   178
-## 10      time   176
+&lt;span class=&quot;c1&quot;&gt;## # A tibble: 10 × 2&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;##         word     n&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;##        &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 1     lizzie   460&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 2       jane   301&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 3      darcy   243&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 4       bing   232&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 5    collins   220&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 6      lydia   196&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 7     bennet   194&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 8  charlotte   180&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 9       yeah   178&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 10      time   176&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Not surprisingly, the most common trigrams are from the phrase that begins every episode, &amp;quot;My name is Lizzie Bennet and...&amp;quot;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;lizziebennet %&amp;gt;%
-  tidytext::unnest_tokens(word, text, token=&amp;quot;ngrams&amp;quot;, n=3) %&amp;gt;%
-  count(word, sort=TRUE) %&amp;gt;%
-  top_n(10)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;lizziebennet &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  tidytext&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;unnest_tokens&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; token&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;ngrams&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; n&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  count&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; sort&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  top_n&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-## # A tibble: 10 × 2
-##                 word     n
-##                &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
-## 1         my name is   106
-## 2   is lizzie bennet    96
-## 3     name is lizzie    96
-## 4  lizzie bennet and    84
-## 5       i don&amp;#39;t know    40
-## 6          oh my god    36
-## 7           a lot of    33
-## 8        going to be    31
-## 9       what are you    29
-## 10     mr collins oh    28
+&lt;span class=&quot;c1&quot;&gt;## # A tibble: 10 × 2&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;##                 word     n&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;##                &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 1         my name is   106&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 2   is lizzie bennet    96&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 3     name is lizzie    96&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 4  lizzie bennet and    84&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 5       i don&amp;#39;t know    40&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 6          oh my god    36&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 7           a lot of    33&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 8        going to be    31&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 9       what are you    29&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## 10     mr collins oh    28&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;I was also especially amused by &lt;em&gt;So good to see you!&lt;/em&gt; and &lt;em&gt;THE MOST AWKWARD DANCE EVER&lt;/em&gt; being in the Top 10 5-grams.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;## # A tibble: 12 × 2
@@ -246,24 +246,24 @@ a list of the characters.&lt;/p&gt;
 &lt;p&gt;I&amp;#39;ve chosen to use the Bing lexicon (because of Bing Lee, get it?). In
 Tidydata sentiment analysis is easy because you just join the lexicon
 against your tokenzied words.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;bing &amp;lt;- sentiments %&amp;gt;%
-        filter(lexicon == &amp;quot;bing&amp;quot;) %&amp;gt;%
-        select(-score)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;bing &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; sentiments &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+        filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;lexicon &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;bing&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+        select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;score&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-lbwordcount &amp;lt;- lizziebennet %&amp;gt;%
-  tidytext::unnest_tokens(word, text) %&amp;gt;%
-  anti_join(stop_words) %&amp;gt;%
-  count(title)
+lbwordcount &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; lizziebennet &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  tidytext&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;unnest_tokens&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  anti_join&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;stop_words&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  count&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-lbsentiment &amp;lt;- lizziebennet %&amp;gt;%
-  tidytext::unnest_tokens(word, text) %&amp;gt;%
-  anti_join(stop_words) %&amp;gt;%
-  inner_join(bing) %&amp;gt;% 
-  count(title, index=ep_num, sentiment) %&amp;gt;% 
-  spread(sentiment, n, fill = 0) %&amp;gt;% 
-  left_join(lbwordcount) %&amp;gt;%
-  mutate(sentiment = positive - negative,
-         sentiment = sentiment / n)  
+lbsentiment &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; lizziebennet &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  tidytext&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;unnest_tokens&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  anti_join&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;stop_words&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  inner_join&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;bing&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; 
+  count&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; index&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ep_num&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; sentiment&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; 
+  spread&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;sentiment&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; n&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; fill &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; 
+  left_join&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;lbwordcount&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;sentiment &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; positive &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; negative&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         sentiment &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; sentiment &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; n&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Most positive sentiment episodes:&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;## # A tibble: 5 × 2
