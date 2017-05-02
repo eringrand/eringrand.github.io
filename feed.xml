@@ -112,7 +112,7 @@ getVideos &amp;lt;- function(vid_info){
   vid_ids &amp;lt;- map(vids$items, &amp;quot;contentDetails&amp;quot;) %&amp;gt;%
     map(&amp;quot;videoId&amp;quot;)  %&amp;gt;%
     unlist()
-  nextPageToken = ifelse(!is.null(vids$nextPageToken), vids$nextPageToken, NA)
+  nextPageToken &amp;lt;- ifelse(!is.null(vids$nextPageToken), vids$nextPageToken, NA)
   vid_info_new &amp;lt;- tibble(ids = vid_ids, page = nextPageToken)
   return(vid_info %&amp;gt;% bind_rows(vid_info_new) )
 }
@@ -142,7 +142,8 @@ getText &amp;lt;- function(id){
   return(text) 
 }
 
-text &amp;lt;- map_df(vid_ids, getText) %&amp;gt;% set_names(c(&amp;quot;text&amp;quot;, &amp;quot;vid_id&amp;quot;, &amp;quot;title&amp;quot;))
+text &amp;lt;- map_df(vid_ids, getText) %&amp;gt;% 
+  set_names(c(&amp;quot;text&amp;quot;, &amp;quot;vid_id&amp;quot;, &amp;quot;title&amp;quot;))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;I don&amp;#39;t actually want to refer to each video by it&amp;#39;s full title, so I do
 some data munching to get each episode&amp;#39;s number (1-100). Notice, the 10
