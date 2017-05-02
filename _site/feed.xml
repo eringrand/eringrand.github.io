@@ -1,0 +1,933 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Erin Grand</title>
+    <description>Interested in data science and education</description>
+    <link>http://eringrand.github.io</link>
+    <atom:link href="http://eringrand.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>Text Analysis of The Lizzie Bennet Diaries</title>
+        <description>&lt;p&gt;Inspired by &lt;a href=&quot;http://juliasilge.com/&quot;&gt;Julia&amp;#39;s Silge&amp;#39;s&lt;/a&gt; recent talk on
+&lt;a href=&quot;http://tidytextmining.com/&quot;&gt;Tidytext&lt;/a&gt; as part of &lt;a href=&quot;https://open.nasa.gov/explore/datanauts/&quot;&gt;NASA
+Datanauts&lt;/a&gt;, and her blog
+posts, I decided to try my hand at some text analysis. Julia&amp;#39;s examples
+focus on the works of Jane Austen. As Jane Austen has been adapted so
+many time, I decided to &amp;quot;adapt&amp;quot; Julia&amp;#39;s talk for the modern works of
+Austen&amp;#39;s book Pride and Prejudice - specifically the Lizzie Bennet Diaries.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.pemberleydigital.com/wp-content/uploads/2012/04/LBD-FacebookCover-Emmy.png&quot; alt=&quot;&quot;&gt;
+&lt;a href=&quot;http://www.pemberleydigital.com/the-lizzie-bennet-diaries/&quot;&gt;Image source: Pemberly Digital&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;The Lizzie Bennet Diaries&lt;/h1&gt;
+
+&lt;p&gt;The &lt;a href=&quot;http://www.pemberleydigital.com/the-lizzie-bennet-diaries/&quot;&gt;Lizzie Bennet
+Diaries&lt;/a&gt; is
+a modern adaptation of Jane Austen&amp;#39;s Pride and Prejudice for YouTube.
+The story is told through a series of Vlogs by Lizzie Bennet as part of
+a school project. The series, created by Hank Green and Bernie Su, first
+aired on April 9, 2012, making this year the &lt;strong&gt;5th Anniversary&lt;/strong&gt; of the
+series! Altogether, the series filmed more than 100 video episodes with
+over 9.5 hours of video making it the longest adaption of Pride and
+Prejudice to date.&lt;/p&gt;
+
+&lt;p&gt;Along with the main LBD channel, there are also some supporting
+channels. These allow others characters to tell parts of the story that
+Lizzie doesn&amp;#39;t take part in. For example, Lydia&amp;#39;s Vlogs include the
+story on how she meets George Wickham and their budding relationship.
+While not required viewing, these extra videos help round out the
+experience.&lt;/p&gt;
+
+&lt;p&gt;Since the series ended, 2 books have come out from the creators and
+writers of the original videos: one that follows the videos but adds
+some more detail to Lizzie&amp;#39;s life, and one that focuses on Lydia&amp;#39;s story
+after the series ends.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/10329014_10202570761053579_3130716185504613915_n.jpg?oh=d6dce9e54a81d5d7864d68dfa2f6269c&amp;amp;oe=596C631F&quot; alt=&quot;&quot;&gt;
+The Secret Diary of Lizzie Bennet, signed by most of the cast and
+writers&lt;/p&gt;
+
+&lt;p&gt;In honor of LBD&amp;#39;s 5th Anniversary, let&amp;#39;s do some LBD text analysis!
+&lt;strong&gt;Happy Anniversary LBD!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://media3.giphy.com/media/10MjSRjJxjc6XK/giphy-downsized.gif&quot; alt=&quot;celebration+lizzie+bennet&quot;&gt;&lt;br&gt;
+&lt;a href=&quot;http://elizabethgillies.tumblr.com/post/44897897466&quot;&gt;Source link&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;Analysis&lt;/h1&gt;
+
+&lt;h2&gt;Gathering Data&lt;/h2&gt;
+
+&lt;p&gt;The first part of this analysis is grabbing all the text from YouTube.
+To access the API, I use the &lt;a href=&quot;https://soodoku.github.io/tuber/&quot;&gt;&lt;code&gt;tuber&lt;/code&gt;&lt;/a&gt;
+package by Gaurav Sood.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(tidyverse)
+library(tuber)
+
+yt_oauth(app_id, app_password)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The fist step was to find the channel id to access the LBD playlist. I
+do a quick search for &lt;code&gt;lizziebennet&lt;/code&gt; to find some videos that I know are
+part of the series.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;search &amp;lt;- yt_search(&amp;quot;lizziebennet&amp;quot;)[1:5, ] 
+search %&amp;gt;% select(title, channelId)
+
+##                                                       title
+## 1                         My Name is Lizzie Bennet  - Ep: 1
+## 2 The Lizzie Bennet Diaries - Episódio 98 (LEGENDADO PT-BR)
+## 3                                      Yeah I Know - Ep: 61
+## 4                                 Introducing Lizzie Bennet
+## 5                                  The Lizzie Trap - Ep: 78
+##                  channelId
+## 1 UCXfbQAimgtbk4RAUHtIAUww
+## 2 UCfhdE-vIhW9GD0eGdd300ag
+## 3 UCXfbQAimgtbk4RAUHtIAUww
+## 4 UCGaVdbSav8xWuFWTadK6loA
+## 5 UCXfbQAimgtbk4RAUHtIAUww
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;With the channel ID in hand, I can now access the channel&amp;#39;s resources to
+find the playlist ID, which I will use to access all the videos in that
+playlist. &lt;code&gt;list_channel_resources&lt;/code&gt; for &lt;code&gt;tuber&lt;/code&gt; creates a list of channel
+attributes and buried in that list in the playlist ID.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;# Channel Information
+a &amp;lt;- list_channel_resources(filter = c(channel_id=&amp;quot;UCXfbQAimgtbk4RAUHtIAUww&amp;quot;), part=&amp;quot;contentDetails&amp;quot;)
+
+# Uploaded playlists:
+playlist_id &amp;lt;- a$items[[1]]$contentDetails$relatedPlaylists$uploads
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The YouTube API atomically pages videos so the max you get per page is
+50. I know I need more than that, so I created a function that I can use
+recursively to get all the videos. (This code is not a simple way of
+doing what I need it to, but it works. I would love any comments on how
+to clean it up.)&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;# Get videos on the playlist
+vids &amp;lt;- get_playlist_items(filter= c(playlist_id=playlist_id), max_results = 50) 
+  vid_ids &amp;lt;- map(vids$items, &amp;quot;contentDetails&amp;quot;) %&amp;gt;%
+  map(&amp;quot;videoId&amp;quot;)  %&amp;gt;%
+  unlist()
+vid_info &amp;lt;- tibble(ids = vid_ids, page = vids$nextPageToken)
+
+getVideos &amp;lt;- function(vid_info){
+  pageToken &amp;lt;- vid_info$page[length(vid_info$page)]
+  vids &amp;lt;- get_playlist_items(filter= c(playlist_id=playlist_id), page_token = pageToken)
+  vid_ids &amp;lt;- map(vids$items, &amp;quot;contentDetails&amp;quot;) %&amp;gt;%
+    map(&amp;quot;videoId&amp;quot;)  %&amp;gt;%
+    unlist()
+  nextPageToken = ifelse(!is.null(vids$nextPageToken), vids$nextPageToken, NA)
+  vid_info_new &amp;lt;- tibble(ids = vid_ids, page = nextPageToken)
+  return(vid_info %&amp;gt;% bind_rows(vid_info_new) )
+}
+
+vid_info &amp;lt;- getVideos(vid_info)
+vid_info &amp;lt;- getVideos(vid_info)
+
+# check that I have all 112 videos
+nrow(vid_info)
+
+## [1] 112
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now that I have a list of video IDs, I can use &lt;code&gt;get_captions&lt;/code&gt; to access
+the text of the videos. I also use &lt;code&gt;xmlTreeParse&lt;/code&gt; and &lt;code&gt;xmlToList&lt;/code&gt; to
+covert the caption into into an easily accessible lines of text. I put
+the text, video ID, and video title in a tibble for use in tidydata.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(XML)
+
+getText &amp;lt;- function(id){
+  x &amp;lt;- get_captions(id, lang = &amp;quot;en&amp;quot;)
+  title &amp;lt;- get_video_details(id)$title
+  a &amp;lt;- xmlTreeParse(x)
+  text &amp;lt;- a$doc$children$transcript
+  text &amp;lt;- xmlToList(text, simplify = TRUE, addAttributes = FALSE) %&amp;gt;% 
+    tibble() %&amp;gt;%
+    mutate( id = id, title = title)
+  return(text) 
+}
+
+text &amp;lt;- map_df(vid_ids, getText) %&amp;gt;% set_names(c(&amp;quot;text&amp;quot;, &amp;quot;vid_id&amp;quot;, &amp;quot;title&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I don&amp;#39;t actually want to refer to each video by it&amp;#39;s full title, so I do
+some data munching to get each episode&amp;#39;s number (1-100). Notice, the 10
+Q&amp;amp;A videos do not get a episode number assigned to them. For the sake of
+this analysis, I&amp;#39;ve decided to only work with the main 100 episodes.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;titles &amp;lt;- text %&amp;gt;%
+  distinct(title) %&amp;gt;%
+  mutate(title = ifelse(title == &amp;quot;Question and Answers #3 (ft. Caroline Lee)&amp;quot;, &amp;quot;Questions and Answers #3 (ft. Caroline Lee)&amp;quot;, title),
+         ep_num = gsub(&amp;quot;[- .)(+!&amp;#39;,/]|[a-zA-Z]*:?&amp;quot;,&amp;quot;&amp;quot;, title),
+         ep_num = ifelse(title == &amp;quot;2 + 1 - Ep: 73&amp;quot;, 73, ep_num),
+         ep_num = ifelse(title == &amp;quot;25 Douchebags and a Gentleman - Ep:18&amp;quot;, 18, ep_num),
+         ep_num = ifelse(title == &amp;quot;Bing Lee and His 500 Teenage Prostitutes - Ep: 4&amp;quot;, 4, ep_num),
+         ep_num = parse_number(ep.num)
+         ) %&amp;gt;%
+  filter(!grepl(&amp;quot;Questions and Answers&amp;quot;, title)) %&amp;gt;%
+  arrange(ep_num) 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;One of the problems with using captions, is the messy text. I used a
+simple set of &lt;code&gt;gsub&lt;/code&gt; to transform obvious punctuation marks into their
+English counterparts. I also pulled out the character SPEAKING the words
+from the text itself. I left this column alone in the dataset, but might
+one day go back and focus an analysis on speaking characters.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(tidytext)
+library(stringr)
+
+lizziebennet &amp;lt;- text %&amp;gt;%
+  left_join(titles, by=&amp;quot;title&amp;quot;) %&amp;gt;%
+  filter(!is.na(ep_num)) %&amp;gt;%
+  arrange(ep_num) %&amp;gt;%
+  mutate(linenumber = row_number()) %&amp;gt;%
+  mutate(text = gsub(&amp;quot;&amp;amp;#39;&amp;quot;, &amp;quot;&amp;#39;&amp;quot;, text),
+         text = gsub(&amp;quot;&amp;amp;quot;&amp;quot;, &amp;#39;\&amp;quot;&amp;#39;, text),
+         text = gsub(&amp;quot;&amp;amp;amp;&amp;quot;, &amp;quot;and&amp;quot;, text),
+         character = str_extract(text, &amp;quot;^[a-zA-Z]*:&amp;quot;),
+         text = sub(&amp;quot;^[a-zA-Z]*:&amp;quot;, &amp;quot;&amp;quot;, text)
+         ) %&amp;gt;%
+  arrange(ep_num, linenumber)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Okay, so now the text is &lt;em&gt;mostly&lt;/em&gt; in place. The first thing I did was
+look at word counts. The most common words are not surprising, it&amp;#39;s just
+a list of the characters.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;lizziebennet %&amp;gt;%
+  tidytext::unnest_tokens(word, text) %&amp;gt;%
+  anti_join(stop_words, by=&amp;quot;word&amp;quot;) %&amp;gt;%
+  count(word, sort=TRUE) %&amp;gt;%
+  top_n(10)
+
+## # A tibble: 10 × 2
+##         word     n
+##        &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
+## 1     lizzie   460
+## 2       jane   301
+## 3      darcy   243
+## 4       bing   232
+## 5    collins   220
+## 6      lydia   196
+## 7     bennet   194
+## 8  charlotte   180
+## 9       yeah   178
+## 10      time   176
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Not surprisingly, the most common trigrams are from the phrase, &amp;quot;My name is Lizzie Bennet and...&amp;quot;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;lizziebennet %&amp;gt;%
+  tidytext::unnest_tokens(word, text, token=&amp;quot;ngrams&amp;quot;, n=3) %&amp;gt;%
+  count(word, sort=TRUE) %&amp;gt;%
+  top_n(10)
+
+## # A tibble: 10 × 2
+##                 word     n
+##                &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
+## 1         my name is   106
+## 2   is lizzie bennet    96
+## 3     name is lizzie    96
+## 4  lizzie bennet and    84
+## 5       i don&amp;#39;t know    40
+## 6          oh my god    36
+## 7           a lot of    33
+## 8        going to be    31
+## 9       what are you    29
+## 10     mr collins oh    28
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I was also especially amused by &lt;em&gt;So good to see you!&lt;/em&gt; and &lt;em&gt;THE MOST AWKWARD DANCE EVER&lt;/em&gt; being in the Top 10 5-grams.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;## # A tibble: 12 × 2
+##                           word     n
+##                          &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
+## 1     my name is lizzie bennet    95
+## 2    name is lizzie bennet and    83
+## 3       is lizzie bennet and i    19
+## 4    is lizzie bennet and this    14
+## 5    lizzie bennet and this is    11
+## 6           so good to see you     9
+## 7       had nothing to do with     5
+## 8     is lizzie bennet and i&amp;#39;m     5
+## 9       lizzie bennet and i am     5
+## 10 the most awkward dance ever     5
+## 11     what are you doing here     5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Sentiment Analysis&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#39;ve chosen to use the Bing lexicon (because of Bing Lee, get it?). In
+Tidydata sentiment analysis is easy because you just join the lexicon
+against your tokenzied words.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;bing &amp;lt;- sentiments %&amp;gt;%
+        filter(lexicon == &amp;quot;bing&amp;quot;) %&amp;gt;%
+        select(-score)
+
+lbwordcount &amp;lt;- lizziebennet %&amp;gt;%
+  tidytext::unnest_tokens(word, text) %&amp;gt;%
+  anti_join(stop_words) %&amp;gt;%
+  count(title)
+
+lbsentiment &amp;lt;- lizziebennet %&amp;gt;%
+  tidytext::unnest_tokens(word, text) %&amp;gt;%
+  anti_join(stop_words) %&amp;gt;%
+  inner_join(bing) %&amp;gt;% 
+  count(title, index=ep_num, sentiment) %&amp;gt;% 
+  spread(sentiment, n, fill = 0) %&amp;gt;% 
+  left_join(lbwordcount) %&amp;gt;%
+  mutate(sentiment = positive - negative,
+         sentiment = sentiment / n)  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Most positive sentiment episodes:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;## # A tibble: 5 × 2
+##                                       title  sentiment
+##                                       &amp;lt;chr&amp;gt;      &amp;lt;dbl&amp;gt;
+## 1                    Care Packages - Ep: 58 0.09623431
+## 2                         The End - Ep: 100 0.09375000
+## 3                   Jane Chimes In - Ep: 12 0.09132420
+## 4 My Parents: Opposingly Supportive - Ep: 3 0.08415842
+## 5      Wishing Something Universal - Ep: 76 0.08018868
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Most negative sentiment episodes:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;## # A tibble: 5 × 2
+##                            title   sentiment
+##                            &amp;lt;chr&amp;gt;       &amp;lt;dbl&amp;gt;
+## 1   Turn About the Room - Ep: 32 -0.15217391
+## 2        How About That - Ep: 91 -0.09937888
+## 3          Staff Spirit - Ep: 59 -0.09745763
+## 4 How to Hold a Grudge  - Ep: 74 -0.09352518
+## 5      Meeting Bing Lee - Ep: 28 -0.07614213
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The next step was to visualize this in a way where you can look at the sentiment over the episodes. &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(viridis)
+theme_set(theme_bw()) # a theme with a white background
+
+ggplot(lbsentiment, aes(x=index, sentiment, fill=as.factor(index))) +
+        geom_bar(stat = &amp;quot;identity&amp;quot;, show.legend = FALSE) +
+        theme_minimal(base_size = 13) +
+        geom_text(data=plot_text, aes(x=index, y=sentiment, label=index), size=3.5) + 
+        labs(title = &amp;quot;Sentiment in Lizzie Bennet Diaries&amp;quot;,
+             y = &amp;quot;Sentiment&amp;quot;
+             ) +
+        scale_fill_viridis(end = 0.75, discrete=TRUE, direction = -1) +
+        scale_x_discrete(expand=c(0.02,0)) +
+        theme(strip.text=element_text(hjust=0)) +
+        theme(strip.text=element_text(face = &amp;quot;italic&amp;quot;)) +
+        theme(axis.title.x=element_blank()) +
+        theme(axis.ticks.x=element_blank()) +
+        theme(axis.text.x=element_blank())
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/images/lizziebennet_textmining_files/figure-markdown_github/unnamed-chunk-17-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;Julia&amp;#39;s sentiment analysis of the original text is much more positive
+than my LBD analysis, with two negative portions relating to Darcy
+proposing to Elizabeth and Lydia running away with Wickham. I had
+expected a similar &amp;quot;Wickham&amp;quot; negative spike in this plot, and while the section of
+Wickham related episodes (Ep 84 to Ep 89) is surely negative it&amp;#39;s not
+more negative than some of the introductory episodes. &lt;/p&gt;
+
+&lt;p&gt;One could argue, that since most of the Lydia - Wickham story line happens off screen and in
+Lydia&amp;#39;s blogs, that would explain that lack of a clear negative spike in the Wickham episodes. &lt;/p&gt;
+
+&lt;h2&gt;More sentiment&lt;/h2&gt;
+
+&lt;p&gt;Continuing the analysis, I wanted to look at which words were causing
+the largest effect on the overall sentiment.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;bing_word_counts %&amp;gt;%
+  group_by(sentiment) %&amp;gt;%
+  top_n(10) %&amp;gt;%
+  mutate(word = reorder(word, n)) %&amp;gt;%
+  ggplot(aes(word, n, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = &amp;quot;free_y&amp;quot;) +
+  labs(y = &amp;quot;Contribution to sentiment&amp;quot;,
+       x = NULL) +
+  coord_flip()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/images/lizziebennet_textmining_files/figure-markdown_strict/unnamed-chunk-18-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;Given that this is a modern adaption, it&amp;#39;s interesting that much like
+the analysis done on the original &amp;quot;miss&amp;quot; is the top contribution to
+negative sentiment. In the original text I would assume a higher count
+of &amp;quot;Miss Bennet&amp;#39;s&amp;quot; to the modernized version. However, Lizzie does talk
+about you she&amp;#39;ll miss Charlotte, or she misses her home... etc, so it&amp;#39;s
+not too surprising to see it have a considerable contribution here.&lt;/p&gt;
+
+&lt;p&gt;I did a bit of an investigation into this with bigrams.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;lizziebennet %&amp;gt;%
+  tidytext::unnest_tokens(bigram, text, token=&amp;quot;ngrams&amp;quot;, n=2) %&amp;gt;%
+  separate(bigram, c(&amp;quot;word1&amp;quot;, &amp;quot;word2&amp;quot;), sep = &amp;quot; &amp;quot;) %&amp;gt;%
+  filter(word1 == &amp;quot;miss&amp;quot;) %&amp;gt;%
+  mutate(miss_in_name = ifelse(word2 %in% c(&amp;quot;bennet&amp;quot;, &amp;quot;lu&amp;quot;), &amp;quot;Yes&amp;quot;, &amp;quot;No&amp;quot;)) %&amp;gt;%
+  count(miss_in_name)
+
+## # A tibble: 2 × 2
+##   miss_in_name     n
+##          &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
+## 1           No    26
+## 2          Yes    27
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And oddly enough, the use of the word &amp;quot;miss&amp;quot; is about half and half
+between &amp;quot;I miss [person/thing]&amp;quot; and &amp;quot;Miss Bennet&amp;quot; type phrases. Interesting! (Anyone want to guess who refers to Lizzie as Miss Bennet the most? Unsurprisingly, it&amp;#39;s Ricky Collins.)&lt;/p&gt;
+
+&lt;h2&gt;More with Bigrams&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;bigrams_separated &amp;lt;- lizziebennet %&amp;gt;%
+  tidytext::unnest_tokens(bigram, text, token=&amp;quot;ngrams&amp;quot;, n=2) %&amp;gt;%
+  separate(bigram, c(&amp;quot;word1&amp;quot;, &amp;quot;word2&amp;quot;), sep = &amp;quot; &amp;quot;) %&amp;gt;%
+  filter(!word1 %in% stop_words$word, 
+         !word2 %in% stop_words$word) %&amp;gt;%
+  count(word1, word2, sort = TRUE)
+
+bigrams_separated %&amp;gt;% 
+  ungroup() %&amp;gt;%
+  top_n(10) 
+
+## # A tibble: 11 × 3
+##      word1   word2     n
+##      &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt;
+## 1   lizzie  bennet   132
+## 2     bing     lee    43
+## 3   george wickham    24
+## 4      hey  lizzie    24
+## 5       de  bourgh    22
+## 6    ricky collins    21
+## 7      los angeles    20
+## 8     miss  bennet    19
+## 9     tour  leader    18
+## 10   video    blog    17
+## 11 william   darcy    17
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Not surprisingly, the common bigrams are first and last names of
+characters, but there&amp;#39;s also some fun other popular bigrams with &amp;quot;tour
+leader&amp;quot; and &amp;quot;video blog.&amp;quot; I guess &lt;em&gt;vlog&lt;/em&gt; wasn&amp;#39;t super popular to use on
+it&amp;#39;s own yet.&lt;/p&gt;
+
+&lt;h2&gt;Network of Words&lt;/h2&gt;
+
+&lt;p&gt;One of my favorite part of tidytext is the example on making a bigram
+network. It&amp;#39;s just so fun!&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(igraph)
+library(ggraph)
+
+set.seed(42)
+
+bigrams_separated %&amp;gt;%
+  filter(n &amp;gt; 5) %&amp;gt;%
+  graph_from_data_frame() %&amp;gt;%
+  ggraph(layout = &amp;quot;fr&amp;quot;) +
+  geom_edge_link() +
+  geom_node_point() +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1) +
+  theme(axis.title.x=element_blank()) +
+  theme(axis.ticks.x=element_blank()) +
+  theme(axis.text.x=element_blank()) +
+  theme(axis.title.y=element_blank()) +
+  theme(axis.ticks.y=element_blank()) +
+  theme(axis.text.y=element_blank())
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/images/lizziebennet_textmining_files/figure-markdown_github/unnamed-chunk-21-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;I especially enjoy the Bennet sister cluster in the left corner.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;I leave you with this last picture.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/1908336_10202570761373587_7013966634375610561_n.jpg?oh=1a5119c2ae93bbd9b01060523cc7e43c&amp;amp;oe=59733FEF&quot; alt=&quot;&quot;&gt;
+Some of cast of Lizzie Bennet Diaries and me. Vidcon 2014&lt;/p&gt;
+</description>
+        <pubDate>Sun, 30 Apr 2017 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/lizziebennet_textmining/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/lizziebennet_textmining/</guid>
+      </item>
+    
+      <item>
+        <title>My Internship With Crisis Text Line</title>
+        <description>&lt;p&gt;At the end of spring semester, I sent in my application to &lt;a href=&quot;https://www.dosomething.org/&quot;&gt;DoSomething.org&lt;/a&gt; for their Data Intern position. I found out about the position through a communication that started over Github, and thought it sounded interesting. I sent in my resume and cover letter and waited to see what would happen. I made it through to the next rounds. The last step was a phone interview where I gave a quick presentation on my analysis on some data, and talked about what the internship was about and what I was interested in. I mentioned that what brought me to Data Science was teaching, and how I hoped to be involved with research and education technology in the future. I didn&amp;#39;t get the job. &lt;/p&gt;
+
+&lt;p&gt;Instead, I got an email directing me to a Data Intern position available at &lt;a href=&quot;http://crisistextline.org&quot;&gt;Crisis Text Line&lt;/a&gt;, where I could work on data related to training crisis counselors. After an interview with Bob Filbin, Chief Data Scientist at CTL, I accepted the internship, and it was the most amazing job I&amp;#39;ve ever had (and I still work for NASA). &lt;/p&gt;
+
+&lt;p&gt;Crisis Text Line was born out of DosSomething.org, and the two companies share an office space. Crisis Text Line does two things: (1) provides free, 24/7 emotional support to people in crisis, by text. And, (2) uses the data to improve the service and the crisis space as a whole. As the Data Intern, I worked in providing data and metrics for products to make the service better. More specifically, I focused in two areas (1) getting more people through the volunteer application and (2) increasing the lifetime number of conversations our counselors take. I used hard numbers and ethnographic research such as interviews and observations to determine user needs and then suggested solutions to solve them. Over the 10 weeks, I successfully researched the major pain points in our application, determined the best way to remove them, wrote a new application, and launched it!&lt;/p&gt;
+
+&lt;p&gt;The experience I have gained from this internship has been invaluable to my career and to my person. I&amp;#39;ve gotten to work with the most wonderful people, and spent every day feeling I was doing meaningful work. &lt;/p&gt;
+
+&lt;p&gt;In addition to the many wonderful experiences I was given through this internship, I also made amazing friends with the DoSomething.org and Crisis Text Line interns. The interns at both DS and CTL shared the same set of middle tables, ate together, had meetings together... etc. Getting to know these folks was my absolute favorite part of the intership, and I miss them dearly.  To quote &lt;a href=&quot;http://blog.thekelvinliu.com/post/126196358593/internship-complete&quot;&gt;Kelvin&lt;/a&gt; (the data intern at DS) &amp;quot;I don’t think I’ve ever met people so interesting, relatable, and devoted to social change. As great as the professional growth provided by this internship was, these people were really the highlight.&amp;quot; &lt;/p&gt;
+
+&lt;p&gt;With the summer having ended, we&amp;#39;ve moved back to school, or other internships. Some have remained in the city (and we still hang out), but others I&amp;#39;ll only see over the internet. That doesn&amp;#39;t change the fact that these people are amazing, and I can&amp;#39;t wait to spend time with them again. &lt;/p&gt;
+
+&lt;p&gt;There were rough spots at the beginning of the internship as I was trying to get a hold of the flow of a tech based not-for-profit start-up, but I got there quick enough. At a regular internship, interns are given jobs that managers may not want to do because they are time consuming or boring. At Crisis Text Line, interns were treated (and acted) like staff. We were given important projects with lasting effects for the company. I used the chance to dive deep into my projects, working hard to get them done correctly. &lt;/p&gt;
+
+&lt;p&gt;I dived so deep into my work, that I couldn&amp;#39;t be pulled out. Luckily, I don&amp;#39;t have to stop! As of a couple weeks ago, I began my official job with Crisis Text Line as a part-time Data Scientist while I finish my last year of graduate school at Columbia. I feel so lucky to have been given this opportunity to continue working with these amazing people!&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;If you have more questions on Crisis Text Line, and how you can get involved please visit 
+&lt;a href=&quot;http://www.crisistextline.org/join-our-efforts/volunteer/&quot;&gt;crisistextline.org/volunteer&lt;/a&gt;.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Disclaimer: This was written at midnight and has not been spell-checked or grammar-checked. Please excuse all mistakes until further notice when I edit this.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 06 Sep 2015 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/ctlinternship/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/ctlinternship/</guid>
+      </item>
+    
+      <item>
+        <title>What Name Do Grad Students Refer to Their Professors As?</title>
+        <description>&lt;p&gt;At some point this past week, I came to the realization that of the professors I&amp;#39;ve had this year, I&amp;#39;ve only referred to the female professor by her first name in conversation with other students. I wondered if this was indicative of some larger issue, or if it&amp;#39;s just because she&amp;#39;s also our class advisor.&lt;/p&gt;
+
+&lt;p&gt;I put together a quick and dirty survey to see what other students&amp;#39; experiences are, in how they refer to their professors. I posted the survey to twitter and facebook. &lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;I am interested if this indicative of some larger issue, or if it&amp;#39;s just because she&amp;#39;s also our class advisor. (2/?)&lt;/p&gt;&amp;mdash; Erin Grand (@astroeringrand) &lt;a href=&quot;https://twitter.com/astroeringrand/status/600694453649682433&quot;&gt;May 19, 2015&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-conversation=&quot;none&quot; lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;I&amp;#39;ve put together a quick survey to look into it. Please fill it out and/or pass it around! &lt;a href=&quot;http://t.co/N4t3sB57kn&quot;&gt;http://t.co/N4t3sB57kn&lt;/a&gt; (3/?)&lt;/p&gt;&amp;mdash; Erin Grand (@astroeringrand) &lt;a href=&quot;https://twitter.com/astroeringrand/status/600694784940990464&quot;&gt;May 19, 2015&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;In the first 24 hours of the survey being posted to facebook and twitter there were 36 responses. &lt;/p&gt;
+
+&lt;p&gt;I also received lots of great responses outside of the survey online such as:
+&lt;blockquote class=&quot;twitter-tweet&quot; lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;&lt;a href=&quot;https://twitter.com/merrdiff&quot;&gt;@merrdiff&lt;/a&gt; &lt;a href=&quot;https://twitter.com/astroeringrand&quot;&gt;@astroeringrand&lt;/a&gt; I changed how I refer to them once I got into grad school.&lt;/p&gt;&amp;mdash; Laura Mayorga (@mayorgalc) &lt;a href=&quot;https://twitter.com/mayorgalc/status/600705464498659328&quot;&gt;May 19, 2015&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;and&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-conversation=&quot;none&quot; lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;&lt;a href=&quot;https://twitter.com/astroeringrand&quot;&gt;@astroeringrand&lt;/a&gt; I always called them Professor/Dr. Last Name unless they want to be called Professor/Dr. First name.&lt;/p&gt;&amp;mdash; David Hamilton (@D_avidH) &lt;a href=&quot;https://twitter.com/D_avidH/status/600697875400560641&quot;&gt;May 19, 2015&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Due to the end of the school year, and the start of my new internship I haven&amp;#39;t had the time to go through the survey results yet. As soon as I can give the time to this project, I will write an update with the results.&lt;/p&gt;
+
+&lt;p&gt;If you&amp;#39;re interested in going through the data yourself, I&amp;#39;ve made the results public to everyone at &lt;a href=&quot;https://docs.google.com/spreadsheets/d/1ya4_UxgW2oB1YXvE55QXQyEjgZBWpta3pjYujUKl3CQ/pubhtml&quot;&gt;this link&lt;/a&gt;. &lt;/p&gt;
+</description>
+        <pubDate>Fri, 22 May 2015 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/profname/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/profname/</guid>
+      </item>
+    
+      <item>
+        <title>Reading Suggestions from March 2015</title>
+        <description>&lt;h2&gt;Articles and Blog posts&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://arxiv.org/pdf/1503.01104v2.pdf&quot;&gt;The Epidemiology and Statistical Mechanics of Zombies&lt;/a&gt;
+by Alexander A. Alemi, Matthew Bierbaum, Christopher R. Myers, James P. Sethna
+Laboratory of Atomic and Solid State Physics, Cornell University, Ithaca, NY 14853
+A research paper about zombies!&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://technology.stitchfix.com/blog/2015/03/17/grammar-of-data-science/?utm_content=buffer2b99d&amp;amp;utm_medium=social&amp;amp;utm_source=twitter.com&amp;amp;utm_campaign=buffer&quot;&gt;The Grammar of Data Science&lt;/a&gt;
+by Deep Ganguli: 
+Another look into using Python vs R as a data scientist from the perspective of a Pandas to dpylr converter. &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.citylab.com/housing/2015/03/why-most-twitter-maps-cant-be-trusted/388586/?utm_source=SFTwitter&quot;&gt;Why Most Twitter Maps Can&amp;#39;t Be Trusted&lt;/a&gt;
+by Aarian Marshall: 
+A look into the perils of drawing information from Twitter maps. 
+Twitter is an easy, cheap way to make social, political, and other claims about from data from the Twitter API.  However, makers of twitter maps aren&amp;#39;t always as representative of the &amp;quot;real world&amp;quot; as we&amp;#39;d like. &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.christianpeccei.com/musicmap/&quot;&gt;Mapping Your Music Collection&lt;/a&gt;
+by Christian Peccei:
+How to make a pretty visualization of similarity measures of your iTunes music collection. &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.improbable.com/2015/03/24/the-physics-of-a-falling-slinky/&quot;&gt;The physics of a falling slinky&lt;/a&gt;
+by Marc Abrahams:
+Slinkies! &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://enterprise.import.io/why-data-science-is-the-fastest-growing-industry-in-tech-right-now/&quot;&gt;Why Data Science Is the Fastest Growing Industry in Tech Right Now&lt;/a&gt;
+Even if employers don&amp;#39;t seem to have a universal defintion of what makes someone a data scientist, it cannot be argued that the field in growing, so much so that it is one of the few fields in which there are more available jobs than applicants. &lt;/p&gt;
+
+&lt;h2&gt;Youtube Videos:&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=jexnhNfOzHg&quot;&gt;Science of that Dress&lt;/a&gt; 
+Remember &amp;quot;the dress&amp;quot; that was everywhere at the beginning of the month? If you are still wondering why you see the dress one way and not another, watch this SciShow episode to see why people can see the thing thing differently. &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=LKnqECcg6Gw&quot;&gt;Computer Colors&lt;/a&gt;
+Colors on computers don&amp;#39;t work the same way we&amp;#39;re taught in 5th grade art class. With so much of our data/results/pictures being shown widely on computers, it&amp;#39;s important to understand how it all works. &lt;/p&gt;
+</description>
+        <pubDate>Wed, 01 Apr 2015 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/suggestionsfrommarch/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/suggestionsfrommarch/</guid>
+      </item>
+    
+      <item>
+        <title>Suggested Links from Spring and Summer 2015</title>
+        <description>&lt;h2&gt;Articles:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;This article is about a year old, but I still find it fascinating. 
+&lt;a href=&quot;http://www.educause.edu/ero/article/what-makes-online-instructional-video-compelling?utm_source=Informz&amp;amp;utm_medium=Email+marketing&amp;amp;utm_campaign=EDUCAUSE&quot;&gt;What Makes Online Instructional Video Compelling&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://www.authorea.com/users/23/articles/8762/_show_article&quot;&gt;The &amp;quot;Paper&amp;quot; of the Future&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://www.analyticsvidhya.com/blog/2015/07/github-special-data-scientists-to-follow-best-tutorials/&quot;&gt;Data Science Tutorials&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Tutorials:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://sqlschool.modeanalytics.com/&quot;&gt;Learn SQL&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Fun Applications:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://recode.net/2015/04/20/textio-spell-checks-for-gender-bias/&quot;&gt;Textio: Spell Check for Gender Bias&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Cool GitHub Projects:&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/gpoore/pythontex&quot;&gt;Pythontex&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 01 Apr 2015 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/aprilreading/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/aprilreading/</guid>
+      </item>
+    
+      <item>
+        <title>Graphics and Plots in Science</title>
+        <description>&lt;p&gt;Graphics and visualizations are used for promotion, advertisement to promote a product or idea. In science, graphics tend to fall into one of two categories: for use in education or a science journal.  For information on what makes a good educational graphic, or a teaching tool, I&amp;#39;ve written a piece earlier on this blog &lt;a href=&quot;http://eringrand.github.io/educationgraphics/&quot;&gt;here&lt;/a&gt;. 
+In the academic articles, graphics hold a special role in telling a compelling story of the data and results, however, the editing emphasis is often placed much more on text than making interesting and understable science graphics.  &lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;DISCLAIMER: I am coming from an astronomy and physics background, and am going to discuss problems found within these contexts.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3&gt;Academic Article Graphics&lt;/h3&gt;
+
+&lt;p&gt;We think of academics and especially science as being told through plots and graphs. In fact, Tufte explains that the history graphics begins with time series plots of the planets and the sun in the night sky. 
+Now a days, science articles use graphics to tell a story. We let the data speak for itself
+by representing it in a reproducible graphic. &lt;/p&gt;
+
+&lt;p&gt;In my time in academia (in physics and astronomy) I&amp;#39;ve come across several common problems such as: &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Missing or incorrect error bars (especially on log-log plots)&lt;/li&gt;
+&lt;li&gt;Missing or incorrect ticks marks and axis labels&lt;/li&gt;
+&lt;li&gt;Too much text - Keep notes and explanations outside the graphic and in the image caption&lt;/li&gt;
+&lt;li&gt;Overlap of lines or points&lt;/li&gt;
+&lt;li&gt;Wasting space or not using enough of it &lt;/li&gt;
+&lt;li&gt;Plots that should have been tables&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Some of these problems come from trying to show off too much of the data. You want the data to stand out, but you don&amp;#39;t always need to include all of it. This is hard because we spend so much time working with the data that we want to share everything, but the added complexity often takes away from the graph and the point you&amp;#39;re trying to make. &lt;/p&gt;
+
+&lt;p&gt;In the remainder of the blog, I will try to address each of these points and introduce a fast and easy way to correct them. &lt;/p&gt;
+
+&lt;h4&gt;Corrections to common problem with academic graphics:&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Log-log plots with missing or symmetric error bars can be fixed by forcing asymmetric error bars. When there are small errors, the log can show as a negative error, which often means that plot won&amp;#39;t do anything. In Matplotlib the default (for the y axis) is to map all negative values a very small positive one. The code for that is: 
+&lt;code&gt;
+plt.yscale(&amp;#39;log&amp;#39;, nonposx=&amp;#39;clip&amp;#39;)
+&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Tick marks: The defaults for tick marks and labels are often too large, too small, facing the wrong direction or elsewise strange.  In ggplot in R this can be manipulated under theme:&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For example, to make everything expect your points or lines disappear you&amp;#39;d use: &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt; theme(axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        legend.position=&amp;quot;none&amp;quot;,
+        panel.background=element_blank(),
+        panel.border=element_blank(),
+        panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        plot.background=element_blank()) 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Each of these could also be modified to make the text larger or smaller, change the font, rotate the labels...etc.&lt;/p&gt;
+
+&lt;p&gt;To change the direction and size of the tick labels you&amp;#39;d use something like:
+&lt;code&gt;
+theme(axis.text.x  = element_text(angle=90, vjust=0.5, size=16)
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;You can reduce clutter on the graph by using fewer (labeled) tick marks. &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Always remember to label your axes! 
+This is done in python with:&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;import matplotlib.pyplot as plt
+plt.xlabel(&amp;#39;X Label&amp;#39;)
+plt.ylabel(&amp;#39;Y Label&amp;#39;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;or in ggplot2 in R using:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;  labs(title = &amp;quot;Plot Title&amp;quot;) +
+  ylab(&amp;quot;X Label&amp;quot;) +
+  xlab(&amp;quot;Y Label&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;The problem of too many overlapping lines or points can be solved in various ways depending on the data. Sometimes, changing the colors and alpha of the points might be enough. 
+In other cases, it&amp;#39;s best to separate out the information into a table of plots.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For example, below is the orignal plot from my research showing the intensity of different molecules across velocities. The plot places all four molecules on the same graph with a key indicating which is which. In color, this graphic might make more sense, but it is still hard to make out the individual curves. Plus, the key is small and referring back to it is time consuming and annoying.&lt;/p&gt;
+
+&lt;div style=&quot;width:image width px; font-size:80%;text-align:center;&quot;&gt;&lt;img src=&quot;/images/spectrapel.png&quot; alt=&quot;Velocity spectra for the Pelican Pillar.&quot;/&gt;
+&lt;figcaption&gt;Velocity spectra for the Pelican Pillar.&lt;/figcaption&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In fixing the graphic, while also including more information from my other sources,
+I separated out the each of the molecules and sources into a table of spectra. 
+This un-clutters the plot and allows you to more easily visualize trends in the sources. 
+(Notice how the plot is missing axes labels - shame on me!) &lt;/p&gt;
+
+&lt;div style=&quot;width:image width px; font-size:80%;text-align:center;&quot;&gt;&lt;img src=&quot;/images/spectra2.png&quot; alt=&quot;Velocity spectra for the pillars show brightness temperature against velocity in km/s. The spectra were taken in the heads of the pillars at the peak brightness and averaged over a beam size.&quot;/&gt;
+&lt;figcaption&gt;Velocity spectra for the pillars show brightness temperature against velocity in km/s. The spectra were taken in the heads of the pillars at the peak brightness and averaged over a beam size.&lt;/figcaption&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The code for this plot was done in IDL - a language mostly used only by astronomers (after looking at the code, you&amp;#39;ll see why no one else joined in the fun...)
+If you&amp;#39;re interested, you can check it out &lt;a href=&quot;https://github.com/eringrand/idlcodes/blob/master/plotspectra.pro&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For the future, I want to try and remake some of my research plots in R for better practice with R and ggplot2, using something along these lines:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;data %&amp;gt;%
+ggplot(aes(x=vel,y=tb)) + 
+geom_line() + 
+facet_wrap(~pillar)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;In attempts to not waste space, you should examine the size and scale of the axes. This often shows up as a problem when an outlier or two that expand the axes such that much of the plot is empty. In these cases, you can crop the plot to the main data and include an arrow to show where the outlier is. &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Most importantly, don&amp;#39;t display empty plots like &lt;a href=&quot;https://www.biostat.wisc.edu/~kbroman/topten_worstgraphs/wittke_thompson_fig1CD.jpg&quot;&gt;this infamous plot &lt;/a&gt; from Wittke-Thompson JK and Pluzhnikov A, Cox NJ (2005). &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Sometimes, to save room or otherwise, it&amp;#39;s best to display the information in a table format instead of bar graphs. For example, this plot from a science article titled &lt;a href=&quot;http://arxiv.org/abs/1403.3091&quot;&gt;&amp;quot;Studying Gender in Conference Talks -- data from the 223rd meeting of the American Astronomical Society&amp;quot;&lt;/a&gt; shows the large difference in number questions asked by males vs number asked by females, given a male or female chair. 
+This plot displays the most significant finding from the analysis: a strong dependence on session chair gender. Still, this information could have easily been shown in a table instead of a graph.  This would be a useful plot for a presentation on the subject, but not needed in the article.&lt;br&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/chairs_questions.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h3&gt;Color in academic graphics:&lt;/h3&gt;
+
+&lt;p&gt;Color can be a huge issue in scientific articles. This is largely because most journals charge more for printing in color, but will present colored versions of plots in the online versions on the articles. This means that authors need to make sure that they have plots that work well in color and in black and white, which gives way to some graphics which are very hard to read. &lt;/p&gt;
+
+&lt;h4&gt;Common color problems.&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Eye piercing bight colors and/or use of rainbow colors.
+We&amp;#39;ve discussed the problems with the rainbow in class, but as a reminder: 
+the rainbow color scheme includes colors which are hard to see, doesn&amp;#39;t have a universally understood order, artificially exaggerates differences in color while softening the differences between others and (importantly for print) doesn&amp;#39;t convert well to black and white. &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Contrast is one of THE biggest problems I see in academic figures.  Things like cyan or yellow on white, red on blue, navy on black... these cause major problems (and headaches) when reading text or trying to discern between lines. Your plot doesn&amp;#39;t have to be pretty, but it does have to be legible!&lt;/p&gt;
+
+&lt;p&gt;Color in astronomy maps often tags along with Colour-coded image of the molecular cloud&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h3&gt;Graph Critique and Fix&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/bad.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;The image from an article titled &amp;quot;MOLECULAR CLOUDS IN THE NORTH AMERICAN AND PELICAN NEBULAE: STRUCTURES&amp;quot; by Shaobo Zhang, Ye Xu and Ji Yang,
+displays the locations of clumps, as well as their velocity and size. From the image caption &amp;quot;The circles indicate the clump positions on the integrated intensity map of 13 CO. The colors of the circles represent the velocities the clumps, while the circles are scaled according to the sizes of clumps.&amp;quot; &lt;/p&gt;
+
+&lt;p&gt;This is a perfect example of trying to show too much in one plot such that it&amp;#39;s no longer understandable. A different color scheme would help the eye more easily see the trends in velocity. I would also like to see the circles filled in, and the background map a bit darker. Also, The graph extends too far up so that the color legend is clear, but leaves too much empty space in the graph. The axes and tick marks could also be smaller. &lt;/p&gt;
+
+&lt;p&gt;I didn&amp;#39;t have their data, but I remade a similar type of plot pulling points, velocities and sizes from normal distributions (see code below). 
+&lt;img src=&quot;http://eringrand.github.io/images/Rplot.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;This image fixes some of the problem by using GGPLOT default color scheme, which keeps the hue in blue and changes the brightness. I&amp;#39;ve filled in the circle in make the difference in sizes more clear, and I made sure that the circles are scaled by area, as to not conflate radius and area. &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(ggplot2) 
+
+xvar &amp;lt;- sample(-100:100,100,replace=T)
+yvar &amp;lt;- sample(-100:100,100,replace=T)
+v &amp;lt;-  sort(rnorm(100,0,1))
+s &amp;lt;- abs(rnorm(100))
+
+data &amp;lt;- data.frame(xvar,yvar,v,s)
+data &amp;lt;- data[order(data$v),]
+data$x &amp;lt;- rnorm(100,0,50)
+data$y &amp;lt;- rnorm(100,0,50)
+
+ggplot(data,aes(x=x,y=y), legend=FALSE)+
+  stat_density2d(aes(alpha=..level..), geom=&amp;quot;polygon&amp;quot;, show_guide=FALSE) +
+  scale_alpha_continuous(limits=c(-2,10), breaks=seq(0,1,by=1)) + 
+  geom_point(aes(x=xvar, y=yvar, size=s, color=v), alpha=0.8, show_guide=FALSE) + 
+  scale_colour_gradient(limits=c(-4,4)) +
+  scale_size_area(max_size=10)   + 
+  theme_bw() + 
+  theme(legend.title=element_blank()) 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;hr&gt;
+
+&lt;h3&gt;Conclusions:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Always remember to think about the story your telling and how your graphic fits in. &lt;/li&gt;
+&lt;li&gt;Label your plots correctly, but don&amp;#39;t clog the plot with text. Keep your labels short, and rotate them if needed to to be read. &lt;/li&gt;
+&lt;li&gt;If displaying all of your data looks cluttered, think about if you really need to show all of it, and if so if there&amp;#39;s a better way to display it. &lt;/li&gt;
+&lt;li&gt;Watch out for color! We like pretty graphs, but only if we can still read them. &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 24 Mar 2015 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/sciencegraphics/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/sciencegraphics/</guid>
+      </item>
+    
+      <item>
+        <title>Educational Graphics in Science</title>
+        <description>&lt;h2&gt;Educational graphics:&lt;/h2&gt;
+
+&lt;p&gt;Educational graphics are often used as a way to teach one concept. As such, they tend to generalize the information in such a way that leaves out important information. &lt;/p&gt;
+
+&lt;p&gt;Take, for example the standard evolution depiction: 
+&lt;img src=&quot;/images/Human-Evolution-460x233.jpg&quot; alt=&quot;Evolution image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;We use this image as a teaching tool, because it&amp;#39;s easy to visual evolution this way.
+However, the graphic, isn&amp;#39;t accurate in it&amp;#39;s depiction of evolution because due to the simplicity of the graphic there is no knowledge of time, species extinction, 
+A better graphic would be able to easily show all of this information. &lt;/p&gt;
+
+&lt;p&gt;The image below does a little better by including time information as well as showing the full evolution tree. This graphic makes clear the complex nature of evolution, but still leaves out many extinction events. (Click
+&lt;a href=&quot;http://www.lucasbrouwers.nl/blog/wp-content/uploads/2009/12/Evo_large.gif&quot;&gt;
+here
+&lt;/a&gt;
+to see a larger version of this image.)
+&lt;img src=&quot;http://www.lucasbrouwers.nl/blog/wp-content/uploads/2009/12/Evo_large.gif&quot; alt=&quot;Example evolution graphic&quot; width=&quot;650px&quot;&gt;&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;For an example of commonly used well depicted graphic, we have this image showing the structure of the terrestrial planets. &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/terrestrial_interiors.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;This graphic shows the relative size difference between the planets as well as their inside makeup. It even manages to show where we have incomplete information. 
+There are lots of version of this graphic, but I think this one works the best because it uses labels and lines sparingly in place of a color coded legend. &lt;/p&gt;
+</description>
+        <pubDate>Tue, 24 Mar 2015 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/educationgraphics/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/educationgraphics/</guid>
+      </item>
+    
+      <item>
+        <title>March Gladness at Tab For a Cause</title>
+        <description>&lt;p&gt;Starting March 13th the college groups on Tab for a Cause will be competing in a bracket style
+tournament for &amp;quot;charitable supremacy!&amp;quot;
+For more on the tournament: &lt;a href=&quot;http://www.tabforacause.org/blog/2015/03/02/march-gladness-tabbing-tournament-charity/&quot;&gt;click here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Uncertain by what Tab For a Cause is and why you should care? Continue reading! &lt;/p&gt;
+
+&lt;h2&gt;What is &lt;a href=&quot;http://www.tabforacause.org/?r=11041284&quot;&gt;Tab for a Cause&lt;/a&gt;?&lt;/h2&gt;
+
+&lt;p&gt;Tab for a Cause is a free browser extension that raises money for charity with every new tab a user opens. 
+After the user downloads the extension, the new tab page will be a customizable backdrop with widgets and 
+a couple of banner advertisements in the corner. 
+The money raised from these advertisements is donated to charity.&lt;/p&gt;
+
+&lt;p&gt;The Tab For a Cause FAWQ states:
+&amp;quot;No matter what our costs are, we give at least half of our revenue to charity. 
+Historically we’ve given upwards of 90%. &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;We use the rest of the revenue for two purposes: 
+
+(1) to cover costs, which include hosting/server costs and food for our 
+team;  
+(2) to reinvest in getting more Tabbers so that we can give more to 
+charity in the long term.&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;How Do Groups Work?&lt;/h2&gt;
+
+&lt;p&gt;Once you download the extension, you can see and join groups by going to your Dashboard (the speedometer button to the left on the page).&lt;br&gt;
+To find a group use the search bar on the top of the dashboard. 
+Once you have joined a group, your New Tab counts (heats) will be added to the group&amp;#39;s total 
+in attempt to climb the &amp;quot;Top Groups&amp;quot; leader board.
+You can also compete within your grop to see who is the &amp;quot;Top Tabber&amp;quot;.&lt;/p&gt;
+
+&lt;h4&gt;&lt;a href=&quot;http://tabforacause.org/?r=11041284&quot;&gt;Join me in this crazy competition to raise money for charity and see which school spends the most time randomly clicking around on the internet!&lt;/a&gt;&lt;/h4&gt;
+</description>
+        <pubDate>Thu, 12 Mar 2015 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/tabforacause/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/tabforacause/</guid>
+      </item>
+    
+      <item>
+        <title>Reading Suggestions from Feb 2015</title>
+        <description>&lt;p&gt;I&amp;#39;m going to start a new monthly post where I link to the most interesting articles, blog posts, tutorials and
+youtube videos I&amp;#39;ve found throughout the previous month. &lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h2&gt;Articles and Blog Posts:&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.countbayesie.com/blog/2015/2/18/bayes-theorem-with-lego&quot;&gt;Baye&amp;#39;s Theorem with Legos&lt;/a&gt;
+written by Will Kurt  of Count Bayesie 
+If you&amp;#39;ve been looking for away to visualize how Bayes Theorem works, Will Kurt has written 
+a piece using legos to picture the formula at work. &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.cnn.com/2015/02/02/opinion/kakaes-big-data/index.html&quot;&gt;The Problem With Data&lt;/a&gt;
+written by Konstantin Kakaes. 
+An interesting look into the future of big data.&lt;br&gt;
+Many of these problems mentioned are problems will data of ALL sizes. &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.cnet.com/news/what-would-spock-do-how-leonard-nimoy-helped-me-prosper/&quot;&gt;What Would Spock Do: How Leonard Nimoy Helped Me Prosper&lt;/a&gt;
+A lovely tribute to the late Leonard Nimoy written by CNET&amp;#39;s Bonnie Burton.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.dataschool.io/python-or-r-for-data-science/&quot;&gt;Python vs R&lt;/a&gt;
+An interesting look into whether teaching python or R for data science is more useful.
+(More personal opinion on this topic is that it&amp;#39;s useful to learn both.)   &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.edutopia.org/blog/whats-the-point-of-assessment-shira-loewenstein&quot;&gt;What&amp;#39;s the Point of Assessment?&lt;/a&gt;
+by Shira Loewenstein. 
+A look into the purpose of standardize testing and grades, and the challenges faced 
+by teachers and students alike.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.nytimes.com/2015/01/18/opinion/sunday/why-some-teams-are-smarter-than-others.html?src=twr&amp;amp;smid=fb-nytimes&amp;amp;bicmst=1409232722000&amp;amp;bicmet=1419773522000&amp;amp;bicmp=AD&amp;amp;smtyp=aut&amp;amp;bicmlukp=WT.mc_id&amp;amp;_r=1&quot;&gt;Why Some Teams ar Smarter Than Others&lt;/a&gt;
+Written by: Anita Woolley, Thomas W. Malone and Christopher Chabris.
+This is a great article about working with people without wasting time.
+It is a great read and useful for everyone who 
+ has experienced problems that can occur when human beings try 
+to work together in groups. &lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h2&gt;Tutorials:&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://kbroman.org/github_tutorial/&quot;&gt;Github&lt;/a&gt;
+Better your knowledge and use of github. &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://kbroman.org/knitr_knutshell/&quot;&gt;Knitr&lt;/a&gt;
+Lean how to use Knitr to change R code into blog posts. &lt;/p&gt;
+</description>
+        <pubDate>Tue, 03 Mar 2015 00:00:00 -0500</pubDate>
+        <link>http://eringrand.github.io/readlistfeb2015/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/readlistfeb2015/</guid>
+      </item>
+    
+      <item>
+        <title>Educational Content on YouTube</title>
+        <description>&lt;p&gt;YouTube is well known as the website that hosts illegal music videos and cats, and while the cat videos are abundant and adorable, there&amp;#39;s been a new trend on YouTube toward channels
+and videos that offer viewers educational content as well as entertainment.&lt;/p&gt;
+
+&lt;p&gt;My introduction to educational videos started with the general &amp;quot;How To&amp;quot; theme. I was able to find solutions to every question I had, from building a website, to fixing the settings on my computer, or to doing my own laundry. (Sorry Mom, but I totally learned that from the internet.) After spending years on YouTube mostly watching comedy bits and the aforementioned cat videos, I was finally introduced to the &lt;a href=&quot;]http://www.youtube.com/user/vlogbrothers&quot;&gt;Vlogbrothers&lt;/a&gt; through their human sexuality &lt;a href=&quot;https://www.youtube.com/watch?v=xXAoG8vAyzI&quot;&gt;video&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;In my mind, John and Hank Green (of the Vlogbrothers) revolutionized education content on YouTube. Their channel started in 2007 with Brotherhood 2.0 as a experiment for the brothers and entertainment for their viewers. As time went on, their videos started including more educational materials about history and current events. In 2011, the brothers started what would become a long list of educational channels each with a different theme.
+At the time of writing this, the Vlogbrothers have produced:
+&lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.youtube.com/user/scishow&quot;&gt;SciShow&lt;/a&gt; - a channel about all things science&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/scishowspace&quot;&gt;SciShow Space&lt;/a&gt; - a channel about all things astronomy&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/crashcourse&quot; target=&quot;_blank&quot;&gt;Crash Course&lt;/a&gt; - a series of playlists for topics at the level of high school course,&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/thebrainscoop&quot; target=&quot;_blank&quot;&gt;Brain Scoop&lt;/a&gt; - a channel from the Chief Curiosity Correspondent of The Field Museum in Chicago about animals,
+biology, and other parts of science&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/thehealthcaretriage&quot; target=&quot;_blank&quot;&gt;Healthcare Triage&lt;/a&gt; - a channel that focuses on providing health information where research is the main source&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/learnhowtoadult&quot; target=&quot;_blank&quot;&gt;How to Adult&lt;/a&gt; - a channel that teaches basic thing they don&amp;#39;t teach in school about being an adult&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;
+
+&lt;p&gt;Outside of the family of the Green brothers&amp;#39; (and related) channels, I also recommend:
+&lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/minutephysics&quot; target=&quot;_blank&quot;&gt;Minute Physics&lt;/a&gt; and &lt;a href=&quot;https://www.youtube.com/user/minuteearth&quot; target=&quot;_blank&quot;&gt;Minute Earth&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/AsapSCIENCE&quot; target=&quot;_blank&quot;&gt;AsapSCIENCE&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/user/1veritasium&quot; target=&quot;_blank&quot;&gt;Veritasium&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;
+
+&lt;p&gt;While it&amp;#39;s easy for everyone to have a YouTube channel, many of these educational channels have large operating costs which make them difficult to fund through advertising revenue alone. SciShow and CrashCourse were originally funded by a YouTube grant. They are both currently supported mostly through fan donations on &lt;a href=&quot;https://www.patreon.com/&quot;&gt;Patreon&lt;/a&gt;. Patreon allows for fans to support their favorite creators directly, and for creators to have a regular income for their projects.&lt;/p&gt;
+
+&lt;p&gt;The popularity of these educational channels has not gone unnoticed by YouTube. The video hosting site recently put a great deal of advertisement backing behind SciShow causing the channel to grow substantially in viewership.&lt;/p&gt;
+
+&lt;p&gt;As educational content videos become more popular with viewers, educators
+are beginning to look to YouTube for supporting materials in the classroom and as study materials. CrashCourse viewership counts grow expoentionally on old and new videos during AP exam season, and both SciShow and CrashCourse are used in hundreds of classes around the world. Personally, I tried to bring a short Minute Physics video to my Introductory Astronomy classes whenever possible. The structure and content of these video series allow the students to be entertained in the subject and for educators to expand upon their students&amp;#39; interest with activities related to the videos.&lt;/p&gt;
+
+&lt;p&gt;I spend more time on Youtube then I care to admit, but through my love of online video I have found a community of people who create great things and I&amp;#39;m happy to be a part of it. In 2014 I was lucky enough to attend Vidcon, the annual online video convention. I was pleasantly surprised that the educational content panel was one of the most packed panels. I think this speaks to what creators want to create and what viewers want to watch. I hope to see more educational based content being created in the near future.&lt;/p&gt;
+
+&lt;p&gt;To summarise, there are hundreds of wonderful educational channels out there and I encourage you to go look for them or to start your own.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;&lt;em&gt;I have produced one video on my youtube channel so far, which you can watch &lt;a href=&quot;https://www.youtube.com/watch?v=leJuucunLak&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;!
+I hope to one day return and post more.&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sun, 15 Feb 2015 00:00:00 -0500</pubDate>
+        <link>http://eringrand.github.io/edu-videos/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/edu-videos/</guid>
+      </item>
+    
+  </channel>
+</rss>
