@@ -59,10 +59,10 @@ writers&lt;/p&gt;
 &lt;p&gt;The first part of this analysis is grabbing all the text from YouTube.
 To access the API, I use the &lt;a href=&quot;https://soodoku.github.io/tuber/&quot;&gt;&lt;code&gt;tuber&lt;/code&gt;&lt;/a&gt;
 package by Gaurav Sood.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(tidyverse)
-library(tuber)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;  &lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tidyverse&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tuber&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-yt_oauth(app_id, app_password)
+  yt_oauth&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;app_id&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; app_password&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The fist step was to find the channel id to access the LBD playlist. I
 do a quick search for &lt;code&gt;lizziebennet&lt;/code&gt; to find some videos that I know are

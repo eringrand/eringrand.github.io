@@ -143,10 +143,10 @@ writers</p>
 <p>The first part of this analysis is grabbing all the text from YouTube.
 To access the API, I use the <a href="https://soodoku.github.io/tuber/"><code>tuber</code></a>
 package by Gaurav Sood.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">library(tidyverse)
-library(tuber)
+<div class="highlight"><pre><code class="language-r" data-lang="r">  <span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span>
+  <span class="kn">library</span><span class="p">(</span>tuber<span class="p">)</span>
 
-yt_oauth(app_id, app_password)
+  yt_oauth<span class="p">(</span>app_id<span class="p">,</span> app_password<span class="p">)</span>
 </code></pre></div>
 <p>The fist step was to find the channel id to access the LBD playlist. I
 do a quick search for <code>lizziebennet</code> to find some videos that I know are
