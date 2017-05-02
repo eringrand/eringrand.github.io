@@ -50,8 +50,7 @@ writers&lt;/p&gt;
 &lt;p&gt;In honor of LBD&amp;#39;s 5th Anniversary, let&amp;#39;s do some LBD text analysis!
 &lt;strong&gt;Happy Anniversary LBD!&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://media3.giphy.com/media/10MjSRjJxjc6XK/giphy-downsized.gif&quot; alt=&quot;celebration+lizzie+bennet&quot;&gt;&lt;br&gt;
-&lt;a href=&quot;http://elizabethgillies.tumblr.com/post/44897897466&quot;&gt;Source link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://media3.giphy.com/media/10MjSRjJxjc6XK/giphy-downsized.gif&quot; alt=&quot;celebration+lizzie+bennet&quot;&gt;  &lt;/p&gt;
 
 &lt;h1&gt;Analysis&lt;/h1&gt;
 
@@ -94,11 +93,8 @@ a &amp;lt;- list_channel_resources(filter = c(channel_id=&amp;quot;UCXfbQAimgtbk
 # Uploaded playlists:
 playlist_id &amp;lt;- a$items[[1]]$contentDetails$relatedPlaylists$uploads
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;The YouTube API atomically pages videos so the max you get per page is
-50. I know I need more than that, so I created a function that I can use
-recursively to get all the videos. (This code is not a simple way of
-doing what I need it to, but it works. I would love any comments on how
-to clean it up.)&lt;/p&gt;
+&lt;p&gt;The YouTube API automatically pages videos so the max you get per page is
+50. I know I need more than that, so I created a function that I call a few times to get all the videos. (This way works, but I would love any comments on how to make it better.)&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;# Get videos on the playlist
 vids &amp;lt;- get_playlist_items(filter= c(playlist_id=playlist_id), max_results = 50) 
   vid_ids &amp;lt;- map(vids$items, &amp;quot;contentDetails&amp;quot;) %&amp;gt;%
@@ -204,7 +200,7 @@ a list of the characters.&lt;/p&gt;
 ## 9       yeah   178
 ## 10      time   176
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Not surprisingly, the most common trigrams are from the phrase, &amp;quot;My name is Lizzie Bennet and...&amp;quot;&lt;/p&gt;
+&lt;p&gt;Not surprisingly, the most common trigrams are from the phrase that begins every episode, &amp;quot;My name is Lizzie Bennet and...&amp;quot;&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;lizziebennet %&amp;gt;%
   tidytext::unnest_tokens(word, text, token=&amp;quot;ngrams&amp;quot;, n=3) %&amp;gt;%
   count(word, sort=TRUE) %&amp;gt;%

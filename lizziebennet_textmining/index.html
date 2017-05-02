@@ -134,8 +134,7 @@ writers</p>
 <p>In honor of LBD&#39;s 5th Anniversary, let&#39;s do some LBD text analysis!
 <strong>Happy Anniversary LBD!</strong></p>
 
-<p><img src="http://media3.giphy.com/media/10MjSRjJxjc6XK/giphy-downsized.gif" alt="celebration+lizzie+bennet"><br>
-<a href="http://elizabethgillies.tumblr.com/post/44897897466">Source link</a></p>
+<p><img src="http://media3.giphy.com/media/10MjSRjJxjc6XK/giphy-downsized.gif" alt="celebration+lizzie+bennet">  </p>
 
 <h1>Analysis</h1>
 
@@ -178,11 +177,8 @@ a &lt;- list_channel_resources(filter = c(channel_id=&quot;UCXfbQAimgtbk4RAUHtIA
 # Uploaded playlists:
 playlist_id &lt;- a$items[[1]]$contentDetails$relatedPlaylists$uploads
 </code></pre></div>
-<p>The YouTube API atomically pages videos so the max you get per page is
-50. I know I need more than that, so I created a function that I can use
-recursively to get all the videos. (This code is not a simple way of
-doing what I need it to, but it works. I would love any comments on how
-to clean it up.)</p>
+<p>The YouTube API automatically pages videos so the max you get per page is
+50. I know I need more than that, so I created a function that I call a few times to get all the videos. (This way works, but I would love any comments on how to make it better.)</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text"># Get videos on the playlist
 vids &lt;- get_playlist_items(filter= c(playlist_id=playlist_id), max_results = 50) 
   vid_ids &lt;- map(vids$items, &quot;contentDetails&quot;) %&gt;%
@@ -288,7 +284,7 @@ a list of the characters.</p>
 ## 9       yeah   178
 ## 10      time   176
 </code></pre></div>
-<p>Not surprisingly, the most common trigrams are from the phrase, &quot;My name is Lizzie Bennet and...&quot;</p>
+<p>Not surprisingly, the most common trigrams are from the phrase that begins every episode, &quot;My name is Lizzie Bennet and...&quot;</p>
 <div class="highlight"><pre><code class="language-text" data-lang="text">lizziebennet %&gt;%
   tidytext::unnest_tokens(word, text, token=&quot;ngrams&quot;, n=3) %&gt;%
   count(word, sort=TRUE) %&gt;%
