@@ -171,100 +171,100 @@ part of the series.</p>
 find the playlist ID, which I will use to access all the videos in that
 playlist. <code>list_channel_resources</code> for <code>tuber</code> creates a list of channel
 attributes and buried in that list in the playlist ID.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1"># Channel Information</span>
-  a <span class="o">&lt;-</span> list_channel_resources<span class="p">(</span>filter <span class="o">=</span> <span class="kt">c</span><span class="p">(</span>channel_id<span class="o">=</span><span class="s">&quot;UCXfbQAimgtbk4RAUHtIAUww&quot;</span><span class="p">),</span> part<span class="o">=</span><span class="s">&quot;contentDetails&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Channel Information</span>
+a <span class="o">&lt;-</span> list_channel_resources<span class="p">(</span>filter <span class="o">=</span> <span class="kt">c</span><span class="p">(</span>channel_id<span class="o">=</span><span class="s">&quot;UCXfbQAimgtbk4RAUHtIAUww&quot;</span><span class="p">),</span> part<span class="o">=</span><span class="s">&quot;contentDetails&quot;</span><span class="p">)</span>
 
-  <span class="c1"># Uploaded playlists:</span>
-  playlist_id <span class="o">&lt;-</span> a<span class="o">$</span>items<span class="p">[[</span><span class="m">1</span><span class="p">]]</span><span class="o">$</span>contentDetails<span class="o">$</span>relatedPlaylists<span class="o">$</span>uploads
+<span class="c1"># Uploaded playlists:</span>
+playlist_id <span class="o">&lt;-</span> a<span class="o">$</span>items<span class="p">[[</span><span class="m">1</span><span class="p">]]</span><span class="o">$</span>contentDetails<span class="o">$</span>relatedPlaylists<span class="o">$</span>uploads
 
-  playlist_id
+playlist_id
 
-  <span class="c1">## [1] &quot;UUXfbQAimgtbk4RAUHtIAUww&quot;</span>
+<span class="c1">## [1] &quot;UUXfbQAimgtbk4RAUHtIAUww&quot;</span>
 </code></pre></div>
 <p>The YouTube API automatically pages videos so the max you get per page is
 50. I know I need more than that, so I created a function that I call a few times to get all the videos. (This way works, but I would love any comments on how to make it better.)</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1"># Get videos on the playlist</span>
-  vids <span class="o">&lt;-</span> get_playlist_items<span class="p">(</span>filter<span class="o">=</span> <span class="kt">c</span><span class="p">(</span>playlist_id<span class="o">=</span>playlist_id<span class="p">),</span> max_results <span class="o">=</span> <span class="m">50</span><span class="p">)</span> 
-    vid_ids <span class="o">&lt;-</span> map<span class="p">(</span>vids<span class="o">$</span>items<span class="p">,</span> <span class="s">&quot;contentDetails&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Get videos on the playlist</span>
+vids <span class="o">&lt;-</span> get_playlist_items<span class="p">(</span>filter<span class="o">=</span> <span class="kt">c</span><span class="p">(</span>playlist_id<span class="o">=</span>playlist_id<span class="p">),</span> max_results <span class="o">=</span> <span class="m">50</span><span class="p">)</span> 
+  vid_ids <span class="o">&lt;-</span> map<span class="p">(</span>vids<span class="o">$</span>items<span class="p">,</span> <span class="s">&quot;contentDetails&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  map<span class="p">(</span><span class="s">&quot;videoId&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span>
+  <span class="kp">unlist</span><span class="p">()</span>
+vid_info <span class="o">&lt;-</span> tibble<span class="p">(</span>ids <span class="o">=</span> vid_ids<span class="p">,</span> page <span class="o">=</span> vids<span class="o">$</span>nextPageToken<span class="p">)</span>
+
+getVideos <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vid_info<span class="p">){</span>
+  pageToken <span class="o">&lt;-</span> vid_info<span class="o">$</span>page<span class="p">[</span><span class="kp">length</span><span class="p">(</span>vid_info<span class="o">$</span>page<span class="p">)]</span>
+  vids <span class="o">&lt;-</span> get_playlist_items<span class="p">(</span>filter<span class="o">=</span> <span class="kt">c</span><span class="p">(</span>playlist_id<span class="o">=</span>playlist_id<span class="p">),</span> page_token <span class="o">=</span> pageToken<span class="p">)</span>
+  vid_ids <span class="o">&lt;-</span> map<span class="p">(</span>vids<span class="o">$</span>items<span class="p">,</span> <span class="s">&quot;contentDetails&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
     map<span class="p">(</span><span class="s">&quot;videoId&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span>
     <span class="kp">unlist</span><span class="p">()</span>
-  vid_info <span class="o">&lt;-</span> tibble<span class="p">(</span>ids <span class="o">=</span> vid_ids<span class="p">,</span> page <span class="o">=</span> vids<span class="o">$</span>nextPageToken<span class="p">)</span>
+  nextPageToken <span class="o">&lt;-</span> <span class="kp">ifelse</span><span class="p">(</span><span class="o">!</span><span class="kp">is.null</span><span class="p">(</span>vids<span class="o">$</span>nextPageToken<span class="p">),</span> vids<span class="o">$</span>nextPageToken<span class="p">,</span> <span class="kc">NA</span><span class="p">)</span>
+  vid_info_new <span class="o">&lt;-</span> tibble<span class="p">(</span>ids <span class="o">=</span> vid_ids<span class="p">,</span> page <span class="o">=</span> nextPageToken<span class="p">)</span>
+  <span class="kr">return</span><span class="p">(</span>vid_info <span class="o">%&gt;%</span> bind_rows<span class="p">(</span>vid_info_new<span class="p">)</span> <span class="p">)</span>
+<span class="p">}</span>
 
-  getVideos <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vid_info<span class="p">){</span>
-    pageToken <span class="o">&lt;-</span> vid_info<span class="o">$</span>page<span class="p">[</span><span class="kp">length</span><span class="p">(</span>vid_info<span class="o">$</span>page<span class="p">)]</span>
-    vids <span class="o">&lt;-</span> get_playlist_items<span class="p">(</span>filter<span class="o">=</span> <span class="kt">c</span><span class="p">(</span>playlist_id<span class="o">=</span>playlist_id<span class="p">),</span> page_token <span class="o">=</span> pageToken<span class="p">)</span>
-    vid_ids <span class="o">&lt;-</span> map<span class="p">(</span>vids<span class="o">$</span>items<span class="p">,</span> <span class="s">&quot;contentDetails&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-      map<span class="p">(</span><span class="s">&quot;videoId&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span>
-      <span class="kp">unlist</span><span class="p">()</span>
-    nextPageToken <span class="o">&lt;-</span> <span class="kp">ifelse</span><span class="p">(</span><span class="o">!</span><span class="kp">is.null</span><span class="p">(</span>vids<span class="o">$</span>nextPageToken<span class="p">),</span> vids<span class="o">$</span>nextPageToken<span class="p">,</span> <span class="kc">NA</span><span class="p">)</span>
-    vid_info_new <span class="o">&lt;-</span> tibble<span class="p">(</span>ids <span class="o">=</span> vid_ids<span class="p">,</span> page <span class="o">=</span> nextPageToken<span class="p">)</span>
-    <span class="kr">return</span><span class="p">(</span>vid_info <span class="o">%&gt;%</span> bind_rows<span class="p">(</span>vid_info_new<span class="p">)</span> <span class="p">)</span>
-  <span class="p">}</span>
+vid_info <span class="o">&lt;-</span> getVideos<span class="p">(</span>vid_info<span class="p">)</span>
+vid_info <span class="o">&lt;-</span> getVideos<span class="p">(</span>vid_info<span class="p">)</span>
 
-  vid_info <span class="o">&lt;-</span> getVideos<span class="p">(</span>vid_info<span class="p">)</span>
-  vid_info <span class="o">&lt;-</span> getVideos<span class="p">(</span>vid_info<span class="p">)</span>
+<span class="c1"># check that I have all 112 videos</span>
+<span class="kp">nrow</span><span class="p">(</span>vid_info<span class="p">)</span>
 
-  <span class="c1"># check that I have all 112 videos</span>
-  <span class="kp">nrow</span><span class="p">(</span>vid_info<span class="p">)</span>
-
-  <span class="c1">## [1] 112</span>
+<span class="c1">## [1] 112</span>
 </code></pre></div>
 <p>Now that I have a list of video IDs, I can use <code>get_captions</code> to access
 the text of the videos. I also use <code>xmlTreeParse</code> and <code>xmlToList</code> to
 covert the caption into into an easily accessible lines of text. I put
 the text, video ID, and video title in a tibble for use in tidydata.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">library(XML)
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>XML<span class="p">)</span>
 
-getText &lt;- function(id){
-  x &lt;- get_captions(id, lang = &quot;en&quot;)
-  title &lt;- get_video_details(id)$title
-  a &lt;- xmlTreeParse(x)
-  text &lt;- a$doc$children$transcript
-  text &lt;- xmlToList(text, simplify = TRUE, addAttributes = FALSE) %&gt;% 
-    tibble() %&gt;%
-    mutate( id = id, title = title)
-  return(text) 
-}
+getText <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>id<span class="p">){</span>
+  x <span class="o">&lt;-</span> get_captions<span class="p">(</span>id<span class="p">,</span> lang <span class="o">=</span> <span class="s">&quot;en&quot;</span><span class="p">)</span>
+  title <span class="o">&lt;-</span> get_video_details<span class="p">(</span>id<span class="p">)</span><span class="o">$</span>title
+  a <span class="o">&lt;-</span> xmlTreeParse<span class="p">(</span>x<span class="p">)</span>
+  text <span class="o">&lt;-</span> a<span class="o">$</span>doc<span class="o">$</span>children<span class="o">$</span>transcript
+  text <span class="o">&lt;-</span> xmlToList<span class="p">(</span>text<span class="p">,</span> simplify <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> addAttributes <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span> <span class="o">%&gt;%</span> 
+    tibble<span class="p">()</span> <span class="o">%&gt;%</span>
+    mutate<span class="p">(</span> id <span class="o">=</span> id<span class="p">,</span> title <span class="o">=</span> title<span class="p">)</span>
+  <span class="kr">return</span><span class="p">(</span>text<span class="p">)</span> 
+<span class="p">}</span>
 
-text &lt;- map_df(vid_ids, getText) %&gt;% 
-  set_names(c(&quot;text&quot;, &quot;vid_id&quot;, &quot;title&quot;))
+text <span class="o">&lt;-</span> map_df<span class="p">(</span>vid_ids<span class="p">,</span> getText<span class="p">)</span> <span class="o">%&gt;%</span> 
+  set_names<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;text&quot;</span><span class="p">,</span> <span class="s">&quot;vid_id&quot;</span><span class="p">,</span> <span class="s">&quot;title&quot;</span><span class="p">))</span>
 </code></pre></div>
 <p>I don&#39;t actually want to refer to each video by it&#39;s full title, so I do
 some data munching to get each episode&#39;s number (1-100). Notice, the 10
 Q&amp;A videos do not get a episode number assigned to them. For the sake of
 this analysis, I&#39;ve decided to only work with the main 100 episodes.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">titles &lt;- text %&gt;%
-  distinct(title) %&gt;%
-  mutate(title = ifelse(title == &quot;Question and Answers #3 (ft. Caroline Lee)&quot;, &quot;Questions and Answers #3 (ft. Caroline Lee)&quot;, title),
-         ep_num = gsub(&quot;[- .)(+!&#39;,/]|[a-zA-Z]*:?&quot;,&quot;&quot;, title),
-         ep_num = ifelse(title == &quot;2 + 1 - Ep: 73&quot;, 73, ep_num),
-         ep_num = ifelse(title == &quot;25 Douchebags and a Gentleman - Ep:18&quot;, 18, ep_num),
-         ep_num = ifelse(title == &quot;Bing Lee and His 500 Teenage Prostitutes - Ep: 4&quot;, 4, ep_num),
-         ep_num = parse_number(ep.num)
-         ) %&gt;%
-  filter(!grepl(&quot;Questions and Answers&quot;, title)) %&gt;%
-  arrange(ep_num) 
+<div class="highlight"><pre><code class="language-r" data-lang="r">titles <span class="o">&lt;-</span> text <span class="o">%&gt;%</span>
+  distinct<span class="p">(</span>title<span class="p">)</span> <span class="o">%&gt;%</span>
+  mutate<span class="p">(</span>title <span class="o">=</span> <span class="kp">ifelse</span><span class="p">(</span>title <span class="o">==</span> <span class="s">&quot;Question and Answers #3 (ft. Caroline Lee)&quot;</span><span class="p">,</span> <span class="s">&quot;Questions and Answers #3 (ft. Caroline Lee)&quot;</span><span class="p">,</span> title<span class="p">),</span>
+         ep_num <span class="o">=</span> <span class="kp">gsub</span><span class="p">(</span><span class="s">&quot;[- .)(+!&#39;,/]|[a-zA-Z]*:?&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span> title<span class="p">),</span>
+         ep_num <span class="o">=</span> <span class="kp">ifelse</span><span class="p">(</span>title <span class="o">==</span> <span class="s">&quot;2 + 1 - Ep: 73&quot;</span><span class="p">,</span> <span class="m">73</span><span class="p">,</span> ep_num<span class="p">),</span>
+         ep_num <span class="o">=</span> <span class="kp">ifelse</span><span class="p">(</span>title <span class="o">==</span> <span class="s">&quot;25 Douchebags and a Gentleman - Ep:18&quot;</span><span class="p">,</span> <span class="m">18</span><span class="p">,</span> ep_num<span class="p">),</span>
+         ep_num <span class="o">=</span> <span class="kp">ifelse</span><span class="p">(</span>title <span class="o">==</span> <span class="s">&quot;Bing Lee and His 500 Teenage Prostitutes - Ep: 4&quot;</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> ep_num<span class="p">),</span>
+         ep_num <span class="o">=</span> parse_number<span class="p">(</span>ep.num<span class="p">)</span>
+         <span class="p">)</span> <span class="o">%&gt;%</span>
+  filter<span class="p">(</span><span class="o">!</span><span class="kp">grepl</span><span class="p">(</span><span class="s">&quot;Questions and Answers&quot;</span><span class="p">,</span> title<span class="p">))</span> <span class="o">%&gt;%</span>
+  arrange<span class="p">(</span>ep_num<span class="p">)</span> 
 </code></pre></div>
 <p>One of the problems with using captions, is the messy text. I used a
 simple set of <code>gsub</code> to transform obvious punctuation marks into their
 English counterparts. I also pulled out the character SPEAKING the words
 from the text itself. I left this column alone in the dataset, but might
 one day go back and focus an analysis on speaking characters.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">library(tidytext)
-library(stringr)
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>tidytext<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>stringr<span class="p">)</span>
 
-lizziebennet &lt;- text %&gt;%
-  left_join(titles, by=&quot;title&quot;) %&gt;%
-  filter(!is.na(ep_num)) %&gt;%
-  arrange(ep_num) %&gt;%
-  mutate(linenumber = row_number()) %&gt;%
-  mutate(text = gsub(&quot;&amp;#39;&quot;, &quot;&#39;&quot;, text),
-         text = gsub(&quot;&amp;quot;&quot;, &#39;\&quot;&#39;, text),
-         text = gsub(&quot;&amp;amp;&quot;, &quot;and&quot;, text),
-         character = str_extract(text, &quot;^[a-zA-Z]*:&quot;),
-         text = sub(&quot;^[a-zA-Z]*:&quot;, &quot;&quot;, text)
-         ) %&gt;%
-  arrange(ep_num, linenumber)
+lizziebennet <span class="o">&lt;-</span> text <span class="o">%&gt;%</span>
+  left_join<span class="p">(</span>titles<span class="p">,</span> by<span class="o">=</span><span class="s">&quot;title&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  filter<span class="p">(</span><span class="o">!</span><span class="kp">is.na</span><span class="p">(</span>ep_num<span class="p">))</span> <span class="o">%&gt;%</span>
+  arrange<span class="p">(</span>ep_num<span class="p">)</span> <span class="o">%&gt;%</span>
+  mutate<span class="p">(</span>linenumber <span class="o">=</span> row_number<span class="p">())</span> <span class="o">%&gt;%</span>
+  mutate<span class="p">(</span>text <span class="o">=</span> <span class="kp">gsub</span><span class="p">(</span><span class="s">&quot;&amp;#39;&quot;</span><span class="p">,</span> <span class="s">&quot;&#39;&quot;</span><span class="p">,</span> text<span class="p">),</span>
+         text <span class="o">=</span> <span class="kp">gsub</span><span class="p">(</span><span class="s">&quot;&amp;quot;&quot;</span><span class="p">,</span> <span class="s">&#39;\&quot;&#39;</span><span class="p">,</span> text<span class="p">),</span>
+         text <span class="o">=</span> <span class="kp">gsub</span><span class="p">(</span><span class="s">&quot;&amp;amp;&quot;</span><span class="p">,</span> <span class="s">&quot;and&quot;</span><span class="p">,</span> text<span class="p">),</span>
+         <span class="kt">character</span> <span class="o">=</span> str_extract<span class="p">(</span>text<span class="p">,</span> <span class="s">&quot;^[a-zA-Z]*:&quot;</span><span class="p">),</span>
+         text <span class="o">=</span> <span class="kp">sub</span><span class="p">(</span><span class="s">&quot;^[a-zA-Z]*:&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> text<span class="p">)</span>
+         <span class="p">)</span> <span class="o">%&gt;%</span>
+  arrange<span class="p">(</span>ep_num<span class="p">,</span> linenumber<span class="p">)</span>
 </code></pre></div>
 <p>Okay, so now the text is <em>mostly</em> in place. The first thing I did was
 look at word counts. The most common words are not surprising, it&#39;s just

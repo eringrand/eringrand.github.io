@@ -87,100 +87,100 @@ part of the series.&lt;/p&gt;
 find the playlist ID, which I will use to access all the videos in that
 playlist. &lt;code&gt;list_channel_resources&lt;/code&gt; for &lt;code&gt;tuber&lt;/code&gt; creates a list of channel
 attributes and buried in that list in the playlist ID.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;  &lt;span class=&quot;c1&quot;&gt;# Channel Information&lt;/span&gt;
-  a &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; list_channel_resources&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;filter &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;channel_id&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;UCXfbQAimgtbk4RAUHtIAUww&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; part&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;contentDetails&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Channel Information&lt;/span&gt;
+a &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; list_channel_resources&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;filter &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;channel_id&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;UCXfbQAimgtbk4RAUHtIAUww&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; part&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;contentDetails&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-  &lt;span class=&quot;c1&quot;&gt;# Uploaded playlists:&lt;/span&gt;
-  playlist_id &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; a&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;items&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;contentDetails&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;relatedPlaylists&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;uploads
+&lt;span class=&quot;c1&quot;&gt;# Uploaded playlists:&lt;/span&gt;
+playlist_id &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; a&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;items&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;contentDetails&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;relatedPlaylists&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;uploads
 
-  playlist_id
+playlist_id
 
-  &lt;span class=&quot;c1&quot;&gt;## [1] &amp;quot;UUXfbQAimgtbk4RAUHtIAUww&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## [1] &amp;quot;UUXfbQAimgtbk4RAUHtIAUww&amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The YouTube API automatically pages videos so the max you get per page is
 50. I know I need more than that, so I created a function that I call a few times to get all the videos. (This way works, but I would love any comments on how to make it better.)&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;  &lt;span class=&quot;c1&quot;&gt;# Get videos on the playlist&lt;/span&gt;
-  vids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; get_playlist_items&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;filter&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;playlist_id&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;playlist_id&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; max_results &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
-    vid_ids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;items&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;contentDetails&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Get videos on the playlist&lt;/span&gt;
+vids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; get_playlist_items&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;filter&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;playlist_id&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;playlist_id&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; max_results &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+  vid_ids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;items&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;contentDetails&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;videoId&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;unlist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; tibble&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ids &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; vid_ids&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; page &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;nextPageToken&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+getVideos &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+  pageToken &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; vid_info&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;page&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;page&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+  vids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; get_playlist_items&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;filter&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;playlist_id&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;playlist_id&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; page_token &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; pageToken&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  vid_ids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;items&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;contentDetails&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
     map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;videoId&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
     &lt;span class=&quot;kp&quot;&gt;unlist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-  vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; tibble&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ids &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; vid_ids&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; page &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;nextPageToken&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  nextPageToken &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;ifelse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;is.null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;nextPageToken&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;nextPageToken&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;NA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  vid_info_new &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; tibble&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ids &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; vid_ids&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; page &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; nextPageToken&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;kr&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; bind_rows&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info_new&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-  getVideos &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-    pageToken &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; vid_info&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;page&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;page&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
-    vids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; get_playlist_items&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;filter&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;playlist_id&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;playlist_id&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; page_token &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; pageToken&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    vid_ids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;items&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;contentDetails&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-      map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;videoId&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-      &lt;span class=&quot;kp&quot;&gt;unlist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    nextPageToken &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;ifelse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;is.null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;nextPageToken&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;nextPageToken&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;NA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    vid_info_new &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; tibble&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ids &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; vid_ids&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; page &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; nextPageToken&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;kr&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; bind_rows&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info_new&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; getVideos&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; getVideos&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-  vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; getVideos&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; getVideos&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# check that I have all 112 videos&lt;/span&gt;
+&lt;span class=&quot;kp&quot;&gt;nrow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-  &lt;span class=&quot;c1&quot;&gt;# check that I have all 112 videos&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;nrow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-  &lt;span class=&quot;c1&quot;&gt;## [1] 112&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;## [1] 112&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now that I have a list of video IDs, I can use &lt;code&gt;get_captions&lt;/code&gt; to access
 the text of the videos. I also use &lt;code&gt;xmlTreeParse&lt;/code&gt; and &lt;code&gt;xmlToList&lt;/code&gt; to
 covert the caption into into an easily accessible lines of text. I put
 the text, video ID, and video title in a tibble for use in tidydata.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(XML)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;XML&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-getText &amp;lt;- function(id){
-  x &amp;lt;- get_captions(id, lang = &amp;quot;en&amp;quot;)
-  title &amp;lt;- get_video_details(id)$title
-  a &amp;lt;- xmlTreeParse(x)
-  text &amp;lt;- a$doc$children$transcript
-  text &amp;lt;- xmlToList(text, simplify = TRUE, addAttributes = FALSE) %&amp;gt;% 
-    tibble() %&amp;gt;%
-    mutate( id = id, title = title)
-  return(text) 
-}
+getText &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;id&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+  x &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; get_captions&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;id&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; lang &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;en&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  title &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; get_video_details&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;id&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;title
+  a &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; xmlTreeParse&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;x&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  text &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; a&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;doc&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;children&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;transcript
+  text &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; xmlToList&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;text&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; simplify &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; addAttributes &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; 
+    tibble&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+    mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; id &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; id&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; title &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; title&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;kr&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;text&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-text &amp;lt;- map_df(vid_ids, getText) %&amp;gt;% 
-  set_names(c(&amp;quot;text&amp;quot;, &amp;quot;vid_id&amp;quot;, &amp;quot;title&amp;quot;))
+text &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; map_df&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_ids&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; getText&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; 
+  set_names&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;vid_id&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;title&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;I don&amp;#39;t actually want to refer to each video by it&amp;#39;s full title, so I do
 some data munching to get each episode&amp;#39;s number (1-100). Notice, the 10
 Q&amp;amp;A videos do not get a episode number assigned to them. For the sake of
 this analysis, I&amp;#39;ve decided to only work with the main 100 episodes.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;titles &amp;lt;- text %&amp;gt;%
-  distinct(title) %&amp;gt;%
-  mutate(title = ifelse(title == &amp;quot;Question and Answers #3 (ft. Caroline Lee)&amp;quot;, &amp;quot;Questions and Answers #3 (ft. Caroline Lee)&amp;quot;, title),
-         ep_num = gsub(&amp;quot;[- .)(+!&amp;#39;,/]|[a-zA-Z]*:?&amp;quot;,&amp;quot;&amp;quot;, title),
-         ep_num = ifelse(title == &amp;quot;2 + 1 - Ep: 73&amp;quot;, 73, ep_num),
-         ep_num = ifelse(title == &amp;quot;25 Douchebags and a Gentleman - Ep:18&amp;quot;, 18, ep_num),
-         ep_num = ifelse(title == &amp;quot;Bing Lee and His 500 Teenage Prostitutes - Ep: 4&amp;quot;, 4, ep_num),
-         ep_num = parse_number(ep.num)
-         ) %&amp;gt;%
-  filter(!grepl(&amp;quot;Questions and Answers&amp;quot;, title)) %&amp;gt;%
-  arrange(ep_num) 
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;titles &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; text &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  distinct&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;ifelse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Question and Answers #3 (ft. Caroline Lee)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Questions and Answers #3 (ft. Caroline Lee)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; title&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         ep_num &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;gsub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;[- .)(+!&amp;#39;,/]|[a-zA-Z]*:?&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; title&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         ep_num &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;ifelse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;2 + 1 - Ep: 73&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;73&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; ep_num&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         ep_num &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;ifelse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;25 Douchebags and a Gentleman - Ep:18&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; ep_num&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         ep_num &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;ifelse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Bing Lee and His 500 Teenage Prostitutes - Ep: 4&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; ep_num&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         ep_num &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; parse_number&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ep.num&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;grepl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Questions and Answers&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; title&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  arrange&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ep_num&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;One of the problems with using captions, is the messy text. I used a
 simple set of &lt;code&gt;gsub&lt;/code&gt; to transform obvious punctuation marks into their
 English counterparts. I also pulled out the character SPEAKING the words
 from the text itself. I left this column alone in the dataset, but might
 one day go back and focus an analysis on speaking characters.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;library(tidytext)
-library(stringr)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tidytext&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;stringr&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-lizziebennet &amp;lt;- text %&amp;gt;%
-  left_join(titles, by=&amp;quot;title&amp;quot;) %&amp;gt;%
-  filter(!is.na(ep_num)) %&amp;gt;%
-  arrange(ep_num) %&amp;gt;%
-  mutate(linenumber = row_number()) %&amp;gt;%
-  mutate(text = gsub(&amp;quot;&amp;amp;#39;&amp;quot;, &amp;quot;&amp;#39;&amp;quot;, text),
-         text = gsub(&amp;quot;&amp;amp;quot;&amp;quot;, &amp;#39;\&amp;quot;&amp;#39;, text),
-         text = gsub(&amp;quot;&amp;amp;amp;&amp;quot;, &amp;quot;and&amp;quot;, text),
-         character = str_extract(text, &amp;quot;^[a-zA-Z]*:&amp;quot;),
-         text = sub(&amp;quot;^[a-zA-Z]*:&amp;quot;, &amp;quot;&amp;quot;, text)
-         ) %&amp;gt;%
-  arrange(ep_num, linenumber)
+lizziebennet &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; text &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  left_join&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;titles&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; by&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;title&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;is.na&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ep_num&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  arrange&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ep_num&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;linenumber &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; row_number&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;text &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;gsub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;amp;#39;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;#39;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         text &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;gsub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;#39;\&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         text &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;gsub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;amp;amp;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;and&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         &lt;span class=&quot;kt&quot;&gt;character&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; str_extract&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;text&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;^[a-zA-Z]*:&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         text &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;^[a-zA-Z]*:&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  arrange&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ep_num&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; linenumber&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Okay, so now the text is &lt;em&gt;mostly&lt;/em&gt; in place. The first thing I did was
 look at word counts. The most common words are not surprising, it&amp;#39;s just
