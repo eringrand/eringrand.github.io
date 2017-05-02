@@ -67,63 +67,63 @@ package by Gaurav Sood.&lt;/p&gt;
 &lt;p&gt;The fist step was to find the channel id to access the LBD playlist. I
 do a quick search for &lt;code&gt;lizziebennet&lt;/code&gt; to find some videos that I know are
 part of the series.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;search &amp;lt;- yt_search(&amp;quot;lizziebennet&amp;quot;)[1:5, ] 
-search %&amp;gt;% select(title, channelId)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;    search &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; yt_search&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;lizziebennet&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
+    search &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; channelId&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-##                                                       title
-## 1                         My Name is Lizzie Bennet  - Ep: 1
-## 2 The Lizzie Bennet Diaries - Episódio 98 (LEGENDADO PT-BR)
-## 3                                      Yeah I Know - Ep: 61
-## 4                                 Introducing Lizzie Bennet
-## 5                                  The Lizzie Trap - Ep: 78
-##                  channelId
-## 1 UCXfbQAimgtbk4RAUHtIAUww
-## 2 UCfhdE-vIhW9GD0eGdd300ag
-## 3 UCXfbQAimgtbk4RAUHtIAUww
-## 4 UCGaVdbSav8xWuFWTadK6loA
-## 5 UCXfbQAimgtbk4RAUHtIAUww
+    &lt;span class=&quot;c1&quot;&gt;##                                                       title&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;## 1                         My Name is Lizzie Bennet  - Ep: 1&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;## 2 The Lizzie Bennet Diaries - Episódio 98 (LEGENDADO PT-BR)&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;## 3                                      Yeah I Know - Ep: 61&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;## 4                                 Introducing Lizzie Bennet&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;## 5                                  The Lizzie Trap - Ep: 78&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;##                  channelId&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;## 1 UCXfbQAimgtbk4RAUHtIAUww&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;## 2 UCfhdE-vIhW9GD0eGdd300ag&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;## 3 UCXfbQAimgtbk4RAUHtIAUww&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;## 4 UCGaVdbSav8xWuFWTadK6loA&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;## 5 UCXfbQAimgtbk4RAUHtIAUww&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;With the channel ID in hand, I can now access the channel&amp;#39;s resources to
 find the playlist ID, which I will use to access all the videos in that
 playlist. &lt;code&gt;list_channel_resources&lt;/code&gt; for &lt;code&gt;tuber&lt;/code&gt; creates a list of channel
 attributes and buried in that list in the playlist ID.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;# Channel Information
-a &amp;lt;- list_channel_resources(filter = c(channel_id=&amp;quot;UCXfbQAimgtbk4RAUHtIAUww&amp;quot;), part=&amp;quot;contentDetails&amp;quot;)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;  &lt;span class=&quot;c1&quot;&gt;# Channel Information&lt;/span&gt;
+  a &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; list_channel_resources&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;filter &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;channel_id&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;UCXfbQAimgtbk4RAUHtIAUww&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; part&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;contentDetails&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-# Uploaded playlists:
-playlist_id &amp;lt;- a$items[[1]]$contentDetails$relatedPlaylists$uploads
+  &lt;span class=&quot;c1&quot;&gt;# Uploaded playlists:&lt;/span&gt;
+  playlist_id &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; a&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;items&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;contentDetails&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;relatedPlaylists&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;uploads
 
-playlist_id
+  playlist_id
 
-## [1] &amp;quot;UUXfbQAimgtbk4RAUHtIAUww&amp;quot;
+  &lt;span class=&quot;c1&quot;&gt;## [1] &amp;quot;UUXfbQAimgtbk4RAUHtIAUww&amp;quot;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The YouTube API automatically pages videos so the max you get per page is
 50. I know I need more than that, so I created a function that I call a few times to get all the videos. (This way works, but I would love any comments on how to make it better.)&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;# Get videos on the playlist
-vids &amp;lt;- get_playlist_items(filter= c(playlist_id=playlist_id), max_results = 50) 
-  vid_ids &amp;lt;- map(vids$items, &amp;quot;contentDetails&amp;quot;) %&amp;gt;%
-  map(&amp;quot;videoId&amp;quot;)  %&amp;gt;%
-  unlist()
-vid_info &amp;lt;- tibble(ids = vid_ids, page = vids$nextPageToken)
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;  &lt;span class=&quot;c1&quot;&gt;# Get videos on the playlist&lt;/span&gt;
+  vids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; get_playlist_items&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;filter&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;playlist_id&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;playlist_id&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; max_results &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+    vid_ids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;items&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;contentDetails&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+    map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;videoId&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+    &lt;span class=&quot;kp&quot;&gt;unlist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+  vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; tibble&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ids &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; vid_ids&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; page &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;nextPageToken&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-getVideos &amp;lt;- function(vid_info){
-  pageToken &amp;lt;- vid_info$page[length(vid_info$page)]
-  vids &amp;lt;- get_playlist_items(filter= c(playlist_id=playlist_id), page_token = pageToken)
-  vid_ids &amp;lt;- map(vids$items, &amp;quot;contentDetails&amp;quot;) %&amp;gt;%
-    map(&amp;quot;videoId&amp;quot;)  %&amp;gt;%
-    unlist()
-  nextPageToken &amp;lt;- ifelse(!is.null(vids$nextPageToken), vids$nextPageToken, NA)
-  vid_info_new &amp;lt;- tibble(ids = vid_ids, page = nextPageToken)
-  return(vid_info %&amp;gt;% bind_rows(vid_info_new) )
-}
+  getVideos &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+    pageToken &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; vid_info&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;page&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;page&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+    vids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; get_playlist_items&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;filter&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;playlist_id&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;playlist_id&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; page_token &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; pageToken&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    vid_ids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;items&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;contentDetails&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+      map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;videoId&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+      &lt;span class=&quot;kp&quot;&gt;unlist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    nextPageToken &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;ifelse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;is.null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;nextPageToken&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;nextPageToken&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;NA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    vid_info_new &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; tibble&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ids &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; vid_ids&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; page &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; nextPageToken&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;kr&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; bind_rows&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info_new&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-vid_info &amp;lt;- getVideos(vid_info)
-vid_info &amp;lt;- getVideos(vid_info)
+  vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; getVideos&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; getVideos&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-# check that I have all 112 videos
-nrow(vid_info)
+  &lt;span class=&quot;c1&quot;&gt;# check that I have all 112 videos&lt;/span&gt;
+  &lt;span class=&quot;kp&quot;&gt;nrow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-## [1] 112
+  &lt;span class=&quot;c1&quot;&gt;## [1] 112&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now that I have a list of video IDs, I can use &lt;code&gt;get_captions&lt;/code&gt; to access
 the text of the videos. I also use &lt;code&gt;xmlTreeParse&lt;/code&gt; and &lt;code&gt;xmlToList&lt;/code&gt; to

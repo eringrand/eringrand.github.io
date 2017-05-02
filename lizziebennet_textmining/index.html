@@ -151,63 +151,63 @@ package by Gaurav Sood.</p>
 <p>The fist step was to find the channel id to access the LBD playlist. I
 do a quick search for <code>lizziebennet</code> to find some videos that I know are
 part of the series.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">search &lt;- yt_search(&quot;lizziebennet&quot;)[1:5, ] 
-search %&gt;% select(title, channelId)
+<div class="highlight"><pre><code class="language-r" data-lang="r">    search <span class="o">&lt;-</span> yt_search<span class="p">(</span><span class="s">&quot;lizziebennet&quot;</span><span class="p">)[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="p">]</span> 
+    search <span class="o">%&gt;%</span> select<span class="p">(</span>title<span class="p">,</span> channelId<span class="p">)</span>
 
-##                                                       title
-## 1                         My Name is Lizzie Bennet  - Ep: 1
-## 2 The Lizzie Bennet Diaries - Episódio 98 (LEGENDADO PT-BR)
-## 3                                      Yeah I Know - Ep: 61
-## 4                                 Introducing Lizzie Bennet
-## 5                                  The Lizzie Trap - Ep: 78
-##                  channelId
-## 1 UCXfbQAimgtbk4RAUHtIAUww
-## 2 UCfhdE-vIhW9GD0eGdd300ag
-## 3 UCXfbQAimgtbk4RAUHtIAUww
-## 4 UCGaVdbSav8xWuFWTadK6loA
-## 5 UCXfbQAimgtbk4RAUHtIAUww
+    <span class="c1">##                                                       title</span>
+    <span class="c1">## 1                         My Name is Lizzie Bennet  - Ep: 1</span>
+    <span class="c1">## 2 The Lizzie Bennet Diaries - Episódio 98 (LEGENDADO PT-BR)</span>
+    <span class="c1">## 3                                      Yeah I Know - Ep: 61</span>
+    <span class="c1">## 4                                 Introducing Lizzie Bennet</span>
+    <span class="c1">## 5                                  The Lizzie Trap - Ep: 78</span>
+    <span class="c1">##                  channelId</span>
+    <span class="c1">## 1 UCXfbQAimgtbk4RAUHtIAUww</span>
+    <span class="c1">## 2 UCfhdE-vIhW9GD0eGdd300ag</span>
+    <span class="c1">## 3 UCXfbQAimgtbk4RAUHtIAUww</span>
+    <span class="c1">## 4 UCGaVdbSav8xWuFWTadK6loA</span>
+    <span class="c1">## 5 UCXfbQAimgtbk4RAUHtIAUww</span>
 </code></pre></div>
 <p>With the channel ID in hand, I can now access the channel&#39;s resources to
 find the playlist ID, which I will use to access all the videos in that
 playlist. <code>list_channel_resources</code> for <code>tuber</code> creates a list of channel
 attributes and buried in that list in the playlist ID.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"># Channel Information
-a &lt;- list_channel_resources(filter = c(channel_id=&quot;UCXfbQAimgtbk4RAUHtIAUww&quot;), part=&quot;contentDetails&quot;)
+<div class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1"># Channel Information</span>
+  a <span class="o">&lt;-</span> list_channel_resources<span class="p">(</span>filter <span class="o">=</span> <span class="kt">c</span><span class="p">(</span>channel_id<span class="o">=</span><span class="s">&quot;UCXfbQAimgtbk4RAUHtIAUww&quot;</span><span class="p">),</span> part<span class="o">=</span><span class="s">&quot;contentDetails&quot;</span><span class="p">)</span>
 
-# Uploaded playlists:
-playlist_id &lt;- a$items[[1]]$contentDetails$relatedPlaylists$uploads
+  <span class="c1"># Uploaded playlists:</span>
+  playlist_id <span class="o">&lt;-</span> a<span class="o">$</span>items<span class="p">[[</span><span class="m">1</span><span class="p">]]</span><span class="o">$</span>contentDetails<span class="o">$</span>relatedPlaylists<span class="o">$</span>uploads
 
-playlist_id
+  playlist_id
 
-## [1] &quot;UUXfbQAimgtbk4RAUHtIAUww&quot;
+  <span class="c1">## [1] &quot;UUXfbQAimgtbk4RAUHtIAUww&quot;</span>
 </code></pre></div>
 <p>The YouTube API automatically pages videos so the max you get per page is
 50. I know I need more than that, so I created a function that I call a few times to get all the videos. (This way works, but I would love any comments on how to make it better.)</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"># Get videos on the playlist
-vids &lt;- get_playlist_items(filter= c(playlist_id=playlist_id), max_results = 50) 
-  vid_ids &lt;- map(vids$items, &quot;contentDetails&quot;) %&gt;%
-  map(&quot;videoId&quot;)  %&gt;%
-  unlist()
-vid_info &lt;- tibble(ids = vid_ids, page = vids$nextPageToken)
+<div class="highlight"><pre><code class="language-r" data-lang="r">  <span class="c1"># Get videos on the playlist</span>
+  vids <span class="o">&lt;-</span> get_playlist_items<span class="p">(</span>filter<span class="o">=</span> <span class="kt">c</span><span class="p">(</span>playlist_id<span class="o">=</span>playlist_id<span class="p">),</span> max_results <span class="o">=</span> <span class="m">50</span><span class="p">)</span> 
+    vid_ids <span class="o">&lt;-</span> map<span class="p">(</span>vids<span class="o">$</span>items<span class="p">,</span> <span class="s">&quot;contentDetails&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+    map<span class="p">(</span><span class="s">&quot;videoId&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span>
+    <span class="kp">unlist</span><span class="p">()</span>
+  vid_info <span class="o">&lt;-</span> tibble<span class="p">(</span>ids <span class="o">=</span> vid_ids<span class="p">,</span> page <span class="o">=</span> vids<span class="o">$</span>nextPageToken<span class="p">)</span>
 
-getVideos &lt;- function(vid_info){
-  pageToken &lt;- vid_info$page[length(vid_info$page)]
-  vids &lt;- get_playlist_items(filter= c(playlist_id=playlist_id), page_token = pageToken)
-  vid_ids &lt;- map(vids$items, &quot;contentDetails&quot;) %&gt;%
-    map(&quot;videoId&quot;)  %&gt;%
-    unlist()
-  nextPageToken &lt;- ifelse(!is.null(vids$nextPageToken), vids$nextPageToken, NA)
-  vid_info_new &lt;- tibble(ids = vid_ids, page = nextPageToken)
-  return(vid_info %&gt;% bind_rows(vid_info_new) )
-}
+  getVideos <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vid_info<span class="p">){</span>
+    pageToken <span class="o">&lt;-</span> vid_info<span class="o">$</span>page<span class="p">[</span><span class="kp">length</span><span class="p">(</span>vid_info<span class="o">$</span>page<span class="p">)]</span>
+    vids <span class="o">&lt;-</span> get_playlist_items<span class="p">(</span>filter<span class="o">=</span> <span class="kt">c</span><span class="p">(</span>playlist_id<span class="o">=</span>playlist_id<span class="p">),</span> page_token <span class="o">=</span> pageToken<span class="p">)</span>
+    vid_ids <span class="o">&lt;-</span> map<span class="p">(</span>vids<span class="o">$</span>items<span class="p">,</span> <span class="s">&quot;contentDetails&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+      map<span class="p">(</span><span class="s">&quot;videoId&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span>
+      <span class="kp">unlist</span><span class="p">()</span>
+    nextPageToken <span class="o">&lt;-</span> <span class="kp">ifelse</span><span class="p">(</span><span class="o">!</span><span class="kp">is.null</span><span class="p">(</span>vids<span class="o">$</span>nextPageToken<span class="p">),</span> vids<span class="o">$</span>nextPageToken<span class="p">,</span> <span class="kc">NA</span><span class="p">)</span>
+    vid_info_new <span class="o">&lt;-</span> tibble<span class="p">(</span>ids <span class="o">=</span> vid_ids<span class="p">,</span> page <span class="o">=</span> nextPageToken<span class="p">)</span>
+    <span class="kr">return</span><span class="p">(</span>vid_info <span class="o">%&gt;%</span> bind_rows<span class="p">(</span>vid_info_new<span class="p">)</span> <span class="p">)</span>
+  <span class="p">}</span>
 
-vid_info &lt;- getVideos(vid_info)
-vid_info &lt;- getVideos(vid_info)
+  vid_info <span class="o">&lt;-</span> getVideos<span class="p">(</span>vid_info<span class="p">)</span>
+  vid_info <span class="o">&lt;-</span> getVideos<span class="p">(</span>vid_info<span class="p">)</span>
 
-# check that I have all 112 videos
-nrow(vid_info)
+  <span class="c1"># check that I have all 112 videos</span>
+  <span class="kp">nrow</span><span class="p">(</span>vid_info<span class="p">)</span>
 
-## [1] 112
+  <span class="c1">## [1] 112</span>
 </code></pre></div>
 <p>Now that I have a list of video IDs, I can use <code>get_captions</code> to access
 the text of the videos. I also use <code>xmlTreeParse</code> and <code>xmlToList</code> to
