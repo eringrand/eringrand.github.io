@@ -176,6 +176,10 @@ a &lt;- list_channel_resources(filter = c(channel_id=&quot;UCXfbQAimgtbk4RAUHtIA
 
 # Uploaded playlists:
 playlist_id &lt;- a$items[[1]]$contentDetails$relatedPlaylists$uploads
+
+playlist_id
+
+## [1] &quot;UUXfbQAimgtbk4RAUHtIAUww&quot;
 </code></pre></div>
 <p>The YouTube API automatically pages videos so the max you get per page is
 50. I know I need more than that, so I created a function that I call a few times to get all the videos. (This way works, but I would love any comments on how to make it better.)</p>
