@@ -117,7 +117,7 @@ vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&q
 
   &lt;span class=&quot;c1&quot;&gt;# if no more pages then done&lt;/span&gt;
   &lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;is.na&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;nextPageToken&lt;span class=&quot;p&quot;&gt;)){&lt;/span&gt;
-     &lt;span class=&quot;kr&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+     &lt;span class=&quot;kr&quot;&gt;break&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -425,7 +425,7 @@ bigrams_separated &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
 &lt;p&gt;&lt;img src=&quot;https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/1908336_10202570761373587_7013966634375610561_n.jpg?oh=1a5119c2ae93bbd9b01060523cc7e43c&amp;amp;oe=59733FEF&quot; alt=&quot;&quot;&gt;
 Some of cast of Lizzie Bennet Diaries and me. Vidcon 2014&lt;/p&gt;
 </description>
-        <pubDate>Sun, 30 Apr 2017 00:00:00 -0400</pubDate>
+        <pubDate>Tue, 02 May 2017 00:00:00 -0400</pubDate>
         <link>http://eringrand.github.io/lizziebennet_textmining/</link>
         <guid isPermaLink="true">http://eringrand.github.io/lizziebennet_textmining/</guid>
       </item>
