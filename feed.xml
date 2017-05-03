@@ -99,26 +99,28 @@ playlist_id
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The YouTube API automatically pages videos so the max you get per page is
 50. I know I need more than that, so I created a function that I call a few times to get all the videos. (This way works, but I would love any comments on how to make it better.)&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Get videos on the playlist&lt;/span&gt;
-vids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; get_playlist_items&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;filter&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;playlist_id&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;playlist_id&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; max_results &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
-  vid_ids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;items&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;contentDetails&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-  map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;videoId&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-  &lt;span class=&quot;kp&quot;&gt;unlist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; tibble&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ids &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; vid_ids&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; page &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;nextPageToken&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# pass NA as next page to get first page&lt;/span&gt;
+nextPageToken &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;NA&lt;/span&gt;
+vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
 
-getMoreVideos &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-  pageToken &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; vid_info&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;page&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;page&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
-  vids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; get_playlist_items&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;filter&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;playlist_id&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;playlist_id&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; page_token &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; pageToken&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# Loop over every available page&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;repeat&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  vids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; get_playlist_items&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;filter&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;playlist_id&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;playlist_id&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; page_token &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; nextPageToken&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
   vid_ids &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;items&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;contentDetails&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-    map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;videoId&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-    &lt;span class=&quot;kp&quot;&gt;unlist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+      map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;videoId&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+      &lt;span class=&quot;kp&quot;&gt;unlist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+  vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; vid_info &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; bind_rows&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tibble&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ids &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; vid_ids&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;# get the token for the next page&lt;/span&gt;
   nextPageToken &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;ifelse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;is.null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;nextPageToken&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; vids&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;nextPageToken&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;NA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  vid_info_new &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; tibble&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ids &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; vid_ids&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; page &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; nextPageToken&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;kr&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; bind_rows&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info_new&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; getMoreVideos&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-vid_info &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; getMoreVideos&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# if no more pages then done&lt;/span&gt;
+  &lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;is.na&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;nextPageToken&lt;span class=&quot;p&quot;&gt;)){&lt;/span&gt;
+     &lt;span class=&quot;kr&quot;&gt;break&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;c1&quot;&gt;# check that I have all 112 videos&lt;/span&gt;
 &lt;span class=&quot;kp&quot;&gt;nrow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vid_info&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -138,7 +140,7 @@ getText &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&q
   text &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; a&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;doc&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;children&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;transcript
   text &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; xmlToList&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;text&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; simplify &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; addAttributes &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; 
     tibble&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
-    mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; id &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; id&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; title &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; title&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;id &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; id&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; title &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; title&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
   &lt;span class=&quot;kr&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;text&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
@@ -146,7 +148,7 @@ text &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; map_df&lt;span class
   set_names&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;vid_id&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;title&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;I don&amp;#39;t actually want to refer to each video by it&amp;#39;s full title, so I do
-some data munching to get each episode&amp;#39;s number (1-100). Notice, the 10
+some data munching to get each episode&amp;#39;s number (1-100). Notice, the
 Q&amp;amp;A videos do not get a episode number assigned to them. For the sake of
 this analysis, I&amp;#39;ve decided to only work with the main 100 episodes.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;titles &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; text &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;

@@ -183,26 +183,28 @@ playlist_id
 </code></pre></div>
 <p>The YouTube API automatically pages videos so the max you get per page is
 50. I know I need more than that, so I created a function that I call a few times to get all the videos. (This way works, but I would love any comments on how to make it better.)</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Get videos on the playlist</span>
-vids <span class="o">&lt;-</span> get_playlist_items<span class="p">(</span>filter<span class="o">=</span> <span class="kt">c</span><span class="p">(</span>playlist_id<span class="o">=</span>playlist_id<span class="p">),</span> max_results <span class="o">=</span> <span class="m">50</span><span class="p">)</span> 
-  vid_ids <span class="o">&lt;-</span> map<span class="p">(</span>vids<span class="o">$</span>items<span class="p">,</span> <span class="s">&quot;contentDetails&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  map<span class="p">(</span><span class="s">&quot;videoId&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span>
-  <span class="kp">unlist</span><span class="p">()</span>
-vid_info <span class="o">&lt;-</span> tibble<span class="p">(</span>ids <span class="o">=</span> vid_ids<span class="p">,</span> page <span class="o">=</span> vids<span class="o">$</span>nextPageToken<span class="p">)</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># pass NA as next page to get first page</span>
+nextPageToken <span class="o">&lt;-</span> <span class="kc">NA</span>
+vid_info <span class="o">&lt;-</span><span class="p">{}</span>
 
-getMoreVideos <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vid_info<span class="p">){</span>
-  pageToken <span class="o">&lt;-</span> vid_info<span class="o">$</span>page<span class="p">[</span><span class="kp">length</span><span class="p">(</span>vid_info<span class="o">$</span>page<span class="p">)]</span>
-  vids <span class="o">&lt;-</span> get_playlist_items<span class="p">(</span>filter<span class="o">=</span> <span class="kt">c</span><span class="p">(</span>playlist_id<span class="o">=</span>playlist_id<span class="p">),</span> page_token <span class="o">=</span> pageToken<span class="p">)</span>
+<span class="c1"># Loop over every available page</span>
+<span class="kr">repeat</span> <span class="p">{</span>
+  vids <span class="o">&lt;-</span> get_playlist_items<span class="p">(</span>filter<span class="o">=</span> <span class="kt">c</span><span class="p">(</span>playlist_id<span class="o">=</span>playlist_id<span class="p">),</span> page_token <span class="o">=</span> nextPageToken<span class="p">)</span>
   vid_ids <span class="o">&lt;-</span> map<span class="p">(</span>vids<span class="o">$</span>items<span class="p">,</span> <span class="s">&quot;contentDetails&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-    map<span class="p">(</span><span class="s">&quot;videoId&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span>
-    <span class="kp">unlist</span><span class="p">()</span>
+      map<span class="p">(</span><span class="s">&quot;videoId&quot;</span><span class="p">)</span>  <span class="o">%&gt;%</span>
+      <span class="kp">unlist</span><span class="p">()</span>
+
+  vid_info <span class="o">&lt;-</span> vid_info <span class="o">%&gt;%</span> bind_rows<span class="p">(</span>tibble<span class="p">(</span>ids <span class="o">=</span> vid_ids<span class="p">))</span>
+
+  <span class="c1"># get the token for the next page</span>
   nextPageToken <span class="o">&lt;-</span> <span class="kp">ifelse</span><span class="p">(</span><span class="o">!</span><span class="kp">is.null</span><span class="p">(</span>vids<span class="o">$</span>nextPageToken<span class="p">),</span> vids<span class="o">$</span>nextPageToken<span class="p">,</span> <span class="kc">NA</span><span class="p">)</span>
-  vid_info_new <span class="o">&lt;-</span> tibble<span class="p">(</span>ids <span class="o">=</span> vid_ids<span class="p">,</span> page <span class="o">=</span> nextPageToken<span class="p">)</span>
-  <span class="kr">return</span><span class="p">(</span>vid_info <span class="o">%&gt;%</span> bind_rows<span class="p">(</span>vid_info_new<span class="p">)</span> <span class="p">)</span>
-<span class="p">}</span>
 
-vid_info <span class="o">&lt;-</span> getMoreVideos<span class="p">(</span>vid_info<span class="p">)</span>
-vid_info <span class="o">&lt;-</span> getMoreVideos<span class="p">(</span>vid_info<span class="p">)</span>
+  <span class="c1"># if no more pages then done</span>
+  <span class="kr">if</span><span class="p">(</span><span class="kp">is.na</span><span class="p">(</span>nextPageToken<span class="p">)){</span>
+     <span class="kr">break</span><span class="p">;</span>
+  <span class="p">}</span>
+
+<span class="p">}</span>
 
 <span class="c1"># check that I have all 112 videos</span>
 <span class="kp">nrow</span><span class="p">(</span>vid_info<span class="p">)</span>
@@ -222,7 +224,7 @@ getText <span class="o">&lt;-</span> <span class="kr">function</span><span class
   text <span class="o">&lt;-</span> a<span class="o">$</span>doc<span class="o">$</span>children<span class="o">$</span>transcript
   text <span class="o">&lt;-</span> xmlToList<span class="p">(</span>text<span class="p">,</span> simplify <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> addAttributes <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span> <span class="o">%&gt;%</span> 
     tibble<span class="p">()</span> <span class="o">%&gt;%</span>
-    mutate<span class="p">(</span> id <span class="o">=</span> id<span class="p">,</span> title <span class="o">=</span> title<span class="p">)</span>
+    mutate<span class="p">(</span>id <span class="o">=</span> id<span class="p">,</span> title <span class="o">=</span> title<span class="p">)</span>
   <span class="kr">return</span><span class="p">(</span>text<span class="p">)</span> 
 <span class="p">}</span>
 
@@ -230,7 +232,7 @@ text <span class="o">&lt;-</span> map_df<span class="p">(</span>vid_ids<span cla
   set_names<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;text&quot;</span><span class="p">,</span> <span class="s">&quot;vid_id&quot;</span><span class="p">,</span> <span class="s">&quot;title&quot;</span><span class="p">))</span>
 </code></pre></div>
 <p>I don&#39;t actually want to refer to each video by it&#39;s full title, so I do
-some data munching to get each episode&#39;s number (1-100). Notice, the 10
+some data munching to get each episode&#39;s number (1-100). Notice, the
 Q&amp;A videos do not get a episode number assigned to them. For the sake of
 this analysis, I&#39;ve decided to only work with the main 100 episodes.</p>
 <div class="highlight"><pre><code class="language-r" data-lang="r">titles <span class="o">&lt;-</span> text <span class="o">%&gt;%</span>
