@@ -307,7 +307,7 @@ ggplot&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;lbsentiment&lt;span class=&q
         theme&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;axis.text.x&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;element_blank&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;img src=&quot;/images/lizziebennet_textmining_files/figure-markdown_github/unnamed-chunk-17-1.png&quot; alt=&quot;&quot;&gt;
-&lt;em&gt;Sentiment analysis by episode of LBD.&lt;/em&gt;&lt;/p&gt;
+&lt;em&gt;Sentiment by main episode of LBD.&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;Julia&amp;#39;s sentiment analysis of the original text is much more positive
 than my LBD analysis, with two negative portions relating to Darcy
