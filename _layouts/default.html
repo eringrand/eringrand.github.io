@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- htmlwidgets dependencies --> 
+    {% assign dep_file = page.url | split: '/' | last | prepend : 'htmlwidgets/' | append : '.html' %}
+    {% assign dep_file_inc = dep_file | prepend : '_includes/' %}
+    {% capture hw_used %}{% file_exists {{ dep_file_inc }} %}{% endcapture %}
+
+    {% if hw_used == "true" %}
+    {% include {{dep_file}} %}
+    {% endif %}
+
     <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.name }} – {{ site.description }}</title>
 
     {% include meta.html %}
@@ -51,3 +60,6 @@
     {% include analytics.html %}
   </body>
 </html>
+
+
+

@@ -6,3 +6,5 @@ _site
 _drafts/*
 .gitignore
 CNAME
+htmlwidgets_deps/*
+.DS_Store
