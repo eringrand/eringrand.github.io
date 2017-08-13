@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Suggested Links from Spring and Summer 2015
-tags: youtube astronomy data science columbia
+tags: YouTube astronomy data science Columbia
 ---
 
 ## Articles: 

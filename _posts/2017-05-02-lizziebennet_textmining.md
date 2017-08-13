@@ -196,7 +196,7 @@ titles <- text %>%
 One of the problems with using captions, is the messy text. I used a
 simple set of `gsub` to transform obvious punctuation marks into their
 English counterparts. I also pulled out the character SPEAKING the words
-from the text itself. I left this column alone in the dataset, but might
+from the text itself. I left this column alone in the data set, but might
 one day go back and focus an analysis on speaking characters.
 
 ```r

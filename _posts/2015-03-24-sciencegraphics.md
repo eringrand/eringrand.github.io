@@ -6,7 +6,7 @@ tags: visualization science ggplot python R
 ---
 
 Graphics and visualizations are used for promotion, advertisement to promote a product or idea. In science, graphics tend to fall into one of two categories: for use in education or a science journal.  For information on what makes a good educational graphic, or a teaching tool, I've written a piece earlier on this blog [here](http://eringrand.github.io/educationgraphics/). 
-In the academic articles, graphics hold a special role in telling a compelling story of the data and results, however, the editing emphasis is often placed much more on text than making interesting and understable science graphics.  
+In the academic articles, graphics hold a special role in telling a compelling story of the data and results, however, the editing emphasis is often placed much more on text than making interesting and understandable science graphics.  
 
 *DISCLAIMER: I am coming from an astronomy and physics background, and am going to discuss problems found within these contexts.*
 
@@ -36,7 +36,7 @@ In the remainder of the blog, I will try to address each of these points and int
 plt.yscale('log', nonposx='clip')
 ```
 
-* Tick marks: The defaults for tick marks and labels are often too large, too small, facing the wrong direction or elsewise strange.  In ggplot in R this can be manipulated under theme:
+* Tick marks: The defaults for tick marks and labels are often too large, too small, facing the wrong direction or else wise strange.  In ggplot in R this can be manipulated under theme:
 
 For example, to make everything expect your points or lines disappear you'd use: 
 
@@ -82,7 +82,7 @@ or in ggplot2 in R using:
 * The problem of too many overlapping lines or points can be solved in various ways depending on the data. Sometimes, changing the colors and alpha of the points might be enough. 
 In other cases, it's best to separate out the information into a table of plots.
 
-For example, below is the orignal plot from my research showing the intensity of different molecules across velocities. The plot places all four molecules on the same graph with a key indicating which is which. In color, this graphic might make more sense, but it is still hard to make out the individual curves. Plus, the key is small and referring back to it is time consuming and annoying.
+For example, below is the original plot from my research showing the intensity of different molecules across velocities. The plot places all four molecules on the same graph with a key indicating which is which. In color, this graphic might make more sense, but it is still hard to make out the individual curves. Plus, the key is small and referring back to it is time consuming and annoying.
 
 {% include {{ site.baseurl }}/image.html url="/images/spectrapel.png" description="Velocity spectra for the Pelican Pillar." %}
 
@@ -131,7 +131,7 @@ the rainbow color scheme includes colors which are hard to see, doesn't have a u
 Contrast is one of THE biggest problems I see in academic figures.  Things like cyan or yellow on white, red on blue, navy on black... these cause major problems (and headaches) when reading text or trying to discern between lines. Your plot doesn't have to be pretty, but it does have to be legible!
 
 
-Color in astronomy maps often tags along with Colour-coded image of the molecular cloud
+Color in astronomy maps often tags along with Color-coded image of the molecular cloud
 	
 ----
 

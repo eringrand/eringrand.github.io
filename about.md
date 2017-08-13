@@ -18,7 +18,7 @@ permalink: /about/
 <!--  This would be a great space to explain yourself --> 
   
 ###Degrees: 
-* MS Data Science (Columbia Univiersity) 2016
+* MS Data Science (Columbia University) 2016
 * MS Astronomy (University of Maryland) 2014
 * BS Physics & Astronomy  (University of Maryland) 2011
 
@@ -31,10 +31,15 @@ permalink: /about/
 
 
 ---
-##<a name="experience"></a>Currently Working 
-* Working at Crisis Text Line as a Data Scientist. You can read about my transistion to Data Science at Crisis Text Line [here](http://datascience.columbia.edu/q-erin-grand-data-scientist-crisis-text-line).
+##<a name="experience"></a>
+
+###Uncommon Schools (Associate Director of Data Analytics)
+* 
+
+###Crisis Text Line (Data Scientist)
+* Working at Crisis Text Line as a Data Scientist. You can read about my transition to Data Science at Crisis Text Line [here](http://datascience.columbia.edu/q-erin-grand-data-scientist-crisis-text-line).
 * Built and shipped a new volunteer application which has been used by 7600 applicants. Increased the completion rate from 40% to 90%.
-* My work has focused on identifing drop off points for trainers and supervisors. I producied cohort reports of training metrics and identified key differences among cohorts to provide trainers with new solutions. I identified counselor churn as the largest organizational priority, and setup tracking, reporting, and analysis of key metrics.
+* My work has focused on identifying drop off points for trainers and supervisors. I produced cohort reports of training metrics and identified key differences among cohorts to provide trainers with new solutions. I identified counselor churn as the largest organizational priority, and setup tracking, reporting, and analysis of key metrics.
 
 [Top](#top)
 
@@ -47,7 +52,7 @@ permalink: /about/
 
 * [Ultraviolet Portrait of M31](http://www.nasa.gov/mission_pages/swift/bursts/uv_andromeda.html)
 	* Collected images from the ultraviolet telescope aboard NASA's swift satellite in order to
-	form the final mosiac
+	form the final mosaic
 	* Worked with Dr. Stefan Immler at NASA Goddard Space Flight Center
 
 * Analyzing the Star Formation of Galaxies in the MIDGET survey with Dr. Alberto Bolatto
@@ -77,6 +82,7 @@ I am not currently teaching.  Check out my [teaching information](https://eringr
 		
 ###<a name="press"></a>In the News
 
+* [packagemetrics - Helping you choose a package since runconf17](https://ropensci.org/blog/blog/2017/06/27/packagemetrics)
 * [A Q & A with Erin Grand, Data Scientist at Crisis Text Line](http://datascience.columbia.edu/q-erin-grand-data-scientist-crisis-text-line)
 * [Tamer Center for Social Enterprise Summer Fellowship Interview](http://columbiasocialenterprise.org/sesummerfellows/student/erin-grand/)
 * [Swift Makes Best-ever Ultraviolet Portrait of Andromeda Galaxy](http://www.nasa.gov/mission_pages/swift/bursts/uv_andromeda.html)

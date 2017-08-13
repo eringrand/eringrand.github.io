@@ -35,12 +35,12 @@ Slinkies!
 
 
 [Why Data Science Is the Fastest Growing Industry in Tech Right Now](http://enterprise.import.io/why-data-science-is-the-fastest-growing-industry-in-tech-right-now/)
-Even if employers don't seem to have a universal defintion of what makes someone a data scientist, it cannot be argued that the field in growing, so much so that it is one of the few fields in which there are more available jobs than applicants. 
+Even if employers don't seem to have a universal definition of what makes someone a data scientist, it cannot be argued that the field in growing, so much so that it is one of the few fields in which there are more available jobs than applicants. 
 
 
 ## Youtube Videos:
 [Science of that Dress](https://www.youtube.com/watch?v=jexnhNfOzHg) 
-Remember "the dress" that was everywhere at the beginning of the month? If you are still wondering why you see the dress one way and not another, watch this SciShow episode to see why people can see the thing thing differently. 
+Remember "the dress" that was everywhere at the beginning of the month? If you are still wondering why you see the dress one way and not another, watch this Sci Show episode to see why people can see the thing thing differently. 
 
 [Computer Colors](https://www.youtube.com/watch?v=LKnqECcg6Gw)
 Colors on computers don't work the same way we're taught in 5th grade art class. With so much of our data/results/pictures being shown widely on computers, it's important to understand how it all works. 

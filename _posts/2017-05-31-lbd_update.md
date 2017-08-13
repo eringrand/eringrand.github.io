@@ -6,7 +6,7 @@ tags: rstats r sentiment tidytext LBD  plotly rladies
 ---
 
 
-[Daniela Vázquez‏](https://twitter.com/d4tagirl) recently published her [blog post on Last Week Tonight](https://d4tagirl.com/2017/05/how-do-you-feel-about-last-week-tonight). She used a bunch of code from my previous LBD analysis (THANKS FOR THE LOVE DANIELA! :heart:) and also created this super cool `plotly` widget.
+[Daniela Vázquez](https://twitter.com/d4tagirl) recently published her [blog post on Last Week Tonight](https://d4tagirl.com/2017/05/how-do-you-feel-about-last-week-tonight). She used a bunch of code from my previous LBD analysis (THANKS FOR THE LOVE DANIELA! :heart:) and also created this super cool `plotly` widget.
 
 I had never used `ggplot` and `plotly` before and wanted to give it a try, recreating a previous plot of sentiment by LBD episode.  
 
