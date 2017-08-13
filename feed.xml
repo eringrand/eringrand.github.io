@@ -8,7 +8,7 @@
     
       <item>
         <title>Update to Lizzie Bennet Text Analysis Using Plotly</title>
-        <description>&lt;p&gt;&lt;a href=&quot;https://twitter.com/d4tagirl&quot;&gt;Daniela Vázquez‏&lt;/a&gt; recently published her &lt;a href=&quot;https://d4tagirl.com/2017/05/how-do-you-feel-about-last-week-tonight&quot;&gt;blog post on Last Week Tonight&lt;/a&gt;. She used a bunch of code from my previous LBD analysis (THANKS FOR THE LOVE DANIELA! :heart:) and also created this super cool &lt;code&gt;plotly&lt;/code&gt; widget.&lt;/p&gt;
+        <description>&lt;p&gt;&lt;a href=&quot;https://twitter.com/d4tagirl&quot;&gt;Daniela Vázquez&lt;/a&gt; recently published her &lt;a href=&quot;https://d4tagirl.com/2017/05/how-do-you-feel-about-last-week-tonight&quot;&gt;blog post on Last Week Tonight&lt;/a&gt;. She used a bunch of code from my previous LBD analysis (THANKS FOR THE LOVE DANIELA! :heart:) and also created this super cool &lt;code&gt;plotly&lt;/code&gt; widget.&lt;/p&gt;
 
 &lt;p&gt;I had never used &lt;code&gt;ggplot&lt;/code&gt; and &lt;code&gt;plotly&lt;/code&gt; before and wanted to give it a try, recreating a previous plot of sentiment by LBD episode.  &lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;viridis&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -201,7 +201,7 @@ this analysis, I&amp;#39;ve decided to only work with the main 100 episodes.&lt;
 &lt;p&gt;One of the problems with using captions, is the messy text. I used a
 simple set of &lt;code&gt;gsub&lt;/code&gt; to transform obvious punctuation marks into their
 English counterparts. I also pulled out the character SPEAKING the words
-from the text itself. I left this column alone in the dataset, but might
+from the text itself. I left this column alone in the data set, but might
 one day go back and focus an analysis on speaking characters.&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tidytext&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;stringr&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -471,11 +471,11 @@ Some of cast of Lizzie Bennet Diaries and me. Vidcon 2014&lt;/p&gt;
 
 &lt;p&gt;Instead, I got an email directing me to a Data Intern position available at &lt;a href=&quot;http://crisistextline.org&quot;&gt;Crisis Text Line&lt;/a&gt;, where I could work on data related to training crisis counselors. After an interview with Bob Filbin, Chief Data Scientist at CTL, I accepted the internship, and it was the most amazing job I&amp;#39;ve ever had (and I still work for NASA). &lt;/p&gt;
 
-&lt;p&gt;Crisis Text Line was born out of DosSomething.org, and the two companies share an office space. Crisis Text Line does two things: (1) provides free, 24/7 emotional support to people in crisis, by text. And, (2) uses the data to improve the service and the crisis space as a whole. As the Data Intern, I worked in providing data and metrics for products to make the service better. More specifically, I focused in two areas (1) getting more people through the volunteer application and (2) increasing the lifetime number of conversations our counselors take. I used hard numbers and ethnographic research such as interviews and observations to determine user needs and then suggested solutions to solve them. Over the 10 weeks, I successfully researched the major pain points in our application, determined the best way to remove them, wrote a new application, and launched it!&lt;/p&gt;
+&lt;p&gt;Crisis Text Line was born out of DoSomething.org, and the two companies share an office space. Crisis Text Line does two things: (1) provides free, 24/7 emotional support to people in crisis, by text. And, (2) uses the data to improve the service and the crisis space as a whole. As the Data Intern, I worked in providing data and metrics for products to make the service better. More specifically, I focused in two areas (1) getting more people through the volunteer application and (2) increasing the lifetime number of conversations our counselors take. I used hard numbers and ethnographic research such as interviews and observations to determine user needs and then suggested solutions to solve them. Over the 10 weeks, I successfully researched the major pain points in our application, determined the best way to remove them, wrote a new application, and launched it!&lt;/p&gt;
 
 &lt;p&gt;The experience I have gained from this internship has been invaluable to my career and to my person. I&amp;#39;ve gotten to work with the most wonderful people, and spent every day feeling I was doing meaningful work. &lt;/p&gt;
 
-&lt;p&gt;In addition to the many wonderful experiences I was given through this internship, I also made amazing friends with the DoSomething.org and Crisis Text Line interns. The interns at both DS and CTL shared the same set of middle tables, ate together, had meetings together... etc. Getting to know these folks was my absolute favorite part of the intership, and I miss them dearly.  To quote &lt;a href=&quot;http://blog.thekelvinliu.com/post/126196358593/internship-complete&quot;&gt;Kelvin&lt;/a&gt; (the data intern at DS) &amp;quot;I don’t think I’ve ever met people so interesting, relatable, and devoted to social change. As great as the professional growth provided by this internship was, these people were really the highlight.&amp;quot; &lt;/p&gt;
+&lt;p&gt;In addition to the many wonderful experiences I was given through this internship, I also made amazing friends with the DoSomething.org and Crisis Text Line interns. The interns at both DS and CTL shared the same set of middle tables, ate together, had meetings together... etc. Getting to know these folks was my absolute favorite part of the internship, and I miss them dearly.  To quote &lt;a href=&quot;http://blog.thekelvinliu.com/post/126196358593/internship-complete&quot;&gt;Kelvin&lt;/a&gt; (the data intern at DS) &amp;quot;I don’t think I’ve ever met people so interesting, relatable, and devoted to social change. As great as the professional growth provided by this internship was, these people were really the highlight.&amp;quot; &lt;/p&gt;
 
 &lt;p&gt;With the summer having ended, we&amp;#39;ve moved back to school, or other internships. Some have remained in the city (and we still hang out), but others I&amp;#39;ll only see over the internet. That doesn&amp;#39;t change the fact that these people are amazing, and I can&amp;#39;t wait to spend time with them again. &lt;/p&gt;
 
@@ -499,11 +499,11 @@ Some of cast of Lizzie Bennet Diaries and me. Vidcon 2014&lt;/p&gt;
     
       <item>
         <title>What Name Do Grad Students Refer to Their Professors As?</title>
-        <description>&lt;p&gt;At some point this past week, I came to the realization that of the professors I&amp;#39;ve had this year, I&amp;#39;ve only referred to the female professor by her first name in conversation with other students. I wondered if this was indicative of some larger issue, or if it&amp;#39;s just because she&amp;#39;s also our class advisor.&lt;/p&gt;
+        <description>&lt;p&gt;At some point this past week, I came to the realization that of the professors I&amp;#39;ve had this year, I&amp;#39;ve only referred to the female professor by her first name in conversation with other students. I wondered if this was indicative of some larger issue, or if it&amp;#39;s just because she&amp;#39;s also our class adviser.&lt;/p&gt;
 
-&lt;p&gt;I put together a quick and dirty survey to see what other students&amp;#39; experiences are, in how they refer to their professors. I posted the survey to twitter and facebook. &lt;/p&gt;
+&lt;p&gt;I put together a quick and dirty survey to see what other students&amp;#39; experiences are, in how they refer to their professors. I posted the survey to twitter and Facebook. &lt;/p&gt;
 
-&lt;blockquote class=&quot;twitter-tweet&quot; lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;I am interested if this indicative of some larger issue, or if it&amp;#39;s just because she&amp;#39;s also our class advisor. (2/?)&lt;/p&gt;&amp;mdash; Erin Grand (@astroeringrand) &lt;a href=&quot;https://twitter.com/astroeringrand/status/600694453649682433&quot;&gt;May 19, 2015&lt;/a&gt;&lt;/blockquote&gt;
+&lt;blockquote class=&quot;twitter-tweet&quot; lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;I am interested if this indicative of some larger issue, or if it&amp;#39;s just because she&amp;#39;s also our class adviser. (2/?)&lt;/p&gt;&amp;mdash; Erin Grand (@astroeringrand) &lt;a href=&quot;https://twitter.com/astroeringrand/status/600694453649682433&quot;&gt;May 19, 2015&lt;/a&gt;&lt;/blockquote&gt;
 
 &lt;script async src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
 
@@ -511,7 +511,7 @@ Some of cast of Lizzie Bennet Diaries and me. Vidcon 2014&lt;/p&gt;
 
 &lt;script async src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
 
-&lt;p&gt;In the first 24 hours of the survey being posted to facebook and twitter there were 36 responses. &lt;/p&gt;
+&lt;p&gt;In the first 24 hours of the survey being posted to Facebook and twitter there were 36 responses. &lt;/p&gt;
 
 &lt;p&gt;I also received lots of great responses outside of the survey online such as:
 &lt;blockquote class=&quot;twitter-tweet&quot; lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;&lt;a href=&quot;https://twitter.com/merrdiff&quot;&gt;@merrdiff&lt;/a&gt; &lt;a href=&quot;https://twitter.com/astroeringrand&quot;&gt;@astroeringrand&lt;/a&gt; I changed how I refer to them once I got into grad school.&lt;/p&gt;&amp;mdash; Laura Mayorga (@mayorgalc) &lt;a href=&quot;https://twitter.com/mayorgalc/status/600705464498659328&quot;&gt;May 19, 2015&lt;/a&gt;&lt;/blockquote&gt;
@@ -559,12 +559,12 @@ by Marc Abrahams:
 Slinkies! &lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://enterprise.import.io/why-data-science-is-the-fastest-growing-industry-in-tech-right-now/&quot;&gt;Why Data Science Is the Fastest Growing Industry in Tech Right Now&lt;/a&gt;
-Even if employers don&amp;#39;t seem to have a universal defintion of what makes someone a data scientist, it cannot be argued that the field in growing, so much so that it is one of the few fields in which there are more available jobs than applicants. &lt;/p&gt;
+Even if employers don&amp;#39;t seem to have a universal definition of what makes someone a data scientist, it cannot be argued that the field in growing, so much so that it is one of the few fields in which there are more available jobs than applicants. &lt;/p&gt;
 
 &lt;h2&gt;Youtube Videos:&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=jexnhNfOzHg&quot;&gt;Science of that Dress&lt;/a&gt; 
-Remember &amp;quot;the dress&amp;quot; that was everywhere at the beginning of the month? If you are still wondering why you see the dress one way and not another, watch this SciShow episode to see why people can see the thing thing differently. &lt;/p&gt;
+Remember &amp;quot;the dress&amp;quot; that was everywhere at the beginning of the month? If you are still wondering why you see the dress one way and not another, watch this Sci Show episode to see why people can see the thing thing differently. &lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=LKnqECcg6Gw&quot;&gt;Computer Colors&lt;/a&gt;
 Colors on computers don&amp;#39;t work the same way we&amp;#39;re taught in 5th grade art class. With so much of our data/results/pictures being shown widely on computers, it&amp;#39;s important to understand how it all works. &lt;/p&gt;
@@ -611,7 +611,7 @@ Colors on computers don&amp;#39;t work the same way we&amp;#39;re taught in 5th 
       <item>
         <title>Graphics and Plots in Science</title>
         <description>&lt;p&gt;Graphics and visualizations are used for promotion, advertisement to promote a product or idea. In science, graphics tend to fall into one of two categories: for use in education or a science journal.  For information on what makes a good educational graphic, or a teaching tool, I&amp;#39;ve written a piece earlier on this blog &lt;a href=&quot;http://eringrand.github.io/educationgraphics/&quot;&gt;here&lt;/a&gt;. 
-In the academic articles, graphics hold a special role in telling a compelling story of the data and results, however, the editing emphasis is often placed much more on text than making interesting and understable science graphics.  &lt;/p&gt;
+In the academic articles, graphics hold a special role in telling a compelling story of the data and results, however, the editing emphasis is often placed much more on text than making interesting and understandable science graphics.  &lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;DISCLAIMER: I am coming from an astronomy and physics background, and am going to discuss problems found within these contexts.&lt;/em&gt;&lt;/p&gt;
 
@@ -643,7 +643,7 @@ by representing it in a reproducible graphic. &lt;/p&gt;
 &lt;code&gt;
 plt.yscale(&amp;#39;log&amp;#39;, nonposx=&amp;#39;clip&amp;#39;)
 &lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Tick marks: The defaults for tick marks and labels are often too large, too small, facing the wrong direction or elsewise strange.  In ggplot in R this can be manipulated under theme:&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Tick marks: The defaults for tick marks and labels are often too large, too small, facing the wrong direction or else wise strange.  In ggplot in R this can be manipulated under theme:&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;For example, to make everything expect your points or lines disappear you&amp;#39;d use: &lt;/p&gt;
@@ -686,7 +686,7 @@ plt.ylabel(&amp;#39;Y Label&amp;#39;)
 In other cases, it&amp;#39;s best to separate out the information into a table of plots.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;For example, below is the orignal plot from my research showing the intensity of different molecules across velocities. The plot places all four molecules on the same graph with a key indicating which is which. In color, this graphic might make more sense, but it is still hard to make out the individual curves. Plus, the key is small and referring back to it is time consuming and annoying.&lt;/p&gt;
+&lt;p&gt;For example, below is the original plot from my research showing the intensity of different molecules across velocities. The plot places all four molecules on the same graph with a key indicating which is which. In color, this graphic might make more sense, but it is still hard to make out the individual curves. Plus, the key is small and referring back to it is time consuming and annoying.&lt;/p&gt;
 
 &lt;div style=&quot;width:image width px; font-size:80%;text-align:center;&quot;&gt;&lt;img src=&quot;/images/spectrapel.png&quot; alt=&quot;Velocity spectra for the Pelican Pillar.&quot;/&gt;
 &lt;figcaption&gt;Velocity spectra for the Pelican Pillar.&lt;/figcaption&gt;
@@ -739,7 +739,7 @@ the rainbow color scheme includes colors which are hard to see, doesn&amp;#39;t 
 
 &lt;p&gt;Contrast is one of THE biggest problems I see in academic figures.  Things like cyan or yellow on white, red on blue, navy on black... these cause major problems (and headaches) when reading text or trying to discern between lines. Your plot doesn&amp;#39;t have to be pretty, but it does have to be legible!&lt;/p&gt;
 
-&lt;p&gt;Color in astronomy maps often tags along with Colour-coded image of the molecular cloud&lt;/p&gt;
+&lt;p&gt;Color in astronomy maps often tags along with Color-coded image of the molecular cloud&lt;/p&gt;
 
 &lt;hr&gt;
 
