@@ -5,7 +5,7 @@ permalink: /about/
 ---
 
 ###<a name="top"></a>*Menu*
-* [Basic Info](#info)
+* [Bio](#info)
 * [Experience](#experience)
 * [Research](#research)
 * [Hiring](#hire)
@@ -14,8 +14,9 @@ permalink: /about/
 
 ---
 
-##<a name="info"></a>Basic Information
-<!--  This would be a great space to explain yourself --> 
+##<a name="info"></a>Bio
+Erin joined Uncommon Schools as an Associate Director of Data Analytics in the summer of 2016. Prior to Uncommon, she worked as a Data Scientist at Crisis Text Line and a software programmer at NASA. She recently completed her masters in Data Science at Columbia University. In the past, Erin researched star formation and taught introductory courses in astronomy and physics. In her free time, Erin enjoys reading, dancing and singing loudly to musical theatre.
+
   
 ###Degrees: 
 * MS Data Science (Columbia University) 2016
@@ -46,14 +47,14 @@ permalink: /about/
 ---
 ##<a name="research"></a>Research
 * Determining the formation mechanism for pillar structures found on the rims of HII regions  
-	* Worked with Dr. Marc Pound and Dr. Lee Mundy at University of Maryland College Park
-	* Click [HERE](https://kicp-workshops.uchicago.edu/carma2013/depot/poster-grand-erin.pdf) for my poster from the 2013 CARMA Symposium
-	* Master thesis paper available at request 
+	* Worked with Dr. Marc Pound and Dr. Lee Mundy at University of Maryland College Park.
+	* [My poster](https://kicp-workshops.uchicago.edu/carma2013/depot/poster-grand-erin.pdf) from the 2013 CARMA Symposium.
+	* Master thesis available at request. 
 
 * [Ultraviolet Portrait of M31](http://www.nasa.gov/mission_pages/swift/bursts/uv_andromeda.html)
 	* Collected images from the ultraviolet telescope aboard NASA's swift satellite in order to
-	form the final mosaic
-	* Worked with Dr. Stefan Immler at NASA Goddard Space Flight Center
+	form the final mosaic.
+	* Worked with Dr. Stefan Immler at NASA Goddard Space Flight Center.
 
 * Analyzing the Star Formation of Galaxies in the MIDGET survey with Dr. Alberto Bolatto
 
@@ -63,11 +64,11 @@ permalink: /about/
 
 ##<a name="hire"></a>Hiring
 * [Resume](https://www.dropbox.com/s/8vit837qrfepnpq/resume.pdf?dl=0)
-* Teaching
+* Teaching:
 	*  I've been a teacher's assistant for several introductory astronomy classes 
-	and a physics tutor for friends in physics. 
-* Coding
-	* Proficient in R and Python. Most of my past experience is in IDL and shell scripts. Learning SQL.
+	and a physics tutor for friends. 
+* Coding:
+	* Proficient in R, SQL and Python. Most of my past experience is in IDL and shell scripts. Learning SQL
 
 [Top](#top)
 

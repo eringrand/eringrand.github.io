@@ -8,3 +8,6 @@ _drafts/*
 CNAME
 htmlwidgets_deps/*
 .DS_Store
+.Rproj.user
+.Rhistory
+*.Rproj
