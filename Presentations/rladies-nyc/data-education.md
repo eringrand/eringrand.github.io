@@ -7,19 +7,24 @@ autosize: true
 
 
 
+
 About Me (2 min)
 ========================================================
 
-- Oringainly studied Astronomy and Physics 
-- Studied Data Science at Columbia University (MS 2016)
-- Teaching in grad school, reading education research papers, listening to friends -> fell in love with education data and research
+- Oringainly studied Astronomy and Physics at University of Maryland
+- Studied Data Science at Columbia University
+- Loves education data and policy!
 
-What is a charter school? What is Uncommon Schools? (5min)
+What is a charter school?
 ========================================================
 
-- Publicly funded school that is run by a private non-profit company
-- Uncommon schools has 52 schools across 5 regions (Boston, Newark, Brooklyn, Rochester, Troy)
-- X # students, Y # teachers
+A charter school is an independently run public school granted greater flexibility in its operations, in return for greater accountability for performance. The "charter" establishing each school is a performance contract detailing the school's mission, program, students served, performance goals, and methods of assessment.
+
+Uncommon Schools
+========================================================
+
+![](http://www.uncommonschools.org/sites/default/files/datagraphics_063017.jpg)
+
 
 What kind of data do we work with? (5 min)
 ========================================================
@@ -64,21 +69,14 @@ You should be able to do everything inside janitor on your own, but we don't hav
 Benefits to using Janitor over writing your own code
 ========================================================
 
-
 - Functions are well tested
 - Data obeys Hadley's official style guide
 - Generally turn many lines of code into one or two (huzzah!)
 - Pipe-able
 - Written for the education data space
 
+Common Functions
 ========================================================
-
-
-
-
-
-
-
 
 Two main functions I use all the time:
 
@@ -88,9 +86,7 @@ Two main functions I use all the time:
 ![](http://media1.giphy.com/media/39V5OwGouQ9S8/giphy-downsized.gif)
 
 
-
-
-Other really usual functions:
+Other really usual functions
 ========================================================
 
 - `remove_empty_rows()` 
@@ -132,7 +128,7 @@ Heping coworkers learn R, why is this important?
 
 
 
-Q & A
+Q & A (10min)
 ========================================================
 
 
