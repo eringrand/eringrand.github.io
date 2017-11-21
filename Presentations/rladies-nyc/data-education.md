@@ -7,10 +7,11 @@ autosize: true
 
 
 
-How did I get into Data Science? (2 min)
+About Me (2 min)
 ========================================================
 
-- Astronomer by training, data scientist by new training
+- Oringainly studied Astronomy and Physics 
+- Studied Data Science at Columbia University (MS 2016)
 - Teaching in grad school, reading education research papers, listening to friends -> fell in love with education data and research
 
 What is a charter school? What is Uncommon Schools? (5min)

@@ -35,7 +35,7 @@ Erin joined Uncommon Schools as an Associate Director of Data Analytics in the s
 ##<a name="experience"></a>
 
 ###Uncommon Schools (Associate Director of Data Analytics)
-* 
+
 
 ###Crisis Text Line (Data Scientist)
 * Working at Crisis Text Line as a Data Scientist. You can read about my transition to Data Science at Crisis Text Line [here](http://datascience.columbia.edu/q-erin-grand-data-scientist-crisis-text-line).
