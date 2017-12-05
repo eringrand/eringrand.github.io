@@ -17,7 +17,7 @@ permalink: /about/
 ##<a name="info"></a>Bio
 Erin joined Uncommon Schools as an Associate Director of Data Analytics in the summer of 2016. Prior to Uncommon, she worked as a Data Scientist at Crisis Text Line and a software programmer at NASA. She recently completed her masters in Data Science at Columbia University. In the past, Erin researched star formation and taught introductory courses in astronomy and physics. In her free time, Erin enjoys reading, dancing and singing loudly to musical theatre.
 
-  
+
 ###Degrees: 
 * MS Data Science (Columbia University) 2016
 * MS Astronomy (University of Maryland) 2014
@@ -28,7 +28,12 @@ Erin joined Uncommon Schools as an Associate Director of Data Analytics in the s
 * [Twitter](https://www.twitter.com/astroeringrand)
 * [Resume](https://www.dropbox.com/s/8vit837qrfepnpq/resume.pdf?dl=0)
 
+
+### Organizations
+* [R-Ladies](https://rladies.org/)
+* [NASA Datanauts](https://open.nasa.gov/explore/datanauts/)
 [Top](#top)
+
 
 
 ---
