@@ -1,4 +1,4 @@
-R in the world of Education
+R in the World of Education
 ========================================================
 author: Erin Grand
 date: December 12, 2017
@@ -12,7 +12,15 @@ transition: none
   word-wrap: normal;
   -moz-hyphens: none;
 }
+
+.fullslide img {
+  margin-top: -85px;
+  margin-left: -60px;
+}
 </style>
+
+
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
@@ -30,30 +38,36 @@ About Me
 
 - Studied Astronomy and Physics at University of Maryland
 - Studied Data Science at Columbia University
-- Loves education data and policy!
+![]()
+
 
 What is a charter school?
 ========================================================
-<hr></hr>
+<hr></hr> 
 
 A charter school is an independently run public school granted greater flexibility in its operations, in return for greater accountability for performance. The "charter" establishing each school is a performance contract detailing the school's mission, program, students served, performance goals, and methods of assessment.
 
 Uncommon Schools
 ========================================================
 <hr></hr>
+![uncommon-schools](http://www.uncommonschools.org/sites/default/files/datagraphics_063017.jpg)
+***
+<hr></hr>
 
-![](http://www.uncommonschools.org/sites/default/files/datagraphics_063017.jpg)
+- Established 1997 (oldest school opens-North Star Academy in Newark); 2005 - CMO formed
+- 83% Free and reduced meal population
+- Intensive PD for teachers & leaders (Teach Like a Champion); Partnerships with local districts to deliver PD; Summer Teaching Fellows diversity recruitment program; Camp Uncommon
 
 
 What kind of data do we work with? 
 ========================================================
 <hr></hr>
 
-- Exams / assessments in class
-- State exams (common core test)
-- Class grades, attendance, suspensions, demographics
-- Teacher data
-- HR + recruitment information
+- **Assessments**: Interim assessments
+- **Exams**: Common Core aligned state exams, SAT, PSAT, APs, ...etc
+- **Classroom**: Grades, attendance, suspensions, ...etc
+- **Teacher**: student - course - teacher linkage
+- **Staff Data**: HR and Recruitment
 
 Data Challenges
 ========================================================
@@ -61,11 +75,52 @@ Data Challenges
 
 - Missing/Incomplete data
 - Different data sources without matching IDs (i.e HR to Teacher to Student)
-- Movement between schools of students and teachers
-- Duplicates in student IDs
+- Movement between schools and courses of students and teachers
+- Changing student IDs (not many)
 - Human data reporting error
-- Historical data
+- Historical data quality
 
+
+After Clean Data: Models
+========================================================
+<hr></hr>
+
+- Assessment cut scores and projections
+- SGI (small group learning)
+- Recruitment projections (based on attrition + growth)
+- Teacher value added model
+
+Examples of Problems we CAN Clean
+========================================================
+<hr></hr>
+
+- Messy excel sheets (historical or human entered)
+- Column names that don't apply anymore
+- Finding duplicates tests
+- Students that take half or one test and the other hald of another
+
+
+- alignment across power schools (missing FRPL, race...etc everywhere)
+- disciplinary codes are entered differently, excel vs salesforces... etc
+- school abbreviations change, location names changes, difference between versions (NSA- and spaces)
+- when we get the data from PSAT and SAT, we don't always use IDs so lots of manual teachers, TN
+- enrollment + student mobility in the middle of the year, audits in Sep but not done till end of Nov
+- carry through of data problems through multiple channels 
+- documentation lack of
+- leading zeros vanishing! (excel problem)
+- way the use the systems, connecting things to each other
+- duplication across systems (tableau and insight showing the same thing)
+- SS numbers! (data security)
+- tracking IDs changes (merge or split) of IDs
+- how we write out school years is different everywhere, with little documentation
+- problem of manual entered data, no audit of manual entered data
+- defining cohort! (grade you're in for a given year)
+
+Solutions:
+- `clean_names`
+- `get_dupes / verify(nrow(.) == 0)`
+- `group_by()` / `mutate()` - pick one of these dupes by some rule
+- key word searches for financial tags
 
 Looking at Duplicates with Janitor
 ========================================================
@@ -88,13 +143,17 @@ Benefits to using Janitor over writing your own code
 - Pipe-able
 - Written for the education data space
 
-Example 
+Messy Excel Sheets 
 ========================================================
 <hr></hr>
 
-picture of excel file before cleaning
+![Image credit to Sam Firke](https://github.com/sfirke/janitor/raw/master/tools/readme/dirty_data.PNG)
 
-```{r eval=FALSE, include = TRUE}
+
+Using Janitor to Clean Excel 
+========================================================
+
+```
 read_excel(filepath, sheet="Sheet1", col_types = "text") %>%
   clean_names() %>%
   remove_empty_cols() %>%
@@ -106,8 +165,9 @@ read_excel(filepath, sheet="Sheet1", col_types = "text") %>%
 
 
 ```{r, include = FALSE}
-library(dplyr)
+library(tidyverse)
 library(janitor)
+library(readxl)
 
 students <- tibble::tibble(student_id = round(runif(10, 1e6, 1e7-1), 0), 
                            grade = round(runif(10, 1, 12)),
@@ -121,9 +181,6 @@ students[3, 2]  <- students[5, 2] - 1
 
 
 
-
-
-
 Finding Duplicates
 ========================================================
 <hr></hr>
@@ -131,6 +188,7 @@ Finding Duplicates
 ```{r, eval = FALSE}
 library(tidyverse)
 library(janitor)
+library(readxl)
 
 students <- read_excel(filepath, sheet="Sheet1", col_types = "text") %>%
   clean_names() %>%
@@ -138,6 +196,7 @@ students <- read_excel(filepath, sheet="Sheet1", col_types = "text") %>%
   mutate_at(vars(entrydate, exitdate, student_id, yearsinuncommon), as.numeric) %>%
   mutate_at(vars(entrydate, exitdate), excel_numeric_to_date)
 ```
+
 
 ```{r}
 students %>% 
