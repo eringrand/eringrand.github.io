@@ -38,7 +38,6 @@ About Me
 
 - Studied Astronomy and Physics at University of Maryland
 - Studied Data Science at Columbia University
-![]()
 
 
 What is a charter school?
@@ -56,7 +55,7 @@ Uncommon Schools
 
 - Established 1997 (oldest school opens-North Star Academy in Newark); 2005 - CMO formed
 - 83% Free and reduced meal population
-- Intensive PD for teachers & leaders (Teach Like a Champion); Partnerships with local districts to deliver PD; Summer Teaching Fellows diversity recruitment program; Camp Uncommon
+- Intensive PD for teachers & leaders; Partnerships with local districts to deliver PD; Summer Teaching Fellows diversity recruitment program; Camp Uncommon
 
 
 What kind of data do we work with? 
@@ -76,6 +75,7 @@ Data Challenges
 - Missing/Incomplete data
 - Different data sources without matching IDs (i.e HR to Teacher to Student)
 - Movement between schools and courses of students and teachers
+- Alignment of data and data processes across all schools and regions
 - Changing student IDs (not many)
 - Human data reporting error
 - Historical data quality
@@ -96,31 +96,28 @@ Examples of Problems we CAN Clean
 
 - Messy excel sheets (historical or human entered)
 - Column names that don't apply anymore
+- Lack of historical documentation
 - Finding duplicates tests
-- Students that take half or one test and the other hald of another
+- Students that take half or one test and the other half of another
+- Vanishing leading zeros
 
-
-- alignment across power schools (missing FRPL, race...etc everywhere)
-- disciplinary codes are entered differently, excel vs salesforces... etc
-- school abbreviations change, location names changes, difference between versions (NSA- and spaces)
-- when we get the data from PSAT and SAT, we don't always use IDs so lots of manual teachers, TN
-- enrollment + student mobility in the middle of the year, audits in Sep but not done till end of Nov
-- carry through of data problems through multiple channels 
-- documentation lack of
-- leading zeros vanishing! (excel problem)
-- way the use the systems, connecting things to each other
-- duplication across systems (tableau and insight showing the same thing)
-- SS numbers! (data security)
-- tracking IDs changes (merge or split) of IDs
-- how we write out school years is different everywhere, with little documentation
-- problem of manual entered data, no audit of manual entered data
-- defining cohort! (grade you're in for a given year)
-
-Solutions:
-- `clean_names`
-- `get_dupes / verify(nrow(.) == 0)`
-- `group_by()` / `mutate()` - pick one of these dupes by some rule
-- key word searches for financial tags
+<!-- - disciplinary codes are entered differently, excel vs salesforces... etc -->
+<!-- - school abbreviations change, location names changes, difference between versions (NSA- and spaces) -->
+<!-- - when we get the data from PSAT and SAT, we don't always use IDs so lots of manual teachers, TN -->
+<!-- - enrollment + student mobility in the middle of the year, audits in Sep but not done till end of Nov -->
+<!-- - carry through of data problems through multiple channels  -->
+<!-- - way the use the systems, connecting things to each other -->
+<!-- - duplication across systems (tableau and insight showing the same thing) -->
+<!-- - SS numbers! (data security) -->
+<!-- - tracking IDs changes (merge or split) of IDs -->
+<!-- - how we write out school years is different everywhere, with little documentation -->
+<!-- - problem of manual entered data, no audit of manual entered data -->
+<!-- - defining cohort! (grade you're in for a given year) -->
+<!-- Solutions: -->
+<!-- - `clean_names` -->
+<!-- - `get_dupes / verify(nrow(.) == 0)` -->
+<!-- - `group_by()` / `mutate()` - pick one of these dupes by some rule -->
+<!-- - key word searches for financial tags -->
 
 Looking at Duplicates with Janitor
 ========================================================
