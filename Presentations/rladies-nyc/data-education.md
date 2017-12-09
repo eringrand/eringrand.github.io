@@ -23,8 +23,6 @@ transition: none
 
 
 
-
-
 About Me
 ========================================================
 <hr></hr>
@@ -37,7 +35,7 @@ What is a charter school?
 ========================================================
 <hr></hr> 
 
-A charter school is an independently run public school granted greater flexibility in its operations, in return for greater accountability for performance. The "charter" establishing each school is a performance contract detailing the school's mission, program, students served, performance goals, and methods of assessment.
+_A charter school is an independently run public school granted greater flexibility in its operations, in return for greater accountability for performance. The "charter" establishing each school is a performance contract detailing the school's mission, program, students served, performance goals, and methods of assessment._
 
 Uncommon Schools
 ========================================================
@@ -72,16 +70,6 @@ Data Challenges
 - Changing student IDs (not many)
 - Human data reporting error
 - Historical data quality
-
-
-After Clean Data: Models
-========================================================
-<hr></hr>
-
-- Assessment cut scores and projections
-- SGI (small group learning)
-- Recruitment projections (based on attrition + growth)
-- Teacher value added model
 
 Examples of Problems we CAN Clean
 ========================================================
@@ -170,8 +158,8 @@ Finding Duplicates
 # A tibble: 2 x 6
   student_id dupe_count grade yearsinuncommon  entrydate exitdate
        <dbl>      <int> <dbl>           <dbl>     <date>    <int>
-1    7239347          2     4               1 2017-12-08       NA
-2    7239347          2     5               1 2017-12-08       NA
+1    2614167          2     4               1 2017-12-09       NA
+2    2614167          2     5               1 2017-12-09       NA
 ```
 
 
@@ -181,28 +169,25 @@ Solving Duplicates
 
 
 
-- Correct the data: `mutate(students, grade = if_else(student_id == 7239347, 4, grade))`
+- Correct the data: `mutate(students, grade = if_else(student_id == 2614167, 4, grade))`
 - Summarize my taking minimum date / grade, if that is causing the problem
 - Output the duplicates and manually choose which version to keep
 
-Example projects: Models
+Model Building
 ========================================================
 <hr></hr>
 
-- Cut scores, linear + trees
-- Recruitment projections (logistic)
-- Value added model - teacher effect (maybe)
-
-
+- Assessment cut scores and projections
+- SGI (small group learning)
+- Recruitment projections (based on attrition + growth)
+- Teacher value added model
 
 ========================================================
 type: qa
-<div class="footer">@astroeringrand</div>
-
 <div style="position:fixed; top:50%;text-align:center;width:100%; display:block;   font-size: 150px;">
 Q & A
 </div>
-
+<div class="footer">@astroeringrand</div>
 
 
 
