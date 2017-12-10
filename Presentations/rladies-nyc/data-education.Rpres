@@ -5,7 +5,9 @@ date: December 12, 2017
 autosize: true
 css: custom.css
 font-family: 'Franklin Gothic Book'
-transition: none
+transition: linear
+width: 960
+height: 700
 
 <style>
 .reveal h1, .reveal h2, .reveal h3 {
@@ -13,12 +15,9 @@ transition: none
   -moz-hyphens: none;
 }
 
-.fullslide img {
-  margin-top: -85px;
-  margin-left: -60px;
-}
 </style>
 
+<div class="footer" style="top: 85%; left: 1%"><img src="US.png" height="100px" width="300" /></div>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
@@ -33,9 +32,13 @@ library(assertr)
 About Me
 ========================================================
 <hr></hr>
-
 - Studied Astronomy and Physics at University of Maryland
-- Studied Data Science at Columbia University
+- Data Science MS from Columbia University 2011
+- Currently Associate Director of Data Analytics at Uncommon Schools
+
+***
+<hr></hr>
+![](http://datascience.columbia.edu/files/seasdepts/idse/image-files/Erin_Grand_400.jpg)
 
 
 What is a charter school?
@@ -46,6 +49,7 @@ _A charter school is an independently run public school granted greater flexibil
 
 Uncommon Schools
 ========================================================
+class: smaller
 <hr></hr>
 ![uncommon-schools](http://www.uncommonschools.org/sites/default/files/datagraphics_063017.jpg)
 ***
@@ -78,8 +82,9 @@ Data Challenges
 - Human data reporting error
 - Historical data quality
 
-Examples of Problems we CAN Clean
+Data Challenges We Can Fix!
 ========================================================
+class: smaller
 <hr></hr>
 
 - Messy excel sheets (historical or human entered)
@@ -89,18 +94,20 @@ Examples of Problems we CAN Clean
 - Students that take half or one test and the other half of another
 - Vanishing leading zeros
 
+***
+<hr></hr>
+
+- Tracking of students IDs that change
+- Common definitions (i.e "cohort")
+- How to refer to school years or school abbreviations
+- Data audits
+
 <!-- - disciplinary codes are entered differently, excel vs salesforces... etc -->
-<!-- - school abbreviations change, location names changes, difference between versions (NSA- and spaces) -->
 <!-- - when we get the data from PSAT and SAT, we don't always use IDs so lots of manual teachers, TN -->
 <!-- - enrollment + student mobility in the middle of the year, audits in Sep but not done till end of Nov -->
 <!-- - carry through of data problems through multiple channels  -->
 <!-- - way the use the systems, connecting things to each other -->
 <!-- - duplication across systems (tableau and insight showing the same thing) -->
-<!-- - SS numbers! (data security) -->
-<!-- - tracking IDs changes (merge or split) of IDs -->
-<!-- - how we write out school years is different everywhere, with little documentation -->
-<!-- - problem of manual entered data, no audit of manual entered data -->
-<!-- - defining cohort! (grade you're in for a given year) -->
 <!-- Solutions: -->
 <!-- - `clean_names` -->
 <!-- - `get_dupes / verify(nrow(.) == 0)` -->
@@ -109,11 +116,12 @@ Examples of Problems we CAN Clean
 
 Looking at Duplicates with Janitor
 ========================================================
+class: center-img
 <hr></hr>
 
-*Janitor was built with beginning-to-intermediate R users in mind and is optimized for user-friendliness. Advanced users can already do everything covered here, but they can do it faster with janitor and save their thinking for more fun tasks.*
+<small>*Janitor was built with beginning-to-intermediate R users in mind and is optimized for user-friendliness. Advanced users can already do everything covered here, but they can do it faster with janitor and save their thinking for more fun tasks.* (_Sam Firke_) </small>
 
-You should be able to do everything inside janitor on your own, but we don't have the time to always clean up data without help.
+<small>If you're experienced with Tidyverse in general, you should be able to do everything inside janitor on your own, but we don't have the time to always clean up data without help. </small>
 
 ![](http://media3.giphy.com/media/3oKIPCSX4UHmuS41TG/giphy-downsized.gif)
 
@@ -125,27 +133,30 @@ Benefits to using Janitor over writing your own code
 - Functions are tested
 - Generally obeys Hadley's official style guide
 - Turn many lines of code into one or two
-- Pipe-able
+- Pipe-able functions
 - Written for the education data space
 
 Messy Excel Sheets 
 ========================================================
+class: center-img
+
 <hr></hr>
 
-![Image credit to Sam Firke](https://github.com/sfirke/janitor/raw/master/tools/readme/dirty_data.PNG)
+<img src = "https://github.com/sfirke/janitor/raw/master/tools/readme/dirty_data.PNG" >
+<small>_Image credit to Sam Firke_</small>
 
 
 Using Janitor to Clean Excel 
 ========================================================
+<hr></hr>
 
-```
+```{r, eval = FALSE, echo = TRUE}
 read_excel(filepath, sheet="Sheet1", col_types = "text") %>%
   clean_names() %>%
   remove_empty_cols() %>%
   remove_empty_rows() %>%
   mutate_at(vars(entrydate, exitdate, student_id, yearsinuncommon), as.numeric) %>%
-  mutate_at(vars(entrydate, exitdate), excel_numeric_to_date) %>% 
-  head()
+  mutate_at(vars(entrydate, exitdate), excel_numeric_to_date) 
 ```
 
 
@@ -157,8 +168,8 @@ library(readxl)
 students <- tibble::tibble(student_id = round(runif(10, 1e6, 1e7-1), 0), 
                            grade = round(runif(10, 1, 12)),
                            yearsinuncommon = rep(1, 10),
-                           entrydate = Sys.Date(),
-                           exitdate = NA_integer_)
+                           entrydate = Sys.Date() - 30,
+                           exitdate = Sys.Date())
 
 students[3, 1]  <- students[5, 1]
 students[3, 2]  <- students[5, 2] - 1
@@ -170,7 +181,7 @@ Finding Duplicates
 ========================================================
 <hr></hr>
 
-```{r, eval = FALSE}
+```{r, eval = FALSE, echo = TRUE}
 library(tidyverse)
 library(janitor)
 library(readxl)
@@ -183,13 +194,13 @@ students <- read_excel(filepath, sheet="Sheet1", col_types = "text") %>%
 ```
 
 
-```{r}
+```{r, echo = TRUE}
 students %>% 
   get_dupes(student_id)
 ```
 
 
-Solving Duplicates
+Now What?
 ========================================================
 <hr></hr>
 
@@ -207,9 +218,34 @@ grade <- students %>%
   as.character()
 ```
 
-- Correct the data: `mutate(students, grade = if_else(student_id == `r id`, `r grade`, grade))`
-- Summarize my taking minimum date / grade, if that is causing the problem
+- Correct the dupes individually with `if_else` or `case_when`
+
+```{r, eval = FALSE, echo = TRUE}
+mutate(students, grade = if_else(student_id == `r id`, `r grade`, grade))
+```
+
+- Summarize by taking minimum date / grade, if that is causing the problem
+
+```{r, eval = FALSE, echo = TRUE}
+group_by(students, student_id) %>% summarize(grade = min(grade))
+```
+
 - Output the duplicates and manually choose which version to keep
+
+```{r, eval = FALSE, echo = TRUE}
+dupes_correct <- read_csv("dupes_correct.csv")
+left_join(students, dupes_correct) %>%
+  replace_na(list(keep = 0)) %>%
+  assert(not_na, keep) %>%
+  filter(keep = 0)
+```
+
+What else do I love about Janitor?
+========================================================
+<hr></hr>
+- `clean_names` is a seriously magical function. Please adopt it for everything you do!
+- `tabyl` Janitor has a few awesome functions designed around tabulating data in a pipe friendly way. More to come in the next version! (Now in dev on github)
+
 
 Model Building
 ========================================================
@@ -221,6 +257,7 @@ Model Building
 - Teacher value added model
 
 ========================================================
+title: false
 type: qa
 <div style="position:fixed; top:50%;text-align:center;width:100%; display:block;   font-size: 150px;">
 Q & A

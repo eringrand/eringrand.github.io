@@ -11,3 +11,4 @@ htmlwidgets_deps/*
 .Rproj.user
 .Rhistory
 *.Rproj
+.httr-oauth
