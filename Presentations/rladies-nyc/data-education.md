@@ -170,8 +170,8 @@ students %>%
 # A tibble: 2 x 6
   student_id dupe_count grade yearsinuncommon  entrydate   exitdate
        <dbl>      <int> <dbl>           <dbl>     <date>     <date>
-1    6620041          2     7               1 2017-11-10 2017-12-10
-2    6620041          2     8               1 2017-11-10 2017-12-10
+1    3669370          2     1               1 2017-11-10 2017-12-10
+2    3669370          2     2               1 2017-11-10 2017-12-10
 ```
 
 
@@ -223,6 +223,7 @@ If a students IDs changes, or new duplicates occur, the code will HALT at this s
 
 Introducing R to my Team
 ========================================================
+class: center-img
 <hr></hr>
 
 **Learnings Along the Way**
@@ -230,6 +231,9 @@ Introducing R to my Team
 - Choose the packages that are needed every day
 - Have someone that is active in R community, so that you can be on the cutting edge.
 - The more practice someone has, the faster they'll learn. Pair PD sessions with coding projects.
+
+![typing+cat](https://media3.giphy.com/media/JIX9t2j0ZTN9S/giphy-downsized.gif?cid=e1bb72ff5a2e09ed4f324f4659a8ecb0)  
+
 
 
 ========================================================
