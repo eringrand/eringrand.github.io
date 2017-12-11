@@ -170,8 +170,8 @@ students %>%
 # A tibble: 2 x 6
   student_id dupe_count grade yearsinuncommon  entrydate   exitdate
        <dbl>      <int> <dbl>           <dbl>     <date>     <date>
-1    6966277          2     7               1 2017-11-10 2017-12-10
-2    6966277          2     8               1 2017-11-10 2017-12-10
+1    2342675          2    10               1 2017-11-11 2017-12-11
+2    2342675          2    11               1 2017-11-11 2017-12-11
 ```
 
 
@@ -232,9 +232,7 @@ class: center-img
 - Have someone that is active in R community, so that you can be on the cutting edge.
 - The more practice someone has, the faster they'll learn. Pair PD sessions with coding projects.
 
-![typing+cat](https://media3.giphy.com/media/JIX9t2j0ZTN9S/giphy-downsized.gif?cid=e1bb72ff5a2e09ed4f324f4659a8ecb0)  
-
-
+<div class="footer" style="top: 60%; left:40%; height: 200px" ><img src="https://media3.giphy.com/media/JIX9t2j0ZTN9S/giphy-downsized.gif?cid=e1bb72ff5a2e09ed4f324f4659a8ecb0"/></div>
 
 ========================================================
 type: qa
