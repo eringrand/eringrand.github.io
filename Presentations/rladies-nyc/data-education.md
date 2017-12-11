@@ -170,8 +170,8 @@ students %>%
 # A tibble: 2 x 6
   student_id dupe_count grade yearsinuncommon  entrydate   exitdate
        <dbl>      <int> <dbl>           <dbl>     <date>     <date>
-1    3669370          2     1               1 2017-11-10 2017-12-10
-2    3669370          2     2               1 2017-11-10 2017-12-10
+1    6966277          2     7               1 2017-11-10 2017-12-10
+2    6966277          2     8               1 2017-11-10 2017-12-10
 ```
 
 
@@ -250,7 +250,7 @@ class: center-img
 
 Entire state test analyses from raw data to dashboard is done with scripts (push button analysis)
 
-<img src = "process.png" size = 90px>
+<img src = "process.png" height = 100px>
 
 - Gathering, cleaning and basic processing
 

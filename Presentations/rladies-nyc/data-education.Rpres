@@ -268,7 +268,7 @@ class: center-img
 
 Entire state test analyses from raw data to dashboard is done with scripts (push button analysis)
 
-<img src = "process.png" size = 90px>
+<img src = "process.png" height = 100px>
 
 - Gathering, cleaning and basic processing
 
