@@ -9,16 +9,7 @@ transition: linear
 width: 960
 height: 700
 
-<style>
-.reveal h1, .reveal h2, .reveal h3 {
-  word-wrap: normal;
-  -moz-hyphens: none;
-}
-
-</style>
-
 <div class="footer" style="top: 85%; left: 1%"><img src="US.png" height="100px" width="300" /></div>
-
 
 
 
@@ -75,6 +66,12 @@ Data Challenges
 - Human data reporting error
 - Historical data quality
 
+========================================================
+class: center-img
+
+<img src = "data_sys.png" height = 650px>
+
+
 Data Challenges We Can Fix!
 ========================================================
 class: smaller
@@ -95,17 +92,6 @@ class: smaller
 - How to refer to school years or school abbreviations
 - Data audits
 
-<!-- - disciplinary codes are entered differently, excel vs salesforces... etc -->
-<!-- - when we get the data from PSAT and SAT, we don't always use IDs so lots of manual teachers, TN -->
-<!-- - enrollment + student mobility in the middle of the year, audits in Sep but not done till end of Nov -->
-<!-- - carry through of data problems through multiple channels  -->
-<!-- - way the use the systems, connecting things to each other -->
-<!-- - duplication across systems (tableau and insight showing the same thing) -->
-<!-- Solutions: -->
-<!-- - `clean_names` -->
-<!-- - `get_dupes / verify(nrow(.) == 0)` -->
-<!-- - `group_by()` / `mutate()` - pick one of these dupes by some rule -->
-<!-- - key word searches for financial tags -->
 
 Looking at Duplicates with Janitor
 ========================================================
@@ -132,7 +118,6 @@ Benefits to using Janitor over writing your own code
 Messy Excel Sheets 
 ========================================================
 class: center-img
-
 <hr></hr>
 
 <img src = "https://github.com/sfirke/janitor/raw/master/tools/readme/dirty_data.PNG" >
@@ -152,7 +137,6 @@ read_excel(filepath, sheet="Sheet1", col_types = "text") %>%
   mutate_at(vars(entrydate, exitdate, student_id, yearsinuncommon), as.numeric) %>%
   mutate_at(vars(entrydate, exitdate), excel_numeric_to_date) 
 ```
-
 
 
 
@@ -186,8 +170,8 @@ students %>%
 # A tibble: 2 x 6
   student_id dupe_count grade yearsinuncommon  entrydate   exitdate
        <dbl>      <int> <dbl>           <dbl>     <date>     <date>
-1    7015340          2     8               1 2017-11-10 2017-12-10
-2    7015340          2     9               1 2017-11-10 2017-12-10
+1    5809913          2     6               1 2017-11-10 2017-12-10
+2    5809913          2     7               1 2017-11-10 2017-12-10
 ```
 
 
@@ -222,21 +206,80 @@ left_join(students, dupes_correct) %>%
   filter(keep = 0)
 ```
 
-What else do I love about Janitor?
-========================================================
-<hr></hr>
-- `clean_names` is a seriously magical function. Please adopt it for everything you do!
-- `tabyl` Janitor has a few awesome functions designed around tabulating data in a pipe friendly way. More to come in the next version! (Now in dev on github)
-
-
-Model Building
+Managing Data Changes
 ========================================================
 <hr></hr>
 
-- Assessment cut scores and projections
+Using `get_dupes` and `verify()` from the **assertr** package is a great way to put in checks in case the data changes (which it will).
+
+```
+check <- students %>% 
+  get_dupes(student_id) %>% 
+  verify(nrow(.) == 0)
+```
+
+If a students IDs changes, or new duplicates occur, the code will HALT at this step alerting that something is off.
+
+
+Introducing R to my Team
+========================================================
+<hr></hr>
+
+**Learnings Along the Way**
+
+- Choose the packages that are needed every day
+- Have someone that is active in R community, so that you can be on the cutting edge.
+- The more practice someone has, the faster they'll learn. Pair PD sessions with coding projects.
+
+Models
+========================================================
+class: sub-section
+
+Automation of State Tests
+========================================================
+class: center-img
+<hr></hr>
+
+Entire state test analyses from raw data to dashboard is done with scripts (push button analysis)
+
+<img src = "process.png" size = 90px>
+
+- Gathering, cleaning and basic processing
+
+
+
+```r
+files <- list.files("../Input/", pattern = ".xlsx", full.names =  TRUE)
+nys <- map_dfr(files, prep_nys_files)
+```
+
+- Combine historical and new data from all three states
+- Data is outputted into Tableau dashboards
+
+Cut Scores: Predicted Pass Rates
+========================================================
+<hr></hr>
+
+
+```r
+library(rpart)
+cut_score <- rpart(profienct ~ ia_score, data = data, method="class")
+# plot
+# get accuracy
+# get first breaking point
+```
+
+***
+<hr></hr>
+![](cut_score.png)
+
+Other Model Projects
+========================================================
+<hr></hr>
+
 - SGI (small group learning)
-- Recruitment projections (based on attrition + growth)
-- Teacher value added model
+- Recruitment projections: Projected Attrition + Projected Growth
+- Teacher Effect : Value added model(s)
 
 ========================================================
 title: false
