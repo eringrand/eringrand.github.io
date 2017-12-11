@@ -170,8 +170,8 @@ students %>%
 # A tibble: 2 x 6
   student_id dupe_count grade yearsinuncommon  entrydate   exitdate
        <dbl>      <int> <dbl>           <dbl>     <date>     <date>
-1    5079133          2    10               1 2017-11-10 2017-12-10
-2    5079133          2    11               1 2017-11-10 2017-12-10
+1    6620041          2     7               1 2017-11-10 2017-12-10
+2    6620041          2     8               1 2017-11-10 2017-12-10
 ```
 
 
@@ -262,21 +262,38 @@ nys <- map_dfr(files, prep_nys_files)
 
 Cut Scores: Predicted Pass Rates
 ========================================================
+left: 70%
 <hr></hr>
 
 
 ```r
 library(rpart)
 library(rpart.plot)
-fit <- rpart(profienct ~ ia_score, data = data, method="class")
-# plot
-rpart.plot(fit)
-# get first breaking point
-cut_score <- fit$splits[1, ]["index"]
+
+# Model Fit
+fit <- rpart(proficient ~ ia_score, data=dat,  maxdepth = 1, method= "class")
+
+# Accuracy Calculation
+root.node.error <- fit$frame[1, 'dev']/fit$frame[1, 'n']
+xerr <- min(fit$cptable[, 3])
+cp.err <- root.node.error * xerr
+acc <- round(1 - cp.err, 3)
+
+# First Split
+cut_score <- as.data.frame(fit$splits)$index
 ```
 
 ***
 <hr></hr>
+
+
+```r
+# Plot Tree
+prp(fit, fallen.leaves = TRUE, type = 3, 
+    extra = 1, under = TRUE, varlen=0, faclen=0)
+title(sub = paste("Accuracy:", paste(100 * acc, "%", sep="")))
+```
+
 ![](cut_score.png)
 
 Other Model Projects
