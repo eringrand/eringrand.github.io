@@ -249,9 +249,13 @@ Introducing R to my Team
 - Have someone that is active in R community, so that you can be on the cutting edge.
 - The more practice someone has, the faster they'll learn. Pair PD sessions with coding projects.
 
-Models
+
 ========================================================
-class: sub-section
+type: qa
+<div style="position:fixed; top:50%;text-align:center;width:100%; display:block;   font-size: 120px;">
+Model Building
+</div>
+
 
 Automation of State Tests
 ========================================================
@@ -279,10 +283,12 @@ Cut Scores: Predicted Pass Rates
 
 ```{r, eval = FALSE, echo = TRUE}
 library(rpart)
-cut_score <- rpart(profienct ~ ia_score, data = data, method="class")
+library(rpart.plot)
+fit <- rpart(profienct ~ ia_score, data = data, method="class")
 # plot
-# get accuracy
+rpart.plot(fit)
 # get first breaking point
+cut_score <- fit$splits[1, ]["index"]
 ```
 
 ***

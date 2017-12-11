@@ -170,8 +170,8 @@ students %>%
 # A tibble: 2 x 6
   student_id dupe_count grade yearsinuncommon  entrydate   exitdate
        <dbl>      <int> <dbl>           <dbl>     <date>     <date>
-1    5809913          2     6               1 2017-11-10 2017-12-10
-2    5809913          2     7               1 2017-11-10 2017-12-10
+1    5079133          2    10               1 2017-11-10 2017-12-10
+2    5079133          2    11               1 2017-11-10 2017-12-10
 ```
 
 
@@ -231,9 +231,13 @@ Introducing R to my Team
 - Have someone that is active in R community, so that you can be on the cutting edge.
 - The more practice someone has, the faster they'll learn. Pair PD sessions with coding projects.
 
-Models
+
 ========================================================
-class: sub-section
+type: qa
+<div style="position:fixed; top:50%;text-align:center;width:100%; display:block;   font-size: 120px;">
+Model Building
+</div>
+
 
 Automation of State Tests
 ========================================================
@@ -263,10 +267,12 @@ Cut Scores: Predicted Pass Rates
 
 ```r
 library(rpart)
-cut_score <- rpart(profienct ~ ia_score, data = data, method="class")
+library(rpart.plot)
+fit <- rpart(profienct ~ ia_score, data = data, method="class")
 # plot
-# get accuracy
+rpart.plot(fit)
 # get first breaking point
+cut_score <- fit$splits[1, ]["index"]
 ```
 
 ***
