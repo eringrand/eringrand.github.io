@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- htmlwidgets dependencies --> 
+    
+    
+    
+
+    
+
+    <title>R in the World of Education – Erin Grand – Interested in data science and education</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="I recently gave a r-ladies presentation about my work cleaning and working with really messy education data. This blog post is an attempt at summarising the main points of the talk.
+" />
+    <meta property="og:description" content="I recently gave a r-ladies presentation about my work cleaning and working with really messy education data. This blog post is an attempt at summarising the main points of the talk.
+" />
+    
+    <meta name="author" content="Erin Grand" />
+
+    
+    <meta property="og:title" content="R in the World of Education" />
+    <meta property="twitter:title" content="R in the World of Education" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Erin Grand - Interested in data science and education" href="/feed.xml" />
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/6360871?v=3" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Erin Grand</a></h1>
+            <p class="site-description">Interested in data science and education</p>
+          </div>
+
+          <nav>
+            <a href="/">Blog</a>
+            <a href="/about">About</a>
+            <a href="/projects">Projects</a>
+            <a href="/archive">Archive</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      
+
+<article class="post">
+<h1>R in the World of Education</h1>
+
+
+<div>
+<ul class="tag_list_in_post">
+<emph> Tags: </emph>
+
+ <a class="tag_list_link" href="/tag/data">data</a>
+
+ <a class="tag_list_link" href="/tag/science">science</a>
+
+ <a class="tag_list_link" href="/tag/education">education</a>
+
+</ul>
+</div>
+
+
+
+
+<p id="post-meta"></p>
+
+  <div class="entry">
+    <p>I recently gave a r-ladies presentation about my work cleaning and working with really messy education data. This blog post is an attempt at summarising the main points of the talk.</p>
+
+<p><img src="/Presentation/rladies-nyc/data-education.html" alt="boop"></p>
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Excited for <a href="https://twitter.com/astroeringrand?ref_src=twsrc%5Etfw">@astroeringrand</a>’s <a href="https://twitter.com/RLadiesNYC?ref_src=twsrc%5Etfw">@RLadiesNYC</a> talk on <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> in education! <a href="https://t.co/wX3PT7F2KI">pic.twitter.com/wX3PT7F2KI</a></p>&mdash; Emily Robinson (@robinson_es) <a href="https://twitter.com/robinson_es/status/940730589077999617?ref_src=twsrc%5Etfw">December 12, 2017</a></blockquote>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p><em>Look how cool I am. Go me!</em></p>
+
+<p>I&#39;ve been an Associate Director of Data Analytics at Uncommon Schools for almost a year and a half now. Part of my job at Uncommon has been working with and teaching R to my fellow data analysts.  As such, I&#39;ve developed a bit of a sense of what works best for the type of messy data we&#39;re constantly analyzing.</p>
+
+<p>As a bit of background, Uncommon Schools is a network of 52 public <a href="http://www.uncommonschools.org/our-approach/faq-what-is-charter-school">charter schools</a> across Massachusetts, New Jersey, and New York. The oldest school (North Star Academy in Newark) was established in 1997 and the CMO was formed in 2005. For a more in depth history of Uncommon Schools, check out our [website](http://www.uncommonschools.org/our-approach/our-history.</p>
+
+<p><img src="http://www.uncommonschools.org/sites/default/files/datagraphics_063017.jpg" alt="uncommon-schools"></p>
+
+<h2>What kind of data do we work with?</h2>
+
+<p>The Data Analytics team focuses at the overall picture of data, so while we don&#39;t work on reporting data directly back to the state (our regional teams have excellent people working on this) we do get to touch most of the data we collect. </p>
+
+<p>The data we work with generally fits into one of these buckets...</p>
+
+<ul>
+<li><strong>Assessments</strong>: Interim assessments are taken as practice tests through out the school year.</li>
+<li><strong>Exams</strong>: Common Core aligned state exams, SAT, PSAT, APs, ...etc</li>
+<li><strong>Classroom</strong>: Assignment grades, attendance, suspensions, ...etc</li>
+<li><strong>Teacher</strong>: student - course - teacher linkage information</li>
+<li><strong>Staff Data</strong>: HR and Recruitment</li>
+</ul>
+
+<p>Unfortunately, given the amount of data we have and the number of sources it may be coming from, we have a ton of data challenges to overcome in every analysis.</p>
+
+<p>Of course, every piece of data has its own challenges and &quot;messy nature,&quot;  but there are patterns.</p>
+
+<ul>
+<li>Missing/Incomplete data</li>
+<li>Different data sources without matching IDs (i.e HR to Teacher to Student)</li>
+<li>Movement between schools and courses of students and teachers</li>
+<li>Alignment of data and data processes across all schools and regions</li>
+<li>Student IDs that change</li>
+<li>Human data reporting error</li>
+<li>Historical data quality</li>
+</ul>
+
+<p>Same of these challenges are easy to fix and some are harder. For example, a messy excel sheet can be cleaned (by hand or by code). We&#39;ve developed (or are developing in some cases) systems to work with most of these types of challenges.</p>
+
+<ul>
+<li>Messy excel sheets (historical or human entered)</li>
+<li>Column names that don&#39;t apply anymore</li>
+<li>Lack of historical documentation</li>
+<li>Finding duplicates tests</li>
+<li>Students that take half or one test and the other half of another</li>
+<li>Vanishing leading zeros</li>
+<li>Tracking of students IDs that change</li>
+<li>Common definitions (i.e &quot;cohort&quot;)</li>
+<li>How to refer to school years or school abbreviations</li>
+<li>Data audits</li>
+</ul>
+
+<h1>The Janitor Package</h1>
+
+<p>I really like this explantion on the package by package author, SAme Firke. <em><a href="https://github.com/sfirke/janitor">Janitor</a> was built with beginning-to-intermediate R users in mind and is optimized for user-friendliness. Advanced users can already do everything covered here, but they can do it faster with janitor and save their thinking for more fun tasks.</em></p>
+
+<p>Meaning, if you&#39;re experienced with the Tidyverse in general, you should be able to do everything inside janitor on your own. However, we don&#39;t always have the time to always clean up data without some help.</p>
+
+<div align="center">
+<img src = "http://media3.giphy.com/media/3oKIPCSX4UHmuS41TG/giphy-downsized.gif" width="100px"/>
+</div>
+
+<p>I like using Janitor over writing my own code because, (1) functions are well tested, (2) I can turn mutlple lines of code into one or two, and (3) the janitor functions are written to be pipe-able to work in the tidyverse space. It&#39;s a pretty cool bonus those that Sam works in the education space, so the functions were created to handle the education data problems I constantly face.</p>
+
+<h2>An example, using Janitor to clean a messy excel file.</h2>
+
+<p>I&#39;m often tasked with cleaning roster files, which contain entry and exit data for students. These files can be very messy due to students who moved between schools or were not exited properly from the system, causing duplicates. </p>
+
+<p>To clean this data, first I read it in with <code>read_excel</code> and use jantior&#39;s <code>clean_names</code> to convert all the column names to something I can use. <code>remove_empty_cols</code> and <code>remove_empty_rows</code> remove entire columns or rows that are NA as excel sometimes can&#39;t tell where this is data and where there isn&#39;t. </p>
+
+<p>I choose to use <code>col_type = &quot;text&quot;</code> in my <code>read_excel</code> statement, because I sometimes have to deal with leading zeros, NAs that are not written as NAs, or other text fields in my numerical columns. Reading in as text and converting later allows me to find and correct problems before they become NAs. I use <code>mutate_at</code> to convert these columns back to numbers after examining that everything looks good.</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r">students <span class="o">&lt;-</span> readxl<span class="o">::</span>read_excel<span class="p">(</span>filepath<span class="p">,</span> sheet<span class="o">=</span><span class="s">&quot;Sheet1&quot;</span><span class="p">,</span> col_types <span class="o">=</span> <span class="s">&quot;text&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  janitor<span class="o">::</span>clean_names<span class="p">()</span> <span class="o">%&gt;%</span>
+  janitor<span class="o">::</span>remove_empty_cols<span class="p">()</span> <span class="o">%&gt;%</span>
+  janitor<span class="o">::</span>remove_empty_rows<span class="p">()</span> <span class="o">%&gt;%</span>
+  dplyr<span class="o">::</span>mutate_at<span class="p">(</span>vars<span class="p">(</span>entrydate<span class="p">,</span> exitdate<span class="p">,</span> student_id<span class="p">,</span> yearsinuncommon<span class="p">),</span> <span class="kp">as.numeric</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  dplyr<span class="o">::</span>mutate_at<span class="p">(</span>vars<span class="p">(</span>entrydate<span class="p">,</span> exitdate<span class="p">),</span> excel_numeric_to_date<span class="p">)</span> 
+</code></pre></div>
+<p>The next step in data cleaning is to look for duplicates. Luckily, Janitor has a super helpful <code>get_dupes()</code> function which does just that!</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r">students <span class="o">%&gt;%</span> 
+  get_dupes<span class="p">(</span>student_id<span class="p">)</span>
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text"># A tibble: 2 x 6
+  student_id dupe_count grade yearsinuncommon  entrydate   exitdate
+       &lt;dbl&gt;      &lt;int&gt; &lt;dbl&gt;           &lt;dbl&gt;     &lt;date&gt;     &lt;date&gt;
+1    2342675          2    10               1 2017-11-11 2017-12-11
+2    2342675          2    11               1 2017-11-11 2017-12-11
+</code></pre></div>
+<p>In this example data, I have one student with duplicate information. They&#39;re in two different grades, ugh! Now, I have to choose a method to correct this student in my data. </p>
+
+<h3>There are three main ways I use to correct dupes.</h3>
+
+<h4>1. Correct the dupes individually with <code>if_else</code> or <code>case_when</code>.</h4>
+
+<p>If there are only a few duplicates, or they&#39;re all in one grade or class room, a quick set of <em>if</em> statements will do the trick to make the rows perfectly duplicated. From there, use <code>distinct</code> to get only distinct rows and remove the duplicates.</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r">mutate<span class="p">(</span>students<span class="p">,</span> grade <span class="o">=</span> if_else<span class="p">(</span>student_id <span class="o">==</span> <span class="m">2342675</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> grade<span class="p">))</span>
+</code></pre></div>
+<h4>2. Summarize by taking minimum date / grade to choose one row to keep.</h4>
+
+<p>This is helpful if you just need one of the rows, and don&#39;t really care which row is the one you keep. For example, our exit and enter date information is not usually great, so I&#39;m okay with the &#39;just pick one&#39; version as long as the student&#39;s grade and teacher information is the same in both rows.</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r">group_by<span class="p">(</span>students<span class="p">,</span> student_id<span class="p">)</span> <span class="o">%&gt;%</span> summarize<span class="p">(</span>grade <span class="o">=</span> <span class="kp">min</span><span class="p">(</span>grade<span class="p">))</span>
+</code></pre></div>
+<h4>3. Output the duplicates and manually choose which version to keep.</h4>
+
+<p>This involves the most manual work, so I usually grab help when I need to do this, yay teammates!</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r">dupes_correct <span class="o">&lt;-</span> read_csv<span class="p">(</span><span class="s">&quot;dupes_correct.csv&quot;</span><span class="p">)</span>
+left_join<span class="p">(</span>students<span class="p">,</span> dupes_correct<span class="p">)</span> <span class="o">%&gt;%</span>
+  replace_na<span class="p">(</span><span class="kt">list</span><span class="p">(</span>keep <span class="o">=</span> <span class="m">0</span><span class="p">))</span> <span class="o">%&gt;%</span>
+  assert<span class="p">(</span>not_na<span class="p">,</span> keep<span class="p">)</span> <span class="o">%&gt;%</span>
+  filter<span class="p">(</span>keep <span class="o">=</span> <span class="m">0</span><span class="p">)</span>
+</code></pre></div>
+<h3>Managing Data Changes</h3>
+
+<p>As data is updated, there might be more duplicates to worry about. A great way to check for duplicate updates is to use <code>get_dupes</code> and <code>verify()</code> from the <strong>assertr</strong> package. This allows you to put checks in place in case the data changes.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">check &lt;- students %&gt;% 
+  get_dupes(student_id) %&gt;% 
+  verify(nrow(.) == 0)
+</code></pre></div>
+<p>If new duplicates occur the code will HALT at this step alerting that something is wrong.</p>
+
+  </div>
+
+  <div class="date">
+    Written on December 30, 2017
+  </div>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+    
+	    var disqus_shortname = 'astroeringrand'; 
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+<a href="mailto:eringrand@gmail.com"><i class="svg-icon email"></i></a>
+
+
+<a href="https://github.com/eringrand"><i class="svg-icon github"></i></a>
+<a href="https://instagram.com/astroeringrand"><i class="svg-icon instagram"></i></a>
+<a href="https://www.linkedin.com/in/eringrand"><i class="svg-icon linkedin"></i></a>
+
+
+<a href="https://www.twitter.com/astroeringrand"><i class="svg-icon twitter"></i></a>
+
+<a href="https://youtube.com/channel/UCAMkBTcL3PAjgnETfWWKkCQ"><i class="svg-icon youtube"></i></a>
+
+        </footer>
+      </div>
+    </div>
+
+    
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		
+		ga('create', 'UA-59780775-1', 'auto');
+		ga('send', 'pageview', {
+		  'page': '/education-data/',
+		  'title': 'R in the World of Education'
+		});
+	</script>
+	<!-- End Google Analytics -->
+
+
+  </body>
+</html>
+
+
+
