@@ -136,9 +136,9 @@ left_join&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;students&lt;span class=&q
 
 &lt;h1&gt;An Example Project: State Test Analysis&lt;/h1&gt;
 
-&lt;p&gt;The largest impact project the data analytics team is in charge of all year is our annual state test analysis. We gather and clean all the raw results data for each of our schools, clean it, and combine the information into one cohesive story.&lt;/p&gt;
+&lt;p&gt;The largest impact project the data analytics team is in charge of all year is our annual state test analysis. We gather and all the raw results data for each of our schools, clean it, and combine the information into one cohesive story.&lt;/p&gt;
 
-&lt;p&gt;The old process for this used a lot of excel workbooks, manual edits, and a very confusing naming system to port the data into tableau dashboards. With the many steps, and points or error, the process took a really long time. A big goal of ours was to go from raw data to published tableau dashboard in a &lt;em&gt;few hours&lt;/em&gt; without any big hiccups.&lt;/p&gt;
+&lt;p&gt;The old process for this used a lot of excel workbooks, manual edits, and a very confusing naming system to port the data into tableau dashboards. With the many steps, and points of error, the process took a really long time. A big goal of ours was to go from raw data to published tableau dashboard in a &lt;em&gt;few hours&lt;/em&gt; without any big hiccups.&lt;/p&gt;
 
 &lt;p&gt;This year we completed an overhaul of the process with R scripts, that clean and QC the data, add variables we need for analysis, combine with historical state test results, and output tableau ready inputs. The entire state test analyses from raw data to dashboard can now be completed with the press of a few buttons.&lt;/p&gt;
 
