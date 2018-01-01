@@ -69,7 +69,7 @@
 
 &lt;h1&gt;The &lt;code&gt;janitor&lt;/code&gt; Package&lt;/h1&gt;
 
-&lt;p&gt;I really like this explanation on the package by package author, Sam Firke. &lt;em&gt;&lt;a href=&quot;https://github.com/sfirke/janitor&quot;&gt;Janitor&lt;/a&gt; was built with beginning-to-intermediate R users in mind and is optimized for user-friendliness. Advanced users can already do everything covered here, but they can do it faster with janitor and save their thinking for more fun tasks.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;I really like this explanation by package author, Sam Firke. &lt;em&gt;&lt;a href=&quot;https://github.com/sfirke/janitor&quot;&gt;Janitor&lt;/a&gt; was built with beginning-to-intermediate R users in mind and is optimized for user-friendliness. Advanced users can already do everything covered here, but they can do it faster with janitor and save their thinking for more fun tasks.&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;Meaning, if you&amp;#39;re experienced with the Tidyverse in general, you should be able to do everything inside &lt;code&gt;janitor&lt;/code&gt; on your own. However, we don&amp;#39;t always have the time to always clean up data without some help.&lt;/p&gt;
 
