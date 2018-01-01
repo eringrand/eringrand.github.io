@@ -4,7 +4,7 @@ title: "R in the World of Education"
 tags: data science education
 ---
 
-I recently gave a [r-ladies presentation](({{ site.baseurl }}/Presentations/rladies-nyc/data-education.html)) about my work cleaning and working with really messy education data. This blog post is an attempt at summarizing the main points of the [talk]({{ site.baseurl }}/Presentations/rladies-nyc/data-education.html).
+I recently gave a [r-ladies presentation]({{ site.baseurl }}/Presentations/rladies-nyc/data-education.html) about my work cleaning and working with really messy education data. This blog post is an attempt at summarizing the main points of the [talk]({{ site.baseurl }}/Presentations/rladies-nyc/data-education.html).
 
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Excited for <a href="https://twitter.com/astroeringrand?ref_src=twsrc%5Etfw">@astroeringrand</a>’s <a href="https://twitter.com/RLadiesNYC?ref_src=twsrc%5Etfw">@RLadiesNYC</a> talk on <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> in education! <a href="https://t.co/wX3PT7F2KI">pic.twitter.com/wX3PT7F2KI</a></p>&mdash; Emily Robinson (@robinson_es) <a href="https://twitter.com/robinson_es/status/940730589077999617?ref_src=twsrc%5Etfw">December 12, 2017</a></blockquote>
