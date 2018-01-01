@@ -9,6 +9,8 @@ transition: linear
 width: 960
 height: 700
 
+R-Ladies NYC
+
 <div class="footer" style="top: 85%; left: 1%"><img src="US.png" height="100px" width="300" /></div>
 
 
@@ -39,7 +41,7 @@ class: smaller
 ***
 <hr></hr>
 
-- Established 1997 (oldest school opens-North Star Academy in Newark); 2005 - CMO formed
+- Established in 1997 (oldest school opened - North Star Academy in Newark); 2005 - CMO formed
 - 83% Free and reduced meal population
 - Intensive PD for teachers & leaders; Partnerships with local districts to deliver PD; Summer Teaching Fellows diversity recruitment program; Camp Uncommon
 
@@ -54,22 +56,23 @@ What kind of data do we work with?
 - **Teacher**: student - course - teacher linkage
 - **Staff Data**: HR and Recruitment
 
+========================================================
+class: center-img
+
+<img src = "data_sys.png" height = 650px>
 Data Challenges
 ========================================================
 <hr></hr>
 
 - Missing/Incomplete data
 - Different data sources without matching IDs (i.e HR to Teacher to Student)
-- Movement between schools and courses of students and teachers
+- Students and teachers may move between schools or courses
 - Alignment of data and data processes across all schools and regions
 - Changing student IDs (not many)
 - Human data reporting error
 - Historical data quality
 
-========================================================
-class: center-img
 
-<img src = "data_sys.png" height = 650px>
 
 
 Data Challenges We Can Fix!
@@ -80,14 +83,14 @@ class: smaller
 - Messy excel sheets (historical or human entered)
 - Column names that don't apply anymore
 - Lack of historical documentation
-- Finding duplicates tests
-- Students that take half or one test and the other half of another
+- Finding duplicate exams
+- Students take half of one test and the other half of another
 - Vanishing leading zeros
 
 ***
 <hr></hr>
 
-- Tracking of students IDs that change
+- Tracking of student IDs that change
 - Common definitions (i.e "cohort")
 - How to refer to school years or school abbreviations
 - Data audits
@@ -170,8 +173,8 @@ students %>%
 # A tibble: 2 x 6
   student_id dupe_count grade yearsinuncommon  entrydate   exitdate
        <dbl>      <int> <dbl>           <dbl>     <date>     <date>
-1    2342675          2    10               1 2017-11-11 2017-12-11
-2    2342675          2    11               1 2017-11-11 2017-12-11
+1    7851976          2     5               1 2017-11-12 2017-12-12
+2    7851976          2     6               1 2017-11-12 2017-12-12
 ```
 
 
@@ -183,9 +186,8 @@ Now What?
 
 - Correct the dupes individually with `if_else` or `case_when`
 
-
-```r
-mutate(students, grade = if_else(student_id == `r id`, `r grade`, grade))
+```
+mutate(students, grade = if_else(student_id == 7851976, 5, grade))
 ```
 
 - Summarize by taking minimum date / grade, if that is causing the problem
@@ -218,7 +220,7 @@ check <- students %>%
   verify(nrow(.) == 0)
 ```
 
-If a students IDs changes, or new duplicates occur, the code will HALT at this step alerting that something is off.
+If a student ID changes, or new duplicates occur, the code will HALT at this step alerting that something is off.
 
 
 Introducing R to my Team

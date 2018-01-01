@@ -7,6 +7,167 @@
     <atom:link href="http://eringrand.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>R in the World of Education</title>
+        <description>&lt;p&gt;I recently gave a &lt;a href=&quot;(/Presentations/rladies-nyc/data-education.html)&quot;&gt;r-ladies presentation&lt;/a&gt; about my work cleaning and working with really messy education data. This blog post is an attempt at summarizing the main points of the &lt;a href=&quot;/Presentations/rladies-nyc/data-education.html&quot;&gt;talk&lt;/a&gt;.&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Excited for &lt;a href=&quot;https://twitter.com/astroeringrand?ref_src=twsrc%5Etfw&quot;&gt;@astroeringrand&lt;/a&gt;’s &lt;a href=&quot;https://twitter.com/RLadiesNYC?ref_src=twsrc%5Etfw&quot;&gt;@RLadiesNYC&lt;/a&gt; talk on &lt;a href=&quot;https://twitter.com/hashtag/rstats?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;#rstats&lt;/a&gt; in education! &lt;a href=&quot;https://t.co/wX3PT7F2KI&quot;&gt;pic.twitter.com/wX3PT7F2KI&lt;/a&gt;&lt;/p&gt;&amp;mdash; Emily Robinson (@robinson_es) &lt;a href=&quot;https://twitter.com/robinson_es/status/940730589077999617?ref_src=twsrc%5Etfw&quot;&gt;December 12, 2017&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;em&gt;Look how cool I am. Go me! The slides are &lt;a href=&quot;/Presentations/rladies-nyc/data-education.html&quot;&gt;here&lt;/a&gt; in case you missed them.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h1&gt;Uncommon Schools&lt;/h1&gt;
+
+&lt;p&gt;I&amp;#39;ve been an Associate Director of Data Analytics at Uncommon Schools for almost a year and a half now. Part of my job at Uncommon has been working with and teaching R to my fellow data analysts.  As such, I&amp;#39;ve developed a sense of what works best for the type of messy data we&amp;#39;re constantly analyzing.&lt;/p&gt;
+
+&lt;p&gt;As a bit of background, Uncommon Schools is a Charter Management Organization (CMO), or network of 52 public &lt;a href=&quot;http://www.uncommonschools.org/our-approach/faq-what-is-charter-school&quot;&gt;charter schools&lt;/a&gt; across Massachusetts, New Jersey, and New York. The oldest school (North Star Academy in Newark) was established in 1997 and the CMO was formed in 2005. For a more in depth history of Uncommon Schools, check out our &lt;a href=&quot;http://www.uncommonschools.org/our-approach/our-history&quot;&gt;website&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.uncommonschools.org/sites/default/files/datagraphics_063017.jpg&quot; alt=&quot;uncommon-schools&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;What kind of data do we work with?&lt;/h2&gt;
+
+&lt;p&gt;The Data Analytics team focuses at the overall picture, so while we don&amp;#39;t work on reporting data directly back to the state (our regional teams have excellent people working on this) we do get to work with most of the data the organization collects. &lt;/p&gt;
+
+&lt;p&gt;The data we work with generally fits into one of these buckets...&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Assessments&lt;/strong&gt;: Interim assessments are taken as practice tests through out the school year.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Exams&lt;/strong&gt;: Common Core aligned state exams, SAT, PSAT, APs, ...etc&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Classroom&lt;/strong&gt;: Assignment grades, attendance, suspensions, ...etc&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Teacher&lt;/strong&gt;: student - course - teacher linkage information&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Staff Data&lt;/strong&gt;: HR and Recruitment&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Unfortunately, given the amount of data we have and the number of sources it may be coming from, we have a ton of data challenges to overcome in every analysis.&lt;/p&gt;
+
+&lt;p&gt;Of course, every piece of data has its own challenges and &amp;quot;messy nature,&amp;quot;  but there are patterns.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Missing/Incomplete data&lt;/li&gt;
+&lt;li&gt;Different data sources without matching IDs (i.e HR to Teacher to Student)&lt;/li&gt;
+&lt;li&gt;Movement between schools and courses of students and teachers&lt;/li&gt;
+&lt;li&gt;Alignment of data and data processes across all schools and regions&lt;/li&gt;
+&lt;li&gt;Student IDs that change&lt;/li&gt;
+&lt;li&gt;Human data reporting error&lt;/li&gt;
+&lt;li&gt;Historical data quality&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Same of these challenges are easy to fix and some are harder. For example, a messy excel sheet can be cleaned (by hand or by code). We&amp;#39;ve developed (or are developing in some cases) systems to work with most of these types of challenges.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Messy excel sheets (historical or human entered)&lt;/li&gt;
+&lt;li&gt;Column names that don&amp;#39;t apply anymore&lt;/li&gt;
+&lt;li&gt;Lack of historical documentation&lt;/li&gt;
+&lt;li&gt;Finding duplicates tests&lt;/li&gt;
+&lt;li&gt;Students that take half of one test and the other half of another&lt;/li&gt;
+&lt;li&gt;Vanishing leading zeros&lt;/li&gt;
+&lt;li&gt;Tracking of student IDs that change&lt;/li&gt;
+&lt;li&gt;Lack of common definitions (i.e &amp;quot;cohort&amp;quot;)&lt;/li&gt;
+&lt;li&gt;How to refer to school years or school abbreviations&lt;/li&gt;
+&lt;li&gt;Data audits&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1&gt;The &lt;code&gt;janitor&lt;/code&gt; Package&lt;/h1&gt;
+
+&lt;p&gt;I really like this explanation on the package by package author, Sam Firke. &lt;em&gt;&lt;a href=&quot;https://github.com/sfirke/janitor&quot;&gt;Janitor&lt;/a&gt; was built with beginning-to-intermediate R users in mind and is optimized for user-friendliness. Advanced users can already do everything covered here, but they can do it faster with janitor and save their thinking for more fun tasks.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Meaning, if you&amp;#39;re experienced with the Tidyverse in general, you should be able to do everything inside &lt;code&gt;janitor&lt;/code&gt; on your own. However, we don&amp;#39;t always have the time to always clean up data without some help.&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+&lt;img src = &quot;http://media3.giphy.com/media/3oKIPCSX4UHmuS41TG/giphy-downsized.gif&quot; width=&quot;100px&quot;/&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I like using &lt;code&gt;janitor&lt;/code&gt; over writing my own code because, (1) functions are well tested, (2) I can turn multiple lines of code into one or two, and (3) the &lt;code&gt;janitor&lt;/code&gt; functions are written to be pipe-able to work in the tidyverse space. It&amp;#39;s a pretty cool bonus that Sam works in the education space, so the functions were created to handle the education data problems I constantly face.&lt;/p&gt;
+
+&lt;h2&gt;An example, using &lt;code&gt;janitor&lt;/code&gt; to clean a messy excel file.&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#39;m often tasked with cleaning roster files, which contain entry and exit data for students. These files can be very messy due to students who moved between schools or were not exited properly from the system, causing duplicates. &lt;/p&gt;
+
+&lt;p&gt;To clean this data, first I read it in with &lt;code&gt;read_excel&lt;/code&gt; and use &lt;code&gt;janitor&amp;#39;s&lt;/code&gt; &lt;code&gt;clean_names&lt;/code&gt; to convert all the column names to something I can use. &lt;code&gt;remove_empty_cols&lt;/code&gt; and &lt;code&gt;remove_empty_rows&lt;/code&gt; remove entire columns or rows that are NA as excel sometimes can&amp;#39;t tell where there is data and where there isn&amp;#39;t. &lt;/p&gt;
+
+&lt;p&gt;I choose to use &lt;code&gt;col_type = &amp;quot;text&amp;quot;&lt;/code&gt; in my &lt;code&gt;read_excel&lt;/code&gt; statement, because I sometimes have to deal with leading zeros, NAs that are not written as NAs, or other text fields in my numerical columns. Reading in as text and converting later allows me to find and correct problems before they become NAs. I use &lt;code&gt;mutate_at&lt;/code&gt; to convert these columns back to numbers after examining that everything looks good.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;students &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; readxl&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;read_excel&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;filepath&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; sheet&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Sheet1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; col_types &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  janitor&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;clean_names&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  janitor&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;remove_empty_cols&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  janitor&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;remove_empty_rows&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  dplyr&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;mutate_at&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vars&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;entrydate&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; exitdate&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; student_id&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; yearsinuncommon&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;as.numeric&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  dplyr&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;mutate_at&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;vars&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;entrydate&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; exitdate&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; excel_numeric_to_date&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The next step in data cleaning is to look for duplicates. Luckily, &lt;code&gt;janitor&lt;/code&gt; has a super helpful &lt;code&gt;get_dupes()&lt;/code&gt; function which does just that!&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;students &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; 
+  get_dupes&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;student_id&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;# A tibble: 2 x 6
+  student_id dupe_count grade yearsinuncommon  entrydate   exitdate
+       &amp;lt;dbl&amp;gt;      &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;           &amp;lt;dbl&amp;gt;     &amp;lt;date&amp;gt;     &amp;lt;date&amp;gt;
+1    2342675          2    10               1 2017-11-11 2017-12-11
+2    2342675          2    11               1 2017-11-11 2017-12-11
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In this example data, I have one student with duplicate information. They&amp;#39;re in two different grades, ugh! Now, I have to choose a method to correct this student in my data. &lt;/p&gt;
+
+&lt;h3&gt;There are three main ways I use to correct dupes.&lt;/h3&gt;
+
+&lt;h4&gt;1. Correct the dupes individually with &lt;code&gt;if_else&lt;/code&gt; or &lt;code&gt;case_when&lt;/code&gt;.&lt;/h4&gt;
+
+&lt;p&gt;If there are only a few duplicates, or they&amp;#39;re all in one grade or class room, a quick set of &lt;em&gt;if&lt;/em&gt; statements will do the trick to make the rows perfectly duplicated. From there, use &lt;code&gt;distinct&lt;/code&gt; to get only distinct rows and remove the duplicates.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;students&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; grade &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; if_else&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;student_id &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2342675&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; grade&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;2. Summarize by taking minimum date / grade to choose one row to keep.&lt;/h4&gt;
+
+&lt;p&gt;This is helpful if you just need one of the rows, and don&amp;#39;t really care which row is the one you keep. For example, our exit and enter date information is not usually great, so I&amp;#39;m okay with the &amp;#39;just pick one&amp;#39; version as long as the student&amp;#39;s grade and teacher information is the same in both rows.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;group_by&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;students&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; student_id&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; summarize&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;grade &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;grade&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;3. Output the duplicates and manually choose which version to keep.&lt;/h4&gt;
+
+&lt;p&gt;This involves the most manual work, so I usually grab help when I need to do this, yay teammates!&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;dupes_correct &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; read_csv&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;dupes_correct.csv&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+left_join&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;students&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; dupes_correct&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  replace_na&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;keep &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  assert&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;not_na&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; keep&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;keep &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Managing Data Changes&lt;/h3&gt;
+
+&lt;p&gt;As data is updated, there might be more duplicates to worry about. A great way to check for duplicate updates is to use the 1:2 punch of &lt;strong&gt;janitor&amp;#39;s&lt;/strong&gt; &lt;code&gt;get_dupes&lt;/code&gt; and &lt;strong&gt;assertr&amp;#39;s&lt;/strong&gt; &lt;code&gt;verify()&lt;/code&gt;. This allows you to put checks in place in case the data changes.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;check &amp;lt;- students %&amp;gt;% 
+  get_dupes(student_id) %&amp;gt;% 
+  verify(nrow(.) == 0)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If new duplicates occur the code will HALT at this step alerting that something is wrong.&lt;/p&gt;
+
+&lt;h1&gt;An Example Project: State Test Analysis&lt;/h1&gt;
+
+&lt;p&gt;The largest impact project the data analytics team is in charge of all year is our annual state test analysis. We gather and clean all the raw results data for each of our schools, clean it, and combine the information into one cohesive story.&lt;/p&gt;
+
+&lt;p&gt;The old process for this used a lot of excel workbooks, manual edits, and a very confusing naming system to port the data into tableau dashboards. With the many steps, and points or error, the process took a really long time. A big goal of ours was to go from raw data to published tableau dashboard in a &lt;em&gt;few hours&lt;/em&gt; without any big hiccups.&lt;/p&gt;
+
+&lt;p&gt;This year we completed an overhaul of the process with R scripts, that clean and QC the data, add variables we need for analysis, combine with historical state test results, and output tableau ready inputs. The entire state test analyses from raw data to dashboard can now be completed with the press of a few buttons.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src = &quot;/Presentations/rladies-nyc/process.png&quot; height = 100px&gt;&lt;/p&gt;
+
+&lt;p&gt;Using &lt;code&gt;PURRR&lt;/code&gt; code to read and combined multiple files into one data frame has been the saving grace of this analysis. We have each grade/subject/school combination in a separate file, and with just a few lines of code R can bring them together for further cleaning.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;files &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;list.files&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;../Input/&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; pattern &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;.xlsx&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; full.names &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;  &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+nys &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; map_dfr&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;files&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; prep_nys_files&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If you&amp;#39;re curious to other parts of the code that really changed this process (for example &lt;code&gt;assertr&lt;/code&gt; or &lt;code&gt;tidyr&lt;/code&gt;) please feel free to ask! &lt;/p&gt;
+
+&lt;h1&gt;Wrap Up&lt;/h1&gt;
+
+&lt;p&gt;These changes didn&amp;#39;t come easy for my team. I work with a group of extremely smart people, but before I started with Uncommon most people on my team didn&amp;#39;t code at all let alone use R. It&amp;#39;s been part of my job to teach everyone to write in R, and make sure we&amp;#39;re all using best practices. One day I will write a longer blog post about some of the learnings I&amp;#39;ve had throughout this process, so stay tuned for that! In the mean time, I offer you some closing remarks on what I&amp;#39;ve found to work best.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Choose the packages to teach that are needed every day. (For me, this was &lt;code&gt;janitor&lt;/code&gt; and &lt;code&gt;dplyr&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Have someone that is active in R community, so that you can be on the cutting edge of best practices and new packages.&lt;/li&gt;
+&lt;li&gt;The more practice someone has, the faster they&amp;#39;ll learn. Pair professional development sessions with coding projects. &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Introducing my team to the &lt;code&gt;tidyverse&lt;/code&gt; and &lt;code&gt;janitor&lt;/code&gt; have been a really big help for getting my team members on board and excited about learning and using R. A quick demonstration of &lt;code&gt;group_by()&lt;/code&gt; and &lt;code&gt;get_dupes()&lt;/code&gt; was really all I needed to motivate big changes in our analysis process.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 30 Dec 2017 00:00:00 -0500</pubDate>
+        <link>http://eringrand.github.io/education-data/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/education-data/</guid>
+      </item>
+    
+      <item>
         <title>Update to Lizzie Bennet Text Analysis Using Plotly</title>
         <description>&lt;p&gt;&lt;a href=&quot;https://twitter.com/d4tagirl&quot;&gt;Daniela Vázquez&lt;/a&gt; recently published her &lt;a href=&quot;https://d4tagirl.com/2017/05/how-do-you-feel-about-last-week-tonight&quot;&gt;blog post on Last Week Tonight&lt;/a&gt;. She used a bunch of code from my previous LBD analysis (THANKS FOR THE LOVE DANIELA! :heart:) and also created this super cool &lt;code&gt;plotly&lt;/code&gt; widget.&lt;/p&gt;
 
@@ -865,59 +1026,6 @@ You can also compete within your grop to see who is the &amp;quot;Top Tabber&amp
         <pubDate>Thu, 12 Mar 2015 00:00:00 -0400</pubDate>
         <link>http://eringrand.github.io/tabforacause/</link>
         <guid isPermaLink="true">http://eringrand.github.io/tabforacause/</guid>
-      </item>
-    
-      <item>
-        <title>Reading Suggestions from Feb 2015</title>
-        <description>&lt;p&gt;I&amp;#39;m going to start a new monthly post where I link to the most interesting articles, blog posts, tutorials and
-youtube videos I&amp;#39;ve found throughout the previous month. &lt;/p&gt;
-
-&lt;hr&gt;
-
-&lt;h2&gt;Articles and Blog Posts:&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.countbayesie.com/blog/2015/2/18/bayes-theorem-with-lego&quot;&gt;Baye&amp;#39;s Theorem with Legos&lt;/a&gt;
-written by Will Kurt  of Count Bayesie 
-If you&amp;#39;ve been looking for away to visualize how Bayes Theorem works, Will Kurt has written 
-a piece using legos to picture the formula at work. &lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.cnn.com/2015/02/02/opinion/kakaes-big-data/index.html&quot;&gt;The Problem With Data&lt;/a&gt;
-written by Konstantin Kakaes. 
-An interesting look into the future of big data.&lt;br&gt;
-Many of these problems mentioned are problems will data of ALL sizes. &lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.cnet.com/news/what-would-spock-do-how-leonard-nimoy-helped-me-prosper/&quot;&gt;What Would Spock Do: How Leonard Nimoy Helped Me Prosper&lt;/a&gt;
-A lovely tribute to the late Leonard Nimoy written by CNET&amp;#39;s Bonnie Burton.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.dataschool.io/python-or-r-for-data-science/&quot;&gt;Python vs R&lt;/a&gt;
-An interesting look into whether teaching python or R for data science is more useful.
-(More personal opinion on this topic is that it&amp;#39;s useful to learn both.)   &lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.edutopia.org/blog/whats-the-point-of-assessment-shira-loewenstein&quot;&gt;What&amp;#39;s the Point of Assessment?&lt;/a&gt;
-by Shira Loewenstein. 
-A look into the purpose of standardize testing and grades, and the challenges faced 
-by teachers and students alike.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.nytimes.com/2015/01/18/opinion/sunday/why-some-teams-are-smarter-than-others.html?src=twr&amp;amp;smid=fb-nytimes&amp;amp;bicmst=1409232722000&amp;amp;bicmet=1419773522000&amp;amp;bicmp=AD&amp;amp;smtyp=aut&amp;amp;bicmlukp=WT.mc_id&amp;amp;_r=1&quot;&gt;Why Some Teams ar Smarter Than Others&lt;/a&gt;
-Written by: Anita Woolley, Thomas W. Malone and Christopher Chabris.
-This is a great article about working with people without wasting time.
-It is a great read and useful for everyone who 
- has experienced problems that can occur when human beings try 
-to work together in groups. &lt;/p&gt;
-
-&lt;hr&gt;
-
-&lt;h2&gt;Tutorials:&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://kbroman.org/github_tutorial/&quot;&gt;Github&lt;/a&gt;
-Better your knowledge and use of github. &lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://kbroman.org/knitr_knutshell/&quot;&gt;Knitr&lt;/a&gt;
-Lean how to use Knitr to change R code into blog posts. &lt;/p&gt;
-</description>
-        <pubDate>Tue, 03 Mar 2015 00:00:00 -0500</pubDate>
-        <link>http://eringrand.github.io/readlistfeb2015/</link>
-        <guid isPermaLink="true">http://eringrand.github.io/readlistfeb2015/</guid>
       </item>
     
   </channel>
