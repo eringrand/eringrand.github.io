@@ -173,8 +173,8 @@ students %>%
 # A tibble: 2 x 6
   student_id dupe_count grade yearsinuncommon  entrydate   exitdate
        <dbl>      <int> <dbl>           <dbl>     <date>     <date>
-1    3070422          2     2               1 2017-12-02 2018-01-01
-2    3070422          2     3               1 2017-12-02 2018-01-01
+1    4137115          2     1               1 2017-12-02 2018-01-01
+2    4137115          2     2               1 2017-12-02 2018-01-01
 ```
 
 
@@ -187,7 +187,7 @@ Now What?
 - Correct the dupes individually with `if_else` or `case_when`
 
 ```
-mutate(students, grade = if_else(student_id == 3070422, 2, grade))
+mutate(students, grade = if_else(student_id == 4137115, 1, grade))
 ```
 
 - Summarize by taking minimum date / grade, if that is causing the problem
