@@ -30,7 +30,7 @@ over 9.5 hours of video making it the longest adaption of Pride and
 Prejudice to date.
 
 Along with the main LBD channel, there are also some supporting
-channels. These allow others characters to tell parts of the story that
+channels. These allow other characters to tell parts of the story that
 Lizzie doesn't take part in. For example, Lydia's Vlogs include the
 story on how she meets George Wickham and their budding relationship.
 While not required viewing, these extra videos help round out the
@@ -41,9 +41,6 @@ writers of the original videos: one that follows the videos but adds
 some more detail to Lizzie's life, and one that focuses on Lydia's story
 after the series ends.
 
-![](https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/10329014_10202570761053579_3130716185504613915_n.jpg?oh=d6dce9e54a81d5d7864d68dfa2f6269c&oe=596C631F)
-The Secret Diary of Lizzie Bennet, signed by most of the cast and
-writers
 
 In honor of LBD's 5th Anniversary, let's do some LBD text analysis!
 **Happy Anniversary LBD!**
@@ -194,7 +191,7 @@ titles <- text %>%
 ```
 
 One of the problems with using captions, is the messy text. I used a
-simple set of `gsub` to transform obvious punctuation marks into their
+simple set of `gsub` commands to transform obvious punctuation marks into their
 English counterparts. I also pulled out the character SPEAKING the words
 from the text itself. I left this column alone in the data set, but might
 one day go back and focus an analysis on speaking characters.
@@ -294,7 +291,7 @@ Sentiment Analysis
 ------------------
 
 I've chosen to use the Bing lexicon (because of Bing Lee, get it?). In
-Tidydata sentiment analysis is easy because you just join the lexicon
+Tidydata, sentiment analysis is easy because you just join the lexicon
 against your tokenzied words.
 
 ```r
