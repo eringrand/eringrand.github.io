@@ -12,3 +12,4 @@ htmlwidgets_deps/*
 .Rhistory
 *.Rproj
 .httr-oauth
+.Rdata
