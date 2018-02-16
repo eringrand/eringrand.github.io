@@ -43,12 +43,12 @@ Of course, every piece of data has its own challenges and "messy nature,"  but t
 - Human data reporting error
 - Historical data quality
 
-Same of these challenges are easy to fix and some are harder. For example, a messy excel sheet can be cleaned (by hand or by code). We've developed (or are developing in some cases) systems to work with most of these types of challenges.
+Some of these challenges are easy to fix and some are harder. For example, a messy excel sheet can be cleaned (by hand or by code). We've developed (or are developing in some cases) systems to work with most of these types of challenges.
 
 - Messy excel sheets (historical or human entered)
 - Column names that don't apply anymore
 - Lack of historical documentation
-- Finding duplicates tests
+- Finding duplicate tests
 - Students that take half of one test and the other half of another
 - Vanishing leading zeros
 - Tracking of student IDs that change
@@ -59,7 +59,7 @@ Same of these challenges are easy to fix and some are harder. For example, a mes
 
 # The `janitor` Package
 
-I really like this explanation on the package by package author, Sam Firke. _[Janitor](https://github.com/sfirke/janitor) was built with beginning-to-intermediate R users in mind and is optimized for user-friendliness. Advanced users can already do everything covered here, but they can do it faster with janitor and save their thinking for more fun tasks._
+I really like this explanation by package author, Sam Firke. _[Janitor](https://github.com/sfirke/janitor) was built with beginning-to-intermediate R users in mind and is optimized for user-friendliness. Advanced users can already do everything covered here, but they can do it faster with janitor and save their thinking for more fun tasks._
 
 Meaning, if you're experienced with the Tidyverse in general, you should be able to do everything inside `janitor` on your own. However, we don't always have the time to always clean up data without some help.
 
@@ -147,9 +147,9 @@ If new duplicates occur the code will HALT at this step alerting that something 
 
 #  An Example Project: State Test Analysis
 
-The largest impact project the data analytics team is in charge of all year is our annual state test analysis. We gather and clean all the raw results data for each of our schools, clean it, and combine the information into one cohesive story.
+The largest impact project the data analytics team is in charge of all year is our annual state test analysis. We gather and all the raw results data for each of our schools, clean it, and combine the information into one cohesive story.
 
-The old process for this used a lot of excel workbooks, manual edits, and a very confusing naming system to port the data into tableau dashboards. With the many steps, and points or error, the process took a really long time. A big goal of ours was to go from raw data to published tableau dashboard in a *few hours* without any big hiccups.
+The old process for this used a lot of excel workbooks, manual edits, and a very confusing naming system to port the data into tableau dashboards. With the many steps, and points of error, the process took a really long time. A big goal of ours was to go from raw data to published tableau dashboard in a *few hours* without any big hiccups.
 
 This year we completed an overhaul of the process with R scripts, that clean and QC the data, add variables we need for analysis, combine with historical state test results, and output tableau ready inputs. The entire state test analyses from raw data to dashboard can now be completed with the press of a few buttons.
 
