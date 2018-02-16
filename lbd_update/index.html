@@ -113,7 +113,7 @@
     <p><a href="https://twitter.com/d4tagirl">Daniela Vázquez</a> recently published her <a href="https://d4tagirl.com/2017/05/how-do-you-feel-about-last-week-tonight">blog post on Last Week Tonight</a>. She used a bunch of code from my previous LBD analysis (THANKS FOR THE LOVE DANIELA! :heart:) and also created this super cool <code>plotly</code> widget.</p>
 
 <p>I had never used <code>ggplot</code> and <code>plotly</code> before and wanted to give it a try, recreating a previous plot of sentiment by LBD episode.  </p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>viridis<span class="p">)</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kn">library</span><span class="p">(</span>viridis<span class="p">)</span>
 <span class="kn">library</span><span class="p">(</span>plotly<span class="p">)</span>
 
 p <span class="o">&lt;-</span> ggplot<span class="p">(</span>lbsentiment<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>index<span class="p">,</span> sentiment<span class="p">,</span> fill<span class="o">=</span><span class="kp">as.factor</span><span class="p">(</span>index<span class="p">),</span> text<span class="o">=</span>title<span class="p">))</span> <span class="o">+</span>

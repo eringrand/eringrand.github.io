@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- htmlwidgets dependencies --> 
+    
+    
+    
+
+    
+
+    <title>Faces of – Erin Grand – Interested in data science and education</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="I was reminded today by Daniela that everyone should blog - and on top of that you can totally blog something small and simple just to get something out there.
+" />
+    <meta property="og:description" content="I was reminded today by Daniela that everyone should blog - and on top of that you can totally blog something small and simple just to get something out there.
+" />
+    
+    <meta name="author" content="Erin Grand" />
+
+    
+    <meta property="og:title" content="Faces of" />
+    <meta property="twitter:title" content="Faces of" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Erin Grand - Interested in data science and education" href="/feed.xml" />
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/6360871?v=3" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Erin Grand</a></h1>
+            <p class="site-description">Interested in data science and education</p>
+          </div>
+
+          <nav>
+            <a href="/">Blog</a>
+            <a href="/about">About</a>
+            <a href="/projects">Projects</a>
+            <a href="/archive">Archive</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      
+
+<article class="post">
+<h1>Faces of</h1>
+
+
+<div>
+<ul class="tag_list_in_post">
+<emph> Tags: </emph>
+
+ <a class="tag_list_link" href="/tag/education">education</a>
+
+ <a class="tag_list_link" href="/tag/youtube">youtube</a>
+
+ <a class="tag_list_link" href="/tag/science">science</a>
+
+</ul>
+</div>
+
+
+
+
+<p id="post-meta"></p>
+
+  <div class="entry">
+    <p>I was reminded today by <a href="https://twitter.com/d4tagirl">Daniela</a> that everyone should blog - and on top of that you can totally blog something small and simple just to get something out there.</p>
+
+<p>In the spirt of small and simple, last week I tweeted out this cool image...</p>
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I am writing up my notes from <a href="https://twitter.com/hashtag/rstduiconf?src=hash&amp;ref_src=twsrc%5Etfw">#rstduiconf</a> (blog post coming!) and wanted to have a quick picture to go with my thoughts. Remembering <a href="https://twitter.com/ma_salmon?ref_src=twsrc%5Etfw">@ma_salmon</a> &#39;s post on Faces of R (here: <a href="https://t.co/C1sRW3hwVL">https://t.co/C1sRW3hwVL</a> ), I decided to make a Faces of Rstudioconf! <a href="https://t.co/vtNVn2RyHV">pic.twitter.com/vtNVn2RyHV</a></p>&mdash; Erin Grand (@astroeringrand) <a href="https://twitter.com/astroeringrand/status/961466502821052416?ref_src=twsrc%5Etfw">February 8, 2018</a></blockquote>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>I have not yet organized all my thoughts from the conference it self (spoilers, it was awesome, I learned so much!), but that will not stop by from posting the code I borrowed from <a href="https://twitter.com/ma_salmon">Maelle</a> to create the pretty image. So, here you go!</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kn">library</span><span class="p">(</span>rtweet<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>magick<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>gmp<span class="p">)</span>
+</code></pre></div><div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>search_terms <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;rstudioconf&quot;</span><span class="p">,</span> <span class="s">&quot;rstudioconf2018&quot;</span><span class="p">)</span>
+
+tweets <span class="o">&lt;-</span> purrr<span class="o">::</span>map_df<span class="p">(</span>search_terms<span class="p">,</span> search_tweets<span class="p">,</span> n<span class="o">=</span><span class="m">2000</span><span class="p">,</span> include_rts<span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span> parse<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span> 
+
+users_tweets <span class="o">&lt;-</span> lookup_users<span class="p">(</span><span class="kp">unique</span><span class="p">(</span>tweets<span class="o">$</span>user_id<span class="p">))</span>
+
+users <span class="o">&lt;-</span> users_tweets <span class="o">%&gt;%</span>
+  select<span class="p">(</span>user_id<span class="p">,</span> 
+         profile_image_url<span class="p">,</span> 
+         screen_name<span class="p">,</span>
+         name<span class="p">,</span> 
+         followers_count<span class="p">,</span> 
+         profile_image_url
+         <span class="p">)</span> <span class="o">%&gt;%</span>
+  distinct<span class="p">()</span>
+
+save_image <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>df<span class="p">){</span>
+  image <span class="o">&lt;-</span> <span class="kp">try</span><span class="p">(</span>image_read<span class="p">(</span>df<span class="o">$</span>profile_image_url<span class="p">),</span> silent <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+  <span class="kr">if</span><span class="p">(</span><span class="kp">class</span><span class="p">(</span>image<span class="p">)[</span><span class="m">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&quot;try-error&quot;</span><span class="p">){</span>
+    image <span class="o">%&gt;%</span>
+      image_scale<span class="p">(</span><span class="s">&quot;50x50&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+      image_write<span class="p">(</span><span class="kp">paste0</span><span class="p">(</span><span class="s">&quot;~pictures/&quot;</span><span class="p">,</span> df<span class="o">$</span>screen_name<span class="p">,</span><span class="s">&quot;.jpg&quot;</span><span class="p">))</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+users <span class="o">&lt;-</span> filter<span class="p">(</span>users<span class="p">,</span> <span class="o">!</span><span class="kp">is.na</span><span class="p">(</span>profile_image_url<span class="p">))</span>
+users_list <span class="o">&lt;-</span> <span class="kp">split</span><span class="p">(</span>users<span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="kp">nrow</span><span class="p">(</span>users<span class="p">))</span>
+walk<span class="p">(</span>users_list<span class="p">,</span> save_image<span class="p">)</span>
+
+
+files <span class="o">&lt;-</span> <span class="kp">dir</span><span class="p">(</span><span class="s">&quot;pictures/&quot;</span><span class="p">,</span> full.names <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+<span class="kp">set.seed</span><span class="p">(</span><span class="m">42</span><span class="p">)</span>
+files <span class="o">&lt;-</span> <span class="kp">sample</span><span class="p">(</span>files<span class="p">,</span> <span class="kp">length</span><span class="p">(</span>files<span class="p">))</span>
+gmp<span class="o">::</span>factorize<span class="p">(</span><span class="kp">length</span><span class="p">(</span>files<span class="p">))</span>
+
+no_rows <span class="o">&lt;-</span> <span class="m">14</span>
+no_cols <span class="o">&lt;-</span> <span class="m">31</span>
+
+make_column <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>i<span class="p">,</span> files<span class="p">,</span> no_rows<span class="p">){</span>
+  image_read<span class="p">(</span>files<span class="p">[(</span>i<span class="o">*</span>no_rows<span class="m">+1</span><span class="p">)</span><span class="o">:</span><span class="p">((</span>i<span class="m">+1</span><span class="p">)</span><span class="o">*</span>no_rows<span class="p">)])</span> <span class="o">%&gt;%</span>
+  image_append<span class="p">(</span>stack <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span> <span class="o">%&gt;%</span>
+    image_write<span class="p">(</span><span class="kp">paste0</span><span class="p">(</span><span class="s">&quot;cols/&quot;</span><span class="p">,</span> i<span class="p">,</span> <span class="s">&quot;.jpg&quot;</span><span class="p">))</span>
+<span class="p">}</span>
+
+walk<span class="p">(</span><span class="m">0</span><span class="o">:</span><span class="p">(</span>no_cols<span class="m">-1</span><span class="p">),</span> make_column<span class="p">,</span> files <span class="o">=</span> files<span class="p">,</span> no_rows <span class="o">=</span> no_rows<span class="p">)</span>
+
+image_read<span class="p">(</span><span class="kp">dir</span><span class="p">(</span><span class="s">&quot;cols/&quot;</span><span class="p">,</span> full.names <span class="o">=</span> <span class="kc">TRUE</span><span class="p">))</span> <span class="o">%&gt;%</span>
+image_append<span class="p">(</span>stack <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  image_write<span class="p">(</span><span class="s">&quot;2018-02-7-facesofrstudioconf.jpg&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><img src="https://github.com/eringrand/projects/blob/master/Rstudio%20Conf%20Twitter%20Pictures/2018-02-7-facesofnasadatanauts.jpg?raw=true" alt=""></p>
+
+  </div>
+
+  <div class="date">
+    Written on February 15, 2018
+  </div>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+    
+	    var disqus_shortname = 'astroeringrand'; 
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+<a href="mailto:eringrand@gmail.com"><i class="svg-icon email"></i></a>
+
+
+<a href="https://github.com/eringrand"><i class="svg-icon github"></i></a>
+<a href="https://instagram.com/astroeringrand"><i class="svg-icon instagram"></i></a>
+<a href="https://www.linkedin.com/in/eringrand"><i class="svg-icon linkedin"></i></a>
+
+
+<a href="https://www.twitter.com/astroeringrand"><i class="svg-icon twitter"></i></a>
+
+<a href="https://youtube.com/channel/UCAMkBTcL3PAjgnETfWWKkCQ"><i class="svg-icon youtube"></i></a>
+
+        </footer>
+      </div>
+    </div>
+
+    
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		
+		ga('create', 'UA-59780775-1', 'auto');
+		ga('send', 'pageview', {
+		  'page': '/facesofrstudioconf/',
+		  'title': 'Faces of'
+		});
+	</script>
+	<!-- End Google Analytics -->
+
+
+  </body>
+</html>
+
+
+

@@ -125,7 +125,7 @@ over 9.5 hours of video making it the longest adaption of Pride and
 Prejudice to date.</p>
 
 <p>Along with the main LBD channel, there are also some supporting
-channels. These allow others characters to tell parts of the story that
+channels. These allow other characters to tell parts of the story that
 Lizzie doesn&#39;t take part in. For example, Lydia&#39;s Vlogs include the
 story on how she meets George Wickham and their budding relationship.
 While not required viewing, these extra videos help round out the
@@ -135,10 +135,6 @@ experience.</p>
 writers of the original videos: one that follows the videos but adds
 some more detail to Lizzie&#39;s life, and one that focuses on Lydia&#39;s story
 after the series ends.</p>
-
-<p><img src="https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/10329014_10202570761053579_3130716185504613915_n.jpg?oh=d6dce9e54a81d5d7864d68dfa2f6269c&amp;oe=596C631F" alt="">
-The Secret Diary of Lizzie Bennet, signed by most of the cast and
-writers</p>
 
 <p>In honor of LBD&#39;s 5th Anniversary, let&#39;s do some LBD text analysis!
 <strong>Happy Anniversary LBD!</strong></p>
@@ -152,7 +148,7 @@ writers</p>
 <p>The first part of this analysis is grabbing all the text from YouTube.
 To access the API, I use the <a href="https://soodoku.github.io/tuber/"><code>tuber</code></a>
 package by Gaurav Sood.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span>
 <span class="kn">library</span><span class="p">(</span>tuber<span class="p">)</span>
 
 yt_oauth<span class="p">(</span>app_id<span class="p">,</span> app_password<span class="p">)</span>
@@ -160,7 +156,7 @@ yt_oauth<span class="p">(</span>app_id<span class="p">,</span> app_password<span
 <p>The fist step was to find the channel id to access the LBD playlist. I
 do a quick search for <code>lizziebennet</code> to find some videos that I know are
 part of the series.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">search <span class="o">&lt;-</span> yt_search<span class="p">(</span><span class="s">&quot;lizziebennet&quot;</span><span class="p">)[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="p">]</span> 
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>search <span class="o">&lt;-</span> yt_search<span class="p">(</span><span class="s">&quot;lizziebennet&quot;</span><span class="p">)[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="p">]</span> 
 search <span class="o">%&gt;%</span> select<span class="p">(</span>title<span class="p">,</span> channelId<span class="p">)</span>
 
 <span class="c1">##                                                       title</span>
@@ -180,7 +176,7 @@ search <span class="o">%&gt;%</span> select<span class="p">(</span>title<span cl
 find the playlist ID, which I will use to access all the videos in that
 playlist. <code>list_channel_resources</code> for <code>tuber</code> creates a list of channel
 attributes and buried in that list in the playlist ID.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># Channel Information</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="c1"># Channel Information</span>
 a <span class="o">&lt;-</span> list_channel_resources<span class="p">(</span>filter <span class="o">=</span> <span class="kt">c</span><span class="p">(</span>channel_id<span class="o">=</span><span class="s">&quot;UCXfbQAimgtbk4RAUHtIAUww&quot;</span><span class="p">),</span> part<span class="o">=</span><span class="s">&quot;contentDetails&quot;</span><span class="p">)</span>
 
 <span class="c1"># Uploaded playlists:</span>
@@ -192,7 +188,7 @@ playlist_id
 </code></pre></div>
 <p>The YouTube API automatically pages videos so the max you get per page is
 50. I know I need more than that, so I created a function that I call a few times to get all the videos. (This way works, but I would love any comments on how to make it better.)</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># pass NA as next page to get first page</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="c1"># pass NA as next page to get first page</span>
 nextPageToken <span class="o">&lt;-</span> <span class="kc">NA</span>
 vid_info <span class="o">&lt;-</span><span class="p">{}</span>
 
@@ -224,7 +220,7 @@ vid_info <span class="o">&lt;-</span><span class="p">{}</span>
 the text of the videos. I also use <code>xmlTreeParse</code> and <code>xmlToList</code> to
 covert the caption into into an easily accessible lines of text. I put
 the text, video ID, and video title in a tibble for use in tidydata.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>XML<span class="p">)</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kn">library</span><span class="p">(</span>XML<span class="p">)</span>
 
 getText <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>id<span class="p">){</span>
   x <span class="o">&lt;-</span> get_captions<span class="p">(</span>id<span class="p">,</span> lang <span class="o">=</span> <span class="s">&quot;en&quot;</span><span class="p">)</span>
@@ -244,7 +240,7 @@ text <span class="o">&lt;-</span> map_df<span class="p">(</span>vid_ids<span cla
 some data munching to get each episode&#39;s number (1-100). Notice, the
 Q&amp;A videos do not get a episode number assigned to them. For the sake of
 this analysis, I&#39;ve decided to only work with the main 100 episodes.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">titles <span class="o">&lt;-</span> text <span class="o">%&gt;%</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>titles <span class="o">&lt;-</span> text <span class="o">%&gt;%</span>
   distinct<span class="p">(</span>title<span class="p">)</span> <span class="o">%&gt;%</span>
   mutate<span class="p">(</span>title <span class="o">=</span> <span class="kp">ifelse</span><span class="p">(</span>title <span class="o">==</span> <span class="s">&quot;Question and Answers #3 (ft. Caroline Lee)&quot;</span><span class="p">,</span> <span class="s">&quot;Questions and Answers #3 (ft. Caroline Lee)&quot;</span><span class="p">,</span> title<span class="p">),</span>
          ep_num <span class="o">=</span> <span class="kp">gsub</span><span class="p">(</span><span class="s">&quot;[- .)(+!&#39;,/]|[a-zA-Z]*:?&quot;</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span> title<span class="p">),</span>
@@ -257,11 +253,11 @@ this analysis, I&#39;ve decided to only work with the main 100 episodes.</p>
   arrange<span class="p">(</span>ep_num<span class="p">)</span> 
 </code></pre></div>
 <p>One of the problems with using captions, is the messy text. I used a
-simple set of <code>gsub</code> to transform obvious punctuation marks into their
+simple set of <code>gsub</code> commands to transform obvious punctuation marks into their
 English counterparts. I also pulled out the character SPEAKING the words
 from the text itself. I left this column alone in the data set, but might
 one day go back and focus an analysis on speaking characters.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>tidytext<span class="p">)</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kn">library</span><span class="p">(</span>tidytext<span class="p">)</span>
 <span class="kn">library</span><span class="p">(</span>stringr<span class="p">)</span>
 
 lizziebennet <span class="o">&lt;-</span> text <span class="o">%&gt;%</span>
@@ -280,7 +276,7 @@ lizziebennet <span class="o">&lt;-</span> text <span class="o">%&gt;%</span>
 <p>Okay, so now the text is <em>mostly</em> in place. The first thing I did was
 look at word counts. The most common words are not surprising, it&#39;s just
 a list of the characters.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">lizziebennet <span class="o">%&gt;%</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>lizziebennet <span class="o">%&gt;%</span>
   tidytext<span class="o">::</span>unnest_tokens<span class="p">(</span>word<span class="p">,</span> text<span class="p">)</span> <span class="o">%&gt;%</span>
   anti_join<span class="p">(</span>stop_words<span class="p">,</span> by<span class="o">=</span><span class="s">&quot;word&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
   count<span class="p">(</span>word<span class="p">,</span> sort<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span> <span class="o">%&gt;%</span>
@@ -301,7 +297,7 @@ a list of the characters.</p>
 <span class="c1">## 10      time   176</span>
 </code></pre></div>
 <p>Not surprisingly, the most common trigrams are from the phrase that begins every episode, &quot;My name is Lizzie Bennet and...&quot;</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">lizziebennet <span class="o">%&gt;%</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>lizziebennet <span class="o">%&gt;%</span>
   tidytext<span class="o">::</span>unnest_tokens<span class="p">(</span>word<span class="p">,</span> text<span class="p">,</span> token<span class="o">=</span><span class="s">&quot;ngrams&quot;</span><span class="p">,</span> n<span class="o">=</span><span class="m">3</span><span class="p">)</span> <span class="o">%&gt;%</span>
   count<span class="p">(</span>word<span class="p">,</span> sort<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span> <span class="o">%&gt;%</span>
   top_n<span class="p">(</span><span class="m">10</span><span class="p">)</span>
@@ -321,7 +317,7 @@ a list of the characters.</p>
 <span class="c1">## 10     mr collins oh    28</span>
 </code></pre></div>
 <p>I was also especially amused by <em>So good to see you!</em> and <em>THE MOST AWKWARD DANCE EVER</em> being in the Top 10 5-grams.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">## # A tibble: 12 × 2
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## # A tibble: 12 × 2
 ##                           word     n
 ##                          &lt;chr&gt; &lt;int&gt;
 ## 1     my name is lizzie bennet    95
@@ -339,9 +335,9 @@ a list of the characters.</p>
 <h2>Sentiment Analysis</h2>
 
 <p>I&#39;ve chosen to use the Bing lexicon (because of Bing Lee, get it?). In
-Tidydata sentiment analysis is easy because you just join the lexicon
+Tidydata, sentiment analysis is easy because you just join the lexicon
 against your tokenzied words.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">bing <span class="o">&lt;-</span> sentiments <span class="o">%&gt;%</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>bing <span class="o">&lt;-</span> sentiments <span class="o">%&gt;%</span>
         filter<span class="p">(</span>lexicon <span class="o">==</span> <span class="s">&quot;bing&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
         select<span class="p">(</span><span class="o">-</span>score<span class="p">)</span>
 
@@ -361,7 +357,7 @@ lbsentiment <span class="o">&lt;-</span> lizziebennet <span class="o">%&gt;%</sp
          sentiment <span class="o">=</span> sentiment <span class="o">/</span> n<span class="p">)</span>  
 </code></pre></div>
 <p>Most positive sentiment episodes:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">## # A tibble: 5 × 2
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## # A tibble: 5 × 2
 ##                                       title  sentiment
 ##                                       &lt;chr&gt;      &lt;dbl&gt;
 ## 1                    Care Packages - Ep: 58 0.09623431
@@ -371,7 +367,7 @@ lbsentiment <span class="o">&lt;-</span> lizziebennet <span class="o">%&gt;%</sp
 ## 5      Wishing Something Universal - Ep: 76 0.08018868
 </code></pre></div>
 <p>Most negative sentiment episodes:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">## # A tibble: 5 × 2
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## # A tibble: 5 × 2
 ##                            title   sentiment
 ##                            &lt;chr&gt;       &lt;dbl&gt;
 ## 1   Turn About the Room - Ep: 32 -0.15217391
@@ -381,7 +377,7 @@ lbsentiment <span class="o">&lt;-</span> lizziebennet <span class="o">%&gt;%</sp
 ## 5      Meeting Bing Lee - Ep: 28 -0.07614213
 </code></pre></div>
 <p>The next step was to visualize this in a way where you can look at the sentiment over the episodes. </p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>viridis<span class="p">)</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kn">library</span><span class="p">(</span>viridis<span class="p">)</span>
 theme_set<span class="p">(</span>theme_bw<span class="p">())</span> <span class="c1"># a theme with a white background</span>
 
 ggplot<span class="p">(</span>lbsentiment<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>index<span class="p">,</span> sentiment<span class="p">,</span> fill<span class="o">=</span><span class="kp">as.factor</span><span class="p">(</span>index<span class="p">)))</span> <span class="o">+</span>
@@ -415,7 +411,7 @@ Lydia&#39;s blogs, that would explain that lack of a clear negative spike in the
 
 <p>Continuing the analysis, I wanted to look at which words were causing
 the largest effect on the overall sentiment.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">bing_word_counts <span class="o">%&gt;%</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>bing_word_counts <span class="o">%&gt;%</span>
   group_by<span class="p">(</span>sentiment<span class="p">)</span> <span class="o">%&gt;%</span>
   top_n<span class="p">(</span><span class="m">10</span><span class="p">)</span> <span class="o">%&gt;%</span>
   mutate<span class="p">(</span>word <span class="o">=</span> reorder<span class="p">(</span>word<span class="p">,</span> n<span class="p">))</span> <span class="o">%&gt;%</span>
@@ -436,7 +432,7 @@ about you she&#39;ll miss Charlotte, or she misses her home... etc, so it&#39;s
 not too surprising to see it have a considerable contribution here.</p>
 
 <p>I did a bit of an investigation into this with bigrams.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">lizziebennet <span class="o">%&gt;%</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>lizziebennet <span class="o">%&gt;%</span>
   tidytext<span class="o">::</span>unnest_tokens<span class="p">(</span>bigram<span class="p">,</span> text<span class="p">,</span> token<span class="o">=</span><span class="s">&quot;ngrams&quot;</span><span class="p">,</span> n<span class="o">=</span><span class="m">2</span><span class="p">)</span> <span class="o">%&gt;%</span>
   separate<span class="p">(</span>bigram<span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;word1&quot;</span><span class="p">,</span> <span class="s">&quot;word2&quot;</span><span class="p">),</span> sep <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
   filter<span class="p">(</span>word1 <span class="o">==</span> <span class="s">&quot;miss&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
@@ -453,7 +449,7 @@ not too surprising to see it have a considerable contribution here.</p>
 between &quot;I miss [person/thing]&quot; and &quot;Miss Bennet&quot; type phrases. Interesting! (Anyone want to guess who refers to Lizzie as Miss Bennet the most? Unsurprisingly, it&#39;s Ricky Collins.)</p>
 
 <h2>More with Bigrams</h2>
-<div class="highlight"><pre><code class="language-r" data-lang="r">bigrams_separated <span class="o">&lt;-</span> lizziebennet <span class="o">%&gt;%</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>bigrams_separated <span class="o">&lt;-</span> lizziebennet <span class="o">%&gt;%</span>
   tidytext<span class="o">::</span>unnest_tokens<span class="p">(</span>bigram<span class="p">,</span> text<span class="p">,</span> token<span class="o">=</span><span class="s">&quot;ngrams&quot;</span><span class="p">,</span> n<span class="o">=</span><span class="m">2</span><span class="p">)</span> <span class="o">%&gt;%</span>
   separate<span class="p">(</span>bigram<span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;word1&quot;</span><span class="p">,</span> <span class="s">&quot;word2&quot;</span><span class="p">),</span> sep <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
   filter<span class="p">(</span><span class="o">!</span>word1 <span class="o">%in%</span> stop_words<span class="o">$</span>word<span class="p">,</span> 
@@ -488,7 +484,7 @@ it&#39;s own yet.</p>
 
 <p>One of my favorite part of tidytext is the example on making a bigram
 network. It&#39;s just so fun!</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>igraph<span class="p">)</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kn">library</span><span class="p">(</span>igraph<span class="p">)</span>
 <span class="kn">library</span><span class="p">(</span>ggraph<span class="p">)</span>
 
 <span class="kp">set.seed</span><span class="p">(</span><span class="m">42</span><span class="p">)</span>
@@ -515,7 +511,7 @@ bigrams_separated <span class="o">%&gt;%</span>
 
 <p>I leave you with this last picture.</p>
 
-<p><img src="https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/1908336_10202570761373587_7013966634375610561_n.jpg?oh=1a5119c2ae93bbd9b01060523cc7e43c&amp;oe=59733FEF" alt="">
+<p><img src="https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/1908336_10202570761373587_7013966634375610561_n.jpg?oh=1a5119c2ae93bbd9b01060523cc7e43c&oe=59733FEF" alt="">
 Some of cast of Lizzie Bennet Diaries and me. Vidcon 2014</p>
 
   </div>

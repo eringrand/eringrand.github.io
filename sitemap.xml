@@ -1,325 +1,193 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>http://eringrand.github.io/education-data/</loc>
-    <lastmod>2017-12-30T00:00:00-05:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/lbd_update/</loc>
-    <lastmod>2017-05-31T00:00:00-04:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/lizziebennet_textmining/</loc>
-    <lastmod>2017-05-02T00:00:00-04:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/ctlinternship/</loc>
-    <lastmod>2015-09-06T00:00:00-04:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/profname/</loc>
-    <lastmod>2015-05-22T00:00:00-04:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/suggestionsfrommarch/</loc>
-    <lastmod>2015-04-01T00:00:00-04:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/aprilreading/</loc>
-    <lastmod>2015-04-01T00:00:00-04:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/sciencegraphics/</loc>
-    <lastmod>2015-03-24T00:00:00-04:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/educationgraphics/</loc>
-    <lastmod>2015-03-24T00:00:00-04:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tabforacause/</loc>
-    <lastmod>2015-03-12T00:00:00-04:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/readlistfeb2015/</loc>
-    <lastmod>2015-03-03T00:00:00-05:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/edu-videos/</loc>
-    <lastmod>2015-02-15T00:00:00-05:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/404/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/about/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/archive/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/projects/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/teaching/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/education/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/youtube/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/science/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/data/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/science,/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/statistics,/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/spock/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/chrome/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/charity/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/extension/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/visualization/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/ggplot/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/python/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/R/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/YouTube/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/astronomy/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/Columbia/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/statistics/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/twitter/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/zombies/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/physics/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/color/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/grad/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/school/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/professor/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/survey/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/ctl/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/internship/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/rstats/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/rladies/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/r/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/tidytext/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/LBD/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/sentiment/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/tag/plotly/</loc>
-    <lastmod>2018-01-01T12:17:25-05:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/Presentations/data-whiz-2017/data-whiz-2017.html</loc>
-    <lastmod>2017-12-03T21:45:40-05:00</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>http://eringrand.github.io/Presentations/rladies-nyc/data-education.html</loc>
-    <lastmod>2017-12-31T19:05:29-05:00</lastmod>
-    <priority>0.6</priority>
-  </url>
+<url>
+<loc>http://eringrand.github.io/edu-videos/</loc>
+<lastmod>2015-02-15T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://eringrand.github.io/readlistfeb2015/</loc>
+<lastmod>2015-03-03T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://eringrand.github.io/tabforacause/</loc>
+<lastmod>2015-03-12T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://eringrand.github.io/educationgraphics/</loc>
+<lastmod>2015-03-24T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://eringrand.github.io/sciencegraphics/</loc>
+<lastmod>2015-03-24T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://eringrand.github.io/aprilreading/</loc>
+<lastmod>2015-04-01T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://eringrand.github.io/suggestionsfrommarch/</loc>
+<lastmod>2015-04-01T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://eringrand.github.io/profname/</loc>
+<lastmod>2015-05-22T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://eringrand.github.io/ctlinternship/</loc>
+<lastmod>2015-09-06T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://eringrand.github.io/lizziebennet_textmining/</loc>
+<lastmod>2017-05-02T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://eringrand.github.io/lbd_update/</loc>
+<lastmod>2017-05-31T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://eringrand.github.io/education-data/</loc>
+<lastmod>2017-12-30T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://eringrand.github.io/facesofrstudioconf/</loc>
+<lastmod>2018-02-15T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>http://eringrand.github.io/404/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/about/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/archive/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/projects/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/teaching/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/education/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/youtube/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/science/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/data/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/science,/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/statistics,/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/spock/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/chrome/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/charity/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/extension/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/visualization/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/ggplot/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/python/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/R/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/YouTube/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/astronomy/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/Columbia/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/statistics/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/twitter/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/zombies/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/physics/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/color/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/grad/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/school/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/professor/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/survey/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/ctl/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/internship/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/rstats/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/rladies/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/r/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/tidytext/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/LBD/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/sentiment/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/tag/plotly/</loc>
+</url>
+<url>
+<loc>http://eringrand.github.io/Presentations/data-whiz-2017/data-whiz-2017.html</loc>
+<lastmod>2017-12-03T21:45:40-05:00</lastmod>
+</url>
+<url>
+<loc>http://eringrand.github.io/Presentations/rladies-nyc/data-education.html</loc>
+<lastmod>2017-12-31T19:05:29-05:00</lastmod>
+</url>
+<url>
+<loc>http://eringrand.github.io/images/resume.pdf</loc>
+<lastmod>2017-05-01T22:51:10-04:00</lastmod>
+</url>
 </urlset>

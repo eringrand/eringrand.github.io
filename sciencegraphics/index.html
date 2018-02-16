@@ -128,7 +128,7 @@ plt.yscale(&#39;log&#39;, nonposx=&#39;clip&#39;)
 </ul>
 
 <p>For example, to make everything expect your points or lines disappear you&#39;d use: </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"> theme(axis.line=element_blank(),
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span> theme(axis.line=element_blank(),
         axis.text.x=element_blank(),
         axis.text.y=element_blank(),
         axis.ticks=element_blank(),
@@ -153,12 +153,12 @@ theme(axis.text.x  = element_text(angle=90, vjust=0.5, size=16)
 <li><p>Always remember to label your axes! 
 This is done in python with:</p></li>
 </ul>
-<div class="highlight"><pre><code class="language-text" data-lang="text">import matplotlib.pyplot as plt
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>import matplotlib.pyplot as plt
 plt.xlabel(&#39;X Label&#39;)
 plt.ylabel(&#39;Y Label&#39;)
 </code></pre></div>
 <p>or in ggplot2 in R using:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">  labs(title = &quot;Plot Title&quot;) +
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>  labs(title = &quot;Plot Title&quot;) +
   ylab(&quot;X Label&quot;) +
   xlab(&quot;Y Label&quot;)
 </code></pre></div>
@@ -186,7 +186,7 @@ This un-clutters the plot and allows you to more easily visualize trends in the 
 If you&#39;re interested, you can check it out <a href="https://github.com/eringrand/idlcodes/blob/master/plotspectra.pro">here</a>.</p>
 
 <p>For the future, I want to try and remake some of my research plots in R for better practice with R and ggplot2, using something along these lines:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">data %&gt;%
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>data %&gt;%
 ggplot(aes(x=vel,y=tb)) + 
 geom_line() + 
 facet_wrap(~pillar)
@@ -237,7 +237,7 @@ displays the locations of clumps, as well as their velocity and size. From the i
 <img src="http://eringrand.github.io/images/Rplot.png" alt=""></p>
 
 <p>This image fixes some of the problem by using GGPLOT default color scheme, which keeps the hue in blue and changes the brightness. I&#39;ve filled in the circle in make the difference in sizes more clear, and I made sure that the circles are scaled by area, as to not conflate radius and area. </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">library(ggplot2) 
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>library(ggplot2) 
 
 xvar &lt;- sample(-100:100,100,replace=T)
 yvar &lt;- sample(-100:100,100,replace=T)

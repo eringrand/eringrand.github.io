@@ -163,7 +163,7 @@
 <p>To clean this data, first I read it in with <code>read_excel</code> and use <code>janitor&#39;s</code> <code>clean_names</code> to convert all the column names to something I can use. <code>remove_empty_cols</code> and <code>remove_empty_rows</code> remove entire columns or rows that are NA as excel sometimes can&#39;t tell where there is data and where there isn&#39;t. </p>
 
 <p>I choose to use <code>col_type = &quot;text&quot;</code> in my <code>read_excel</code> statement, because I sometimes have to deal with leading zeros, NAs that are not written as NAs, or other text fields in my numerical columns. Reading in as text and converting later allows me to find and correct problems before they become NAs. I use <code>mutate_at</code> to convert these columns back to numbers after examining that everything looks good.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">students <span class="o">&lt;-</span> readxl<span class="o">::</span>read_excel<span class="p">(</span>filepath<span class="p">,</span> sheet<span class="o">=</span><span class="s">&quot;Sheet1&quot;</span><span class="p">,</span> col_types <span class="o">=</span> <span class="s">&quot;text&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>students <span class="o">&lt;-</span> readxl<span class="o">::</span>read_excel<span class="p">(</span>filepath<span class="p">,</span> sheet<span class="o">=</span><span class="s">&quot;Sheet1&quot;</span><span class="p">,</span> col_types <span class="o">=</span> <span class="s">&quot;text&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
   janitor<span class="o">::</span>clean_names<span class="p">()</span> <span class="o">%&gt;%</span>
   janitor<span class="o">::</span>remove_empty_cols<span class="p">()</span> <span class="o">%&gt;%</span>
   janitor<span class="o">::</span>remove_empty_rows<span class="p">()</span> <span class="o">%&gt;%</span>
@@ -171,9 +171,9 @@
   dplyr<span class="o">::</span>mutate_at<span class="p">(</span>vars<span class="p">(</span>entrydate<span class="p">,</span> exitdate<span class="p">),</span> excel_numeric_to_date<span class="p">)</span> 
 </code></pre></div>
 <p>The next step in data cleaning is to look for duplicates. Luckily, <code>janitor</code> has a super helpful <code>get_dupes()</code> function which does just that!</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">students <span class="o">%&gt;%</span> 
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>students <span class="o">%&gt;%</span> 
   get_dupes<span class="p">(</span>student_id<span class="p">)</span>
-</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text"># A tibble: 2 x 6
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span># A tibble: 2 x 6
   student_id dupe_count grade yearsinuncommon  entrydate   exitdate
        &lt;dbl&gt;      &lt;int&gt; &lt;dbl&gt;           &lt;dbl&gt;     &lt;date&gt;     &lt;date&gt;
 1    2342675          2    10               1 2017-11-11 2017-12-11
@@ -186,17 +186,17 @@
 <h4>1. Correct the dupes individually with <code>if_else</code> or <code>case_when</code>.</h4>
 
 <p>If there are only a few duplicates, or they&#39;re all in one grade or class room, a quick set of <em>if</em> statements will do the trick to make the rows perfectly duplicated. From there, use <code>distinct</code> to get only distinct rows and remove the duplicates.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">mutate<span class="p">(</span>students<span class="p">,</span> grade <span class="o">=</span> if_else<span class="p">(</span>student_id <span class="o">==</span> <span class="m">2342675</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> grade<span class="p">))</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>mutate<span class="p">(</span>students<span class="p">,</span> grade <span class="o">=</span> if_else<span class="p">(</span>student_id <span class="o">==</span> <span class="m">2342675</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> grade<span class="p">))</span>
 </code></pre></div>
 <h4>2. Summarize by taking minimum date / grade to choose one row to keep.</h4>
 
 <p>This is helpful if you just need one of the rows, and don&#39;t really care which row is the one you keep. For example, our exit and enter date information is not usually great, so I&#39;m okay with the &#39;just pick one&#39; version as long as the student&#39;s grade and teacher information is the same in both rows.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">group_by<span class="p">(</span>students<span class="p">,</span> student_id<span class="p">)</span> <span class="o">%&gt;%</span> summarize<span class="p">(</span>grade <span class="o">=</span> <span class="kp">min</span><span class="p">(</span>grade<span class="p">))</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>group_by<span class="p">(</span>students<span class="p">,</span> student_id<span class="p">)</span> <span class="o">%&gt;%</span> summarize<span class="p">(</span>grade <span class="o">=</span> <span class="kp">min</span><span class="p">(</span>grade<span class="p">))</span>
 </code></pre></div>
 <h4>3. Output the duplicates and manually choose which version to keep.</h4>
 
 <p>This involves the most manual work, so I usually grab help when I need to do this, yay teammates!</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">dupes_correct <span class="o">&lt;-</span> read_csv<span class="p">(</span><span class="s">&quot;dupes_correct.csv&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>dupes_correct <span class="o">&lt;-</span> read_csv<span class="p">(</span><span class="s">&quot;dupes_correct.csv&quot;</span><span class="p">)</span>
 left_join<span class="p">(</span>students<span class="p">,</span> dupes_correct<span class="p">)</span> <span class="o">%&gt;%</span>
   replace_na<span class="p">(</span><span class="kt">list</span><span class="p">(</span>keep <span class="o">=</span> <span class="m">0</span><span class="p">))</span> <span class="o">%&gt;%</span>
   assert<span class="p">(</span>not_na<span class="p">,</span> keep<span class="p">)</span> <span class="o">%&gt;%</span>
@@ -205,7 +205,7 @@ left_join<span class="p">(</span>students<span class="p">,</span> dupes_correct<
 <h3>Managing Data Changes</h3>
 
 <p>As data is updated, there might be more duplicates to worry about. A great way to check for duplicate updates is to use the 1:2 punch of <strong>janitor&#39;s</strong> <code>get_dupes</code> and <strong>assertr&#39;s</strong> <code>verify()</code>. This allows you to put checks in place in case the data changes.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">check &lt;- students %&gt;% 
+<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>check &lt;- students %&gt;% 
   get_dupes(student_id) %&gt;% 
   verify(nrow(.) == 0)
 </code></pre></div>
@@ -222,7 +222,7 @@ left_join<span class="p">(</span>students<span class="p">,</span> dupes_correct<
 <p><img src = "/Presentations/rladies-nyc/process.png" height = 100px></p>
 
 <p>Using <code>PURRR</code> code to read and combined multiple files into one data frame has been the saving grace of this analysis. We have each grade/subject/school combination in a separate file, and with just a few lines of code R can bring them together for further cleaning.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r">files <span class="o">&lt;-</span> <span class="kp">list.files</span><span class="p">(</span><span class="s">&quot;../Input/&quot;</span><span class="p">,</span> pattern <span class="o">=</span> <span class="s">&quot;.xlsx&quot;</span><span class="p">,</span> full.names <span class="o">=</span>  <span class="kc">TRUE</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>files <span class="o">&lt;-</span> <span class="kp">list.files</span><span class="p">(</span><span class="s">&quot;../Input/&quot;</span><span class="p">,</span> pattern <span class="o">=</span> <span class="s">&quot;.xlsx&quot;</span><span class="p">,</span> full.names <span class="o">=</span>  <span class="kc">TRUE</span><span class="p">)</span>
 nys <span class="o">&lt;-</span> map_dfr<span class="p">(</span>files<span class="p">,</span> prep_nys_files<span class="p">)</span>
 </code></pre></div>
 <p>If you&#39;re curious to other parts of the code that really changed this process (for example <code>assertr</code> or <code>tidyr</code>) please feel free to ask! </p>
