@@ -12,7 +12,7 @@ A long while ago now, [Nujchare](https://twitter.com/Nujcharee) tweeted about an
 
 I complemented her work and she asked me to look over the code. I jumped at the chance, (1) because I don't know a ton about scraping website data and wanted to see what she started, (2) I could help with the `dplyr` part of the code, and most imporantly (3) I love APOD!
 
-I love APOD so much, that for most of my childhood my life goal was "get a picture published to APOD." To make matter more exciting, in 2009 [this happened](https://apod.nasa.gov/apod/ap090917.html)
+I love APOD so much, that for most of my childhood my life goal was "get a picture published to APOD." To make matters more exciting in 2009 [this happened](https://apod.nasa.gov/apod/ap090917.html).
 
 ![](../images/apod_me.png)
 
