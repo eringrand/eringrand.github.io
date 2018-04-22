@@ -7,6 +7,145 @@
     <atom:link href="http://eringrand.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Scraping APOD Descriptions</title>
+        <description>&lt;h2&gt;Orginal Plan - Scrape from Archive&lt;/h2&gt;
+
+&lt;p&gt;A long while ago now, &lt;a href=&quot;https://twitter.com/Nujcharee&quot;&gt;Nujchare&lt;/a&gt; tweeted about an awesome vis she did using &lt;code&gt;rvest&lt;/code&gt; and PowerBi. &lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Using rvest + purrr packages to scrap APOD. PowerBI viz it up real nice! &lt;a href=&quot;https://twitter.com/hashtag/rstats?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;#rstats&lt;/a&gt; &lt;a href=&quot;https://twitter.com/hashtag/powerbi?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;#powerbi&lt;/a&gt;. My learning journal during &lt;a href=&quot;https://twitter.com/hashtag/NASADatanauts?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;#NASADatanauts&lt;/a&gt; year of awesomeness.  &lt;a href=&quot;https://t.co/cnwttLPoIS&quot;&gt;https://t.co/cnwttLPoIS&lt;/a&gt; &lt;a href=&quot;https://t.co/je511h99L9&quot;&gt;pic.twitter.com/je511h99L9&lt;/a&gt;&lt;/p&gt;&amp;mdash; Nujcharee (เป็ด) (@Nujcharee) &lt;a href=&quot;https://twitter.com/Nujcharee/status/939257591431036929?ref_src=twsrc%5Etfw&quot;&gt;December 8, 2017&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;I complemented her work and she asked me to look over the code. I jumped at the chance, (1) because I don&amp;#39;t know a ton about scraping website data and wanted to see what she started, (2) I could help with the &lt;code&gt;dplyr&lt;/code&gt; part of the code, and most imporantly (3) I love APOD!&lt;/p&gt;
+
+&lt;p&gt;I love APOD so much, that for most of my childhood my life goal was &amp;quot;get a picture published to APOD.&amp;quot; To make matter more exciting, in 2009 &lt;a href=&quot;https://apod.nasa.gov/apod/ap090917.html&quot;&gt;this happened&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/apod_me.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Getting the Data&lt;/h2&gt;
+
+&lt;p&gt;To start, we grab the information from the landing page of APOD&amp;#39;s archive and ignore any links that are not pictures of the day. (Luckily, these all start with &amp;quot;ap&amp;quot; so we can use &lt;code&gt;str_detect()&lt;/code&gt; to find them.)&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;rvest&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tidyverse&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tidytext&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;## scrape the landing page&lt;/span&gt;
+apod &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; read_html&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https://apod.nasa.gov/apod/archivepix.html&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;## scrape all URLs&lt;/span&gt;
+url &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; html_nodes&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;apod&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;a&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; 
+  map_chr&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;xml_attrs&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  tibble&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;url &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;str_detect&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;ap&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;str_detect&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Next, we have to go to each of the pages and scrape the underlying page data. There are A LOT of APODs, so this can take a long time. I&amp;#39;ve chosen to only look at the first 1000 images for now. (More on solving this at the end!)&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# read html from url&lt;/span&gt;
+my_read_html &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  xml2&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;read_html&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+data_raw &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# first 1000 links&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;full_url &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;paste0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;https://apod.nasa.gov/apod/&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;page &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; map&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;full_url&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; my_read_html&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         pic &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; map_chr&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;page&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;html_node&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;.&lt;/span&gt;x&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; xpath &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;//*/img&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; html_attr&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;src&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;
+         title &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; map_chr&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;page&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;html_nodes&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;.&lt;/span&gt;x&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;title&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; html_text&lt;span class=&quot;p&quot;&gt;()),&lt;/span&gt;
+         description &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; map_chr&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;page&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;html_nodes&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;.&lt;/span&gt;x&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;p&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; html_text&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;str_detect&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Ex&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)])&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# descriptions start with &amp;quot;Explanation:&amp;quot;&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Data Cleaning&lt;/h2&gt;
+
+&lt;p&gt;With the raw data in hand, I move into more specific text cleaning. I want to start with some quick tidy text analysis of the descriptions, so I cant to clean that up first.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span&gt;&lt;/span&gt;data &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; data_raw &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; 
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;description &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; str_replace_all&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;description&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         description &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; str_replace_all&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;description&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Explanation:&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         title &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; str_replace_all&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         title &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; str_replace_all&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;APOD:&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         title &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; if_else&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;str_detect&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;2017 November 22&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;2017 November 22 - Oumuamua Interstellar Asteroid&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; title&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate_all&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;trimws&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  separate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; into &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;date&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;title&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; sep &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot; - &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Great, now we can a do a quick word count using tidytext tools.&lt;/p&gt;
+
+&lt;h2&gt;Fun Stuff - word count&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span&gt;&lt;/span&gt;keep_words &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;way&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# I don&amp;#39;t want &amp;quot;way&amp;quot; as in &amp;quot;Milky Way&amp;quot; to be filtered&lt;/span&gt;
+my_stop_words &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; tibble&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;image&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;lexicon &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;PERSONAL&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  bind_rows&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;stop_words&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;word &lt;span class=&quot;o&quot;&gt;%in%&lt;/span&gt; keep_words&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+
+data &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  distinct&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  unnest_tokens&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; description&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  anti_join&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;my_stop_words&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  count&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; sort &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  top_n&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;## # A tibble: 10 x 2
+##    word       n
+##    &amp;lt;chr&amp;gt;  &amp;lt;int&amp;gt;
+##  1 light   1088
+##  2 star     725
+##  3 stars    656
+##  4 galaxy   636
+##  5 nebula   627
+##  6 moon     522
+##  7 sun      497
+##  8 earth    496
+##  9 bright   461
+## 10 sky      411
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I love this because it clearly shows the types of objects that make up most of pretty Astronomy pictures, i.e stars, galaxies and nebulae. Very cool! &lt;/p&gt;
+
+&lt;p&gt;If I look at bi-grams is there any doubt that &amp;quot;Milky Way&amp;quot; will have a strong showing?&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span&gt;&lt;/span&gt;data &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  distinct&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  unnest_tokens&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; description&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; token &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;ngrams&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; n &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;title&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; word&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  separate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; into &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;word1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;word2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; by &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  unite&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; word1&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; word2&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; sep &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  count&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; sort &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  top_n&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;## # A tibble: 10 x 2
+##    word                n
+##    &amp;lt;chr&amp;gt;           &amp;lt;int&amp;gt;
+##  1 milky way         315
+##  2 planet earth      205
+##  3 way galaxy        133
+##  4 million light     118
+##  5 solar system      114
+##  6 space telescope   106
+##  7 star forming      100
+##  8 hubble space       88
+##  9 spiral galaxy      88
+## 10 star cluster       75
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;...and there it is, clearly winning over &amp;quot;Planet Earth&amp;quot; and &amp;quot;Solar System.&amp;quot; &lt;/p&gt;
+
+&lt;p&gt;As a person who studied star formation, I&amp;#39;m also proud of the strong showing of &amp;quot;star forming&amp;quot; in the bi-grams. Yay baby stars!&lt;/p&gt;
+
+&lt;h2&gt;But wait... isn&amp;#39;t there an API?&lt;/h2&gt;
+
+&lt;p&gt;This is great and fun, but what I&amp;#39;d really love to look at the entire APOD archive, or pull a specific date. Luckily, NASA has a great &lt;a href=&quot;https://github.com/nasa/apod-api&quot;&gt;API&lt;/a&gt; to do just that! The API is super easy to use and simple enough to write into some R functions. I decided the coolest thing to do with this API was create a package, and thus my new package - &lt;a href=&quot;https://github.com/eringrand/astropic&quot;&gt;astropic&lt;/a&gt; was born (available on github)!&lt;/p&gt;
+
+&lt;p&gt;The goal of &lt;a href=&quot;https://github.com/eringrand/astropic&quot;&gt;astropic&lt;/a&gt; is to connect R to the NASA APOD API. The APOD API supports one image at a time. In order to supply more than that, this package also includes creating time ranges (of less than 1000 days at a time) and some historical data in tibble format.&lt;/p&gt;
+
+&lt;p&gt;You can install the current version from GitHub to check it out&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# install.packages(&amp;quot;devtools&amp;quot;)&lt;/span&gt;
+devtools&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;install_github&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;eringrand/astropic&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/eringrand/astropic&quot;&gt;Astropic&lt;/a&gt; does not yet contain ANY tests and the documentation is very sparse. It is most definitely a work in progress - I&amp;#39;ll update more as I add more to it. &lt;/p&gt;
+
+&lt;p&gt;Next time on the blog, more about the package creation and cool things you can do with it. In the mean time, please feel free to send pull requests and let me know what you&amp;#39;d like from such a package.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 21 Apr 2018 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/scrape_apod/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/scrape_apod/</guid>
+      </item>
+    
+      <item>
         <title>Faces of rstudioconf</title>
         <description>&lt;p&gt;I was reminded today by &lt;a href=&quot;https://twitter.com/d4tagirl&quot;&gt;Daniela&lt;/a&gt; that everyone should blog - and on top of that you can totally blog something small and simple just to get something out there.&lt;/p&gt;
 
@@ -1020,40 +1159,6 @@ ggplot(data,aes(x=x,y=y), legend=FALSE)+
         <pubDate>Tue, 24 Mar 2015 00:00:00 -0400</pubDate>
         <link>http://eringrand.github.io/sciencegraphics/</link>
         <guid isPermaLink="true">http://eringrand.github.io/sciencegraphics/</guid>
-      </item>
-    
-      <item>
-        <title>Educational Graphics in Science</title>
-        <description>&lt;h2&gt;Educational graphics:&lt;/h2&gt;
-
-&lt;p&gt;Educational graphics are often used as a way to teach one concept. As such, they tend to generalize the information in such a way that leaves out important information. &lt;/p&gt;
-
-&lt;p&gt;Take, for example the standard evolution depiction: 
-&lt;img src=&quot;/images/Human-Evolution-460x233.jpg&quot; alt=&quot;Evolution image&quot;&gt;&lt;/p&gt;
-
-&lt;p&gt;We use this image as a teaching tool, because it&amp;#39;s easy to visual evolution this way.
-However, the graphic, isn&amp;#39;t accurate in it&amp;#39;s depiction of evolution because due to the simplicity of the graphic there is no knowledge of time, species extinction, 
-A better graphic would be able to easily show all of this information. &lt;/p&gt;
-
-&lt;p&gt;The image below does a little better by including time information as well as showing the full evolution tree. This graphic makes clear the complex nature of evolution, but still leaves out many extinction events. (Click
-&lt;a href=&quot;http://www.lucasbrouwers.nl/blog/wp-content/uploads/2009/12/Evo_large.gif&quot;&gt;
-here
-&lt;/a&gt;
-to see a larger version of this image.)
-&lt;img src=&quot;http://www.lucasbrouwers.nl/blog/wp-content/uploads/2009/12/Evo_large.gif&quot; alt=&quot;Example evolution graphic&quot; width=&quot;650px&quot;&gt;&lt;/p&gt;
-
-&lt;hr&gt;
-
-&lt;p&gt;For an example of commonly used well depicted graphic, we have this image showing the structure of the terrestrial planets. &lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/terrestrial_interiors.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-
-&lt;p&gt;This graphic shows the relative size difference between the planets as well as their inside makeup. It even manages to show where we have incomplete information. 
-There are lots of version of this graphic, but I think this one works the best because it uses labels and lines sparingly in place of a color coded legend. &lt;/p&gt;
-</description>
-        <pubDate>Tue, 24 Mar 2015 00:00:00 -0400</pubDate>
-        <link>http://eringrand.github.io/educationgraphics/</link>
-        <guid isPermaLink="true">http://eringrand.github.io/educationgraphics/</guid>
       </item>
     
   </channel>

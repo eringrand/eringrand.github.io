@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- htmlwidgets dependencies --> 
+    
+    
+    
+
+    
+
+    <title>Scraping APOD Descriptions – Erin Grand – Interested in data science and education</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="Orginal Plan - Scrape from Archive
+" />
+    <meta property="og:description" content="Orginal Plan - Scrape from Archive
+" />
+    
+    <meta name="author" content="Erin Grand" />
+
+    
+    <meta property="og:title" content="Scraping APOD Descriptions" />
+    <meta property="twitter:title" content="Scraping APOD Descriptions" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Erin Grand - Interested in data science and education" href="/feed.xml" />
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/6360871?v=3" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Erin Grand</a></h1>
+            <p class="site-description">Interested in data science and education</p>
+          </div>
+
+          <nav>
+            <a href="/">Blog</a>
+            <a href="/about">About</a>
+            <a href="/projects">Projects</a>
+            <a href="/archive">Archive</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      
+
+<article class="post">
+<h1>Scraping APOD Descriptions</h1>
+
+
+
+
+
+<p id="post-meta"></p>
+
+  <div class="entry">
+    <h2>Orginal Plan - Scrape from Archive</h2>
+
+<p>A long while ago now, <a href="https://twitter.com/Nujcharee">Nujchare</a> tweeted about an awesome vis she did using <code>rvest</code> and PowerBi. </p>
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Using rvest + purrr packages to scrap APOD. PowerBI viz it up real nice! <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/powerbi?src=hash&amp;ref_src=twsrc%5Etfw">#powerbi</a>. My learning journal during <a href="https://twitter.com/hashtag/NASADatanauts?src=hash&amp;ref_src=twsrc%5Etfw">#NASADatanauts</a> year of awesomeness.  <a href="https://t.co/cnwttLPoIS">https://t.co/cnwttLPoIS</a> <a href="https://t.co/je511h99L9">pic.twitter.com/je511h99L9</a></p>&mdash; Nujcharee (เป็ด) (@Nujcharee) <a href="https://twitter.com/Nujcharee/status/939257591431036929?ref_src=twsrc%5Etfw">December 8, 2017</a></blockquote>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>I complemented her work and she asked me to look over the code. I jumped at the chance, (1) because I don&#39;t know a ton about scraping website data and wanted to see what she started, (2) I could help with the <code>dplyr</code> part of the code, and most imporantly (3) I love APOD!</p>
+
+<p>I love APOD so much, that for most of my childhood my life goal was &quot;get a picture published to APOD.&quot; To make matter more exciting, in 2009 <a href="https://apod.nasa.gov/apod/ap090917.html">this happened</a></p>
+
+<p><img src="../images/apod_me.png" alt=""></p>
+
+<h2>Getting the Data</h2>
+
+<p>To start, we grab the information from the landing page of APOD&#39;s archive and ignore any links that are not pictures of the day. (Luckily, these all start with &quot;ap&quot; so we can use <code>str_detect()</code> to find them.)</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kn">library</span><span class="p">(</span>rvest<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>tidytext<span class="p">)</span>
+
+<span class="c1">## scrape the landing page</span>
+apod <span class="o">&lt;-</span> read_html<span class="p">(</span><span class="s">&quot;https://apod.nasa.gov/apod/archivepix.html&quot;</span><span class="p">)</span>
+
+<span class="c1">## scrape all URLs</span>
+url <span class="o">&lt;-</span> html_nodes<span class="p">(</span>apod<span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span> 
+  map_chr<span class="p">(</span>xml_attrs<span class="p">)</span> <span class="o">%&gt;%</span>
+  tibble<span class="p">(</span>url <span class="o">=</span> <span class="m">.</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  filter<span class="p">(</span>str_detect<span class="p">(</span><span class="kp">url</span><span class="p">,</span> <span class="s">&quot;ap&quot;</span><span class="p">),</span> <span class="o">!</span>str_detect<span class="p">(</span><span class="kp">url</span><span class="p">,</span> <span class="s">&quot;/&quot;</span><span class="p">))</span>
+</code></pre></div>
+<p>Next, we have to go to each of the pages and scrape the underlying page data. There are A LOT of APODs, so this can take a long time. I&#39;ve chosen to only look at the first 1000 images for now. (More on solving this at the end!)</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="c1"># read html from url</span>
+my_read_html <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="kp">url</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span> <span class="p">{</span>
+  xml2<span class="o">::</span>read_html<span class="p">(</span><span class="kp">url</span><span class="p">,</span> <span class="kc">...</span><span class="p">)</span>
+<span class="p">}</span>
+
+data_raw <span class="o">&lt;-</span> <span class="kp">url</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">1000</span><span class="p">,</span> <span class="p">]</span> <span class="o">%&gt;%</span> <span class="c1"># first 1000 links</span>
+  mutate<span class="p">(</span>full_url <span class="o">=</span> <span class="kp">paste0</span><span class="p">(</span><span class="s">&quot;https://apod.nasa.gov/apod/&quot;</span><span class="p">,</span> <span class="kp">url</span><span class="p">))</span> <span class="o">%&gt;%</span>
+  mutate<span class="p">(</span>page <span class="o">=</span> map<span class="p">(</span>full_url<span class="p">,</span> my_read_html<span class="p">),</span>
+         pic <span class="o">=</span> map_chr<span class="p">(</span>page<span class="p">,</span> <span class="o">~</span>html_node<span class="p">(</span><span class="m">.</span>x<span class="p">,</span> xpath <span class="o">=</span> <span class="s">&quot;//*/img&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span> html_attr<span class="p">(</span><span class="s">&quot;src&quot;</span><span class="p">)),</span>
+         title <span class="o">=</span> map_chr<span class="p">(</span>page<span class="p">,</span> <span class="o">~</span>html_nodes<span class="p">(</span><span class="m">.</span>x<span class="p">,</span> <span class="s">&quot;title&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span> html_text<span class="p">()),</span>
+         description <span class="o">=</span> map_chr<span class="p">(</span>page<span class="p">,</span> <span class="o">~</span>html_nodes<span class="p">(</span><span class="m">.</span>x<span class="p">,</span> <span class="s">&quot;p&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span> html_text<span class="p">()</span> <span class="o">%&gt;%</span> <span class="m">.</span><span class="p">[</span>str_detect<span class="p">(</span><span class="m">.</span><span class="p">,</span> <span class="s">&quot;Ex&quot;</span><span class="p">)])</span> <span class="c1"># descriptions start with &quot;Explanation:&quot;</span>
+         <span class="p">)</span>
+</code></pre></div>
+<h2>Data Cleaning</h2>
+
+<p>With the raw data in hand, I move into more specific text cleaning. I want to start with some quick tidy text analysis of the descriptions, so I cant to clean that up first.</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>data <span class="o">&lt;-</span> data_raw <span class="o">%&gt;%</span> 
+  mutate<span class="p">(</span>description <span class="o">=</span> str_replace_all<span class="p">(</span>description<span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">,</span> <span class="s">&quot; &quot;</span><span class="p">),</span>
+         description <span class="o">=</span> str_replace_all<span class="p">(</span>description<span class="p">,</span> <span class="s">&quot;Explanation:&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">),</span>
+         title <span class="o">=</span> str_replace_all<span class="p">(</span>title<span class="p">,</span> <span class="s">&quot;\n&quot;</span><span class="p">,</span> <span class="s">&quot; &quot;</span><span class="p">),</span>
+         title <span class="o">=</span> str_replace_all<span class="p">(</span>title<span class="p">,</span> <span class="s">&quot;APOD:&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">),</span>
+         title <span class="o">=</span> if_else<span class="p">(</span>str_detect<span class="p">(</span>title<span class="p">,</span> <span class="s">&quot;2017 November 22&quot;</span><span class="p">),</span> <span class="s">&quot;2017 November 22 - Oumuamua Interstellar Asteroid&quot;</span><span class="p">,</span> title<span class="p">)</span>
+         <span class="p">)</span> <span class="o">%&gt;%</span>
+  mutate_all<span class="p">(</span>trimws<span class="p">)</span> <span class="o">%&gt;%</span>
+  separate<span class="p">(</span>title<span class="p">,</span> into <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;date&quot;</span><span class="p">,</span> <span class="s">&quot;title&quot;</span><span class="p">),</span> sep <span class="o">=</span> <span class="s">&quot; - &quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>Great, now we can a do a quick word count using tidytext tools.</p>
+
+<h2>Fun Stuff - word count</h2>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>keep_words <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;way&quot;</span><span class="p">)</span> <span class="c1"># I don&#39;t want &quot;way&quot; as in &quot;Milky Way&quot; to be filtered</span>
+my_stop_words <span class="o">&lt;-</span> tibble<span class="p">(</span>word <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;image&quot;</span><span class="p">))</span> <span class="o">%&gt;%</span>
+  mutate<span class="p">(</span>lexicon <span class="o">=</span> <span class="s">&quot;PERSONAL&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  bind_rows<span class="p">(</span>stop_words<span class="p">)</span> <span class="o">%&gt;%</span>
+  filter<span class="p">(</span><span class="o">!</span>word <span class="o">%in%</span> keep_words<span class="p">)</span>
+
+
+data <span class="o">%&gt;%</span>
+  select<span class="p">(</span><span class="o">-</span><span class="kp">date</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  distinct<span class="p">()</span> <span class="o">%&gt;%</span>
+  unnest_tokens<span class="p">(</span>word<span class="p">,</span> description<span class="p">)</span> <span class="o">%&gt;%</span>
+  anti_join<span class="p">(</span>my_stop_words<span class="p">)</span> <span class="o">%&gt;%</span>
+  count<span class="p">(</span>word<span class="p">,</span> sort <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  top_n<span class="p">(</span><span class="m">10</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## # A tibble: 10 x 2
+##    word       n
+##    &lt;chr&gt;  &lt;int&gt;
+##  1 light   1088
+##  2 star     725
+##  3 stars    656
+##  4 galaxy   636
+##  5 nebula   627
+##  6 moon     522
+##  7 sun      497
+##  8 earth    496
+##  9 bright   461
+## 10 sky      411
+</code></pre></div>
+<p>I love this because it clearly shows the types of objects that make up most of pretty Astronomy pictures, i.e stars, galaxies and nebulae. Very cool! </p>
+
+<p>If I look at bi-grams is there any doubt that &quot;Milky Way&quot; will have a strong showing?</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>data <span class="o">%&gt;%</span>
+  select<span class="p">(</span><span class="o">-</span><span class="kp">date</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  distinct<span class="p">()</span> <span class="o">%&gt;%</span>
+  unnest_tokens<span class="p">(</span>word<span class="p">,</span> description<span class="p">,</span> token <span class="o">=</span> <span class="s">&quot;ngrams&quot;</span><span class="p">,</span> n <span class="o">=</span> <span class="m">2</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  select<span class="p">(</span>title<span class="p">,</span> word<span class="p">)</span> <span class="o">%&gt;%</span>
+  separate<span class="p">(</span>word<span class="p">,</span> into <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;word1&quot;</span><span class="p">,</span> <span class="s">&quot;word2&quot;</span><span class="p">),</span> by <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  unite<span class="p">(</span>word<span class="p">,</span> word1<span class="p">,</span> word2<span class="p">,</span> sep <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  count<span class="p">(</span>word<span class="p">,</span> sort <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  top_n<span class="p">(</span><span class="m">10</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>## # A tibble: 10 x 2
+##    word                n
+##    &lt;chr&gt;           &lt;int&gt;
+##  1 milky way         315
+##  2 planet earth      205
+##  3 way galaxy        133
+##  4 million light     118
+##  5 solar system      114
+##  6 space telescope   106
+##  7 star forming      100
+##  8 hubble space       88
+##  9 spiral galaxy      88
+## 10 star cluster       75
+</code></pre></div>
+<p>...and there it is, clearly winning over &quot;Planet Earth&quot; and &quot;Solar System.&quot; </p>
+
+<p>As a person who studied star formation, I&#39;m also proud of the strong showing of &quot;star forming&quot; in the bi-grams. Yay baby stars!</p>
+
+<h2>But wait... isn&#39;t there an API?</h2>
+
+<p>This is great and fun, but what I&#39;d really love to look at the entire APOD archive, or pull a specific date. Luckily, NASA has a great <a href="https://github.com/nasa/apod-api">API</a> to do just that! The API is super easy to use and simple enough to write into some R functions. I decided the coolest thing to do with this API was create a package, and thus my new package - <a href="https://github.com/eringrand/astropic">astropic</a> was born (available on github)!</p>
+
+<p>The goal of <a href="https://github.com/eringrand/astropic">astropic</a> is to connect R to the NASA APOD API. The APOD API supports one image at a time. In order to supply more than that, this package also includes creating time ranges (of less than 1000 days at a time) and some historical data in tibble format.</p>
+
+<p>You can install the current version from GitHub to check it out</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="c1"># install.packages(&quot;devtools&quot;)</span>
+devtools<span class="o">::</span>install_github<span class="p">(</span><span class="s">&quot;eringrand/astropic&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><a href="https://github.com/eringrand/astropic">Astropic</a> does not yet contain ANY tests and the documentation is very sparse. It is most definitely a work in progress - I&#39;ll update more as I add more to it. </p>
+
+<p>Next time on the blog, more about the package creation and cool things you can do with it. In the mean time, please feel free to send pull requests and let me know what you&#39;d like from such a package.</p>
+
+  </div>
+
+  <div class="date">
+    Written on April 21, 2018
+  </div>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+    
+	    var disqus_shortname = 'astroeringrand'; 
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+<a href="mailto:eringrand@gmail.com"><i class="svg-icon email"></i></a>
+
+
+<a href="https://github.com/eringrand"><i class="svg-icon github"></i></a>
+<a href="https://instagram.com/astroeringrand"><i class="svg-icon instagram"></i></a>
+<a href="https://www.linkedin.com/in/eringrand"><i class="svg-icon linkedin"></i></a>
+
+
+<a href="https://www.twitter.com/astroeringrand"><i class="svg-icon twitter"></i></a>
+
+<a href="https://youtube.com/channel/UCAMkBTcL3PAjgnETfWWKkCQ"><i class="svg-icon youtube"></i></a>
+
+        </footer>
+      </div>
+    </div>
+
+    
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		
+		ga('create', 'UA-59780775-1', 'auto');
+		ga('send', 'pageview', {
+		  'page': '/scrape_apod/',
+		  'title': 'Scraping APOD Descriptions'
+		});
+	</script>
+	<!-- End Google Analytics -->
+
+
+  </body>
+</html>
+
+
+
