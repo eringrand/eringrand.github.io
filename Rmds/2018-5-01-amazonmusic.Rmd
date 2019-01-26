@@ -1,0 +1,26 @@
+```{r}
+library(tidyverse)
+library(googlesheets)
+library(janitor)
+library()
+```
+
+
+```{r}
+doc <- gs_title("Songs played")
+```
+
+```{r}
+gs_read(doc, 1, verbose = FALSE) %>%
+  clean_names() %>%
+  mutate(date = str_replace(date, " at ", " "),
+         date = lubridate::mdy_hm(date),
+         weekday = lubridate::wday(date, label = TRUE, abbr = FALSE),
+         hour = lubridate::hour(date),
+         explicit = str_detect(album, "Explicit"),
+         next_date = lead(date),
+         time_diff = as.numeric(next_date - date, units = "mins"),
+         time_diff = if_else(time_diff <= 10, time_diff, NA_real_)) %>%
+  filter(time_diff > 1 | is.na(time_diff)) # skipped songs
+```
+
