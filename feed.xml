@@ -10,7 +10,7 @@
         <title>Twitter's Favorite Lesser Known Packages</title>
         <description>&lt;p&gt;At the 2018 December NYC R Ladies meetup (yes this post has been sitting in my drafts for over a year), a group started talking about how a few tiny functions in a lesser-known package can provide you with serious magic. The problem is finding those packages and functions! With so many amazing packages on CRAN and GitHub, how do you even begin to search?  One way - ask all your twitter followers what they think, and twitter did not disappoint - so here are some examples of &lt;em&gt;amazing&lt;/em&gt; packages and functions you might want to learn about.&lt;/p&gt;
 
-&lt;p&gt;The types of functions offered seemed to fall in a couple buckets. For example, making tasks you do all the time easier (cleaning data, summary), dealing with data structures that aren&amp;#39;t are easy to deal with (factors, strings.. etc),  and visualizations and plotting support.&lt;/p&gt;
+&lt;p&gt;The types of functions offered seemed to fall in a couple buckets. For example, making tasks you do all the time easier (cleaning data, summary), dealing with data structures that aren&amp;#39;t are easy to deal with (factors, strings.. etc), visualizations, and so much more.&lt;/p&gt;
 
 &lt;h2&gt;Data Tasks&lt;/h2&gt;
 
