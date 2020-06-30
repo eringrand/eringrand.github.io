@@ -7,6 +7,78 @@
     <atom:link href="http://eringrand.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Twitter's Favorite Lesser Known Packages</title>
+        <description>&lt;p&gt;At the 2018 December NYC R Ladies meetup (yes this post has been sitting in my drafts for over a year), a group started talking about how a few tiny functions in a lesser-known package can provide you with serious magic. The problem is finding those packages and functions! With so many amazing packages on CRAN and GitHub, how do you even begin to search?  One way - ask all your twitter followers what they think, and twitter did not disappoint - so here are some examples of &lt;em&gt;amazing&lt;/em&gt; packages and functions you might want to learn about.&lt;/p&gt;
+
+&lt;p&gt;The types of functions offered seemed to fall in a couple buckets. For example, making tasks you do all the time easier (cleaning data, summary), dealing with data structures that aren&amp;#39;t are easy to deal with (factors, strings.. etc),  and visualizations and plotting support.&lt;/p&gt;
+
+&lt;h2&gt;Data Tasks&lt;/h2&gt;
+
+&lt;p&gt;My favorite lesser known package is &lt;a href=&quot;https://sfirke.github.io/janitor/&quot;&gt;Janitor&lt;/a&gt; by Sam Firke. This package has basic functions to clean and prep messy data files. The functions are mostly relatively easy to replicate with dplyr, but why write the same thing over and over when Janitor does it for you!&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Mine are, from janitor...&lt;br&gt;1. clean_names&lt;br&gt;2. get_dupes&lt;br&gt;3. remove_empty&lt;a href=&quot;https://twitter.com/hashtag/rstats?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;#rstats&lt;/a&gt;&lt;/p&gt;&amp;mdash; Erin Grand (@astroeringrand) &lt;a href=&quot;https://twitter.com/astroeringrand/status/1072325599300071431?ref_src=twsrc%5Etfw&quot;&gt;December 11, 2018&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://docs.ropensci.org/skimr/&quot;&gt;Skimr&lt;/a&gt;, as suggested by Fernando Flores, started at an ROpenSci Un-conf that provides a better summary function. It creates both a tidy version of the summary table to work with and a visual version to inspect. This is super useful for investigating data issues.&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-conversation=&quot;none&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Couldn&amp;#39;t choose just one package, so here we go:&lt;br&gt;skimr::skim&lt;br&gt;covr::report&lt;br&gt;DT::JS&lt;/p&gt;&amp;mdash; Fernando Flores (@ds_floresf) &lt;a href=&quot;https://twitter.com/ds_floresf/status/1072539510448275456?ref_src=twsrc%5Etfw&quot;&gt;December 11, 2018&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;h2&gt;Data Types&lt;/h2&gt;
+
+&lt;p&gt;The tidyverse packages for dealing with specific data types are not nearly as widely used as they can be; forcats, lubridate, glue, and stringr can help solve so many problems with factor, dates, and strings.&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;From forcats:&lt;br&gt;1. fct_infreq&lt;br&gt;2. fct_rev&lt;br&gt;3. fct_drop&lt;/p&gt;&amp;mdash; Emily Zabor (@zabormetrics) &lt;a href=&quot;https://twitter.com/zabormetrics/status/1073648773014929413?ref_src=twsrc%5Etfw&quot;&gt;December 14, 2018&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-conversation=&quot;none&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;forcats::fct_lump&lt;a href=&quot;https://t.co/2BboLbdzuS&quot;&gt;https://t.co/2BboLbdzuS&lt;/a&gt;&lt;br&gt;&lt;br&gt;glue::glue and glue::glue_data&lt;a href=&quot;https://t.co/Bxt20MQGi2&quot;&gt;https://t.co/Bxt20MQGi2&lt;/a&gt;&lt;br&gt;&lt;br&gt;Cheated and use 2x packages.&lt;/p&gt;&amp;mdash; Thomas Mock 👨🏼
+💻 (@thomas_mock) &lt;a href=&quot;https://twitter.com/thomas_mock/status/1072328281741901824?ref_src=twsrc%5Etfw&quot;&gt;December 11, 2018&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;you stole mine! 😉 this is kind of cheating but from lubridate: year(), month(), day()&lt;/p&gt;&amp;mdash; Luuuda (@ludmila_janda) &lt;a href=&quot;https://twitter.com/ludmila_janda/status/1072339517821067264?ref_src=twsrc%5Etfw&quot;&gt;December 11, 2018&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;h2&gt;Plotting Support&lt;/h2&gt;
+
+&lt;p&gt;A few of the recommendations focused on vizulations and plotting. Key shouts outs for naniar and patchwork. &lt;a href=&quot;http://naniar.njtierney.com/&quot;&gt;Naniar&lt;/a&gt; helps you visualize your missing values. &lt;a href=&quot;https://patchwork.data-imaginist.com/&quot;&gt;Patchwork&lt;/a&gt; allows you to combine plots together.&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-conversation=&quot;none&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;From two packages, super handy at first steps after loading dataset: &lt;br&gt;naniar::gg_miss_var&lt;br&gt;summarytools::descr&lt;br&gt;summarytools::freq&lt;/p&gt;&amp;mdash; Radoslaw Panczak (@RPanczak) &lt;a href=&quot;https://twitter.com/RPanczak/status/1072674486326124544?ref_src=twsrc%5Etfw&quot;&gt;December 12, 2018&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;h2&gt;Other&lt;/h2&gt;
+
+&lt;p&gt;There are were a ton of other amazing offerings for excellent packages. &lt;/p&gt;
+
+&lt;p&gt;The magrittr package has many useful operators outside of the normal %&amp;gt;% pipe. &lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-conversation=&quot;none&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;I was going to say  %&amp;lt;&amp;gt;% , %&amp;lt;&amp;gt;% , and   %&amp;lt;&amp;gt;%  from magrittr - I use it all the time now thanks to &lt;a href=&quot;https://twitter.com/robinson_es?ref_src=twsrc%5Etfw&quot;&gt;@robinson_es&lt;/a&gt; - but now I&amp;#39;m browsing other magrittr functions and the aliases like extract() etc would be v handy when piping&lt;/p&gt;&amp;mdash; Sarah R (@srhrnkn) &lt;a href=&quot;https://twitter.com/srhrnkn/status/1072870594314625024?ref_src=twsrc%5Etfw&quot;&gt;December 12, 2018&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;If you work with spatial data at all, the &lt;a href=&quot;https://r-spatial.github.io/sf/&quot;&gt;sf&lt;/a&gt; package is a must. &lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;The sf package cleared my skin, cleaned my home &amp;amp; cured my anxiety&lt;/p&gt;&amp;mdash; Brooke Watson (@brookLYNevery1) &lt;a href=&quot;https://twitter.com/brookLYNevery1/status/1072616772870770695?ref_src=twsrc%5Etfw&quot;&gt;December 11, 2018&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-conversation=&quot;none&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;I added the `conflicted` package to my RProfile this summer, and I really love that it warns me about possible name conflicts _before_ I run into problems &lt;a href=&quot;https://t.co/46Y88gexP9&quot;&gt;pic.twitter.com/46Y88gexP9&lt;/a&gt;&lt;/p&gt;&amp;mdash; Irene Steves (@i_steves) &lt;a href=&quot;https://twitter.com/i_steves/status/1088884286101573632?ref_src=twsrc%5Etfw&quot;&gt;January 25, 2019&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;What is your favorite lesser know package or function? Sound off in the comments (or find me on twitter).&lt;/p&gt;
+</description>
+        <pubDate>Tue, 30 Jun 2020 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/fave_r_functions/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/fave_r_functions/</guid>
+      </item>
+    
+      <item>
         <title>Scraping APOD Descriptions</title>
         <description>&lt;h2&gt;Orginal Plan - Scrape from Archive&lt;/h2&gt;
 
@@ -974,191 +1046,6 @@ Colors on computers don&amp;#39;t work the same way we&amp;#39;re taught in 5th 
         <pubDate>Wed, 01 Apr 2015 00:00:00 -0400</pubDate>
         <link>http://eringrand.github.io/aprilreading/</link>
         <guid isPermaLink="true">http://eringrand.github.io/aprilreading/</guid>
-      </item>
-    
-      <item>
-        <title>Graphics and Plots in Science</title>
-        <description>&lt;p&gt;Graphics and visualizations are used for promotion, advertisement to promote a product or idea. In science, graphics tend to fall into one of two categories: for use in education or a science journal.  For information on what makes a good educational graphic, or a teaching tool, I&amp;#39;ve written a piece earlier on this blog &lt;a href=&quot;http://eringrand.github.io/educationgraphics/&quot;&gt;here&lt;/a&gt;. 
-In the academic articles, graphics hold a special role in telling a compelling story of the data and results, however, the editing emphasis is often placed much more on text than making interesting and understandable science graphics.  &lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;DISCLAIMER: I am coming from an astronomy and physics background, and am going to discuss problems found within these contexts.&lt;/em&gt;&lt;/p&gt;
-
-&lt;h3&gt;Academic Article Graphics&lt;/h3&gt;
-
-&lt;p&gt;We think of academics and especially science as being told through plots and graphs. In fact, Tufte explains that the history graphics begins with time series plots of the planets and the sun in the night sky. 
-Now a days, science articles use graphics to tell a story. We let the data speak for itself
-by representing it in a reproducible graphic. &lt;/p&gt;
-
-&lt;p&gt;In my time in academia (in physics and astronomy) I&amp;#39;ve come across several common problems such as: &lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Missing or incorrect error bars (especially on log-log plots)&lt;/li&gt;
-&lt;li&gt;Missing or incorrect ticks marks and axis labels&lt;/li&gt;
-&lt;li&gt;Too much text - Keep notes and explanations outside the graphic and in the image caption&lt;/li&gt;
-&lt;li&gt;Overlap of lines or points&lt;/li&gt;
-&lt;li&gt;Wasting space or not using enough of it &lt;/li&gt;
-&lt;li&gt;Plots that should have been tables&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Some of these problems come from trying to show off too much of the data. You want the data to stand out, but you don&amp;#39;t always need to include all of it. This is hard because we spend so much time working with the data that we want to share everything, but the added complexity often takes away from the graph and the point you&amp;#39;re trying to make. &lt;/p&gt;
-
-&lt;p&gt;In the remainder of the blog, I will try to address each of these points and introduce a fast and easy way to correct them. &lt;/p&gt;
-
-&lt;h4&gt;Corrections to common problem with academic graphics:&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Log-log plots with missing or symmetric error bars can be fixed by forcing asymmetric error bars. When there are small errors, the log can show as a negative error, which often means that plot won&amp;#39;t do anything. In Matplotlib the default (for the y axis) is to map all negative values a very small positive one. The code for that is: 
-&lt;code&gt;
-plt.yscale(&amp;#39;log&amp;#39;, nonposx=&amp;#39;clip&amp;#39;)
-&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Tick marks: The defaults for tick marks and labels are often too large, too small, facing the wrong direction or else wise strange.  In ggplot in R this can be manipulated under theme:&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;For example, to make everything expect your points or lines disappear you&amp;#39;d use: &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt; theme(axis.line=element_blank(),
-        axis.text.x=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks=element_blank(),
-        axis.title.x=element_blank(),
-        axis.title.y=element_blank(),
-        legend.position=&amp;quot;none&amp;quot;,
-        panel.background=element_blank(),
-        panel.border=element_blank(),
-        panel.grid.major=element_blank(),
-        panel.grid.minor=element_blank(),
-        plot.background=element_blank()) 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Each of these could also be modified to make the text larger or smaller, change the font, rotate the labels...etc.&lt;/p&gt;
-
-&lt;p&gt;To change the direction and size of the tick labels you&amp;#39;d use something like:
-&lt;code&gt;
-theme(axis.text.x  = element_text(angle=90, vjust=0.5, size=16)
-&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;You can reduce clutter on the graph by using fewer (labeled) tick marks. &lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Always remember to label your axes! 
-This is done in python with:&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;import matplotlib.pyplot as plt
-plt.xlabel(&amp;#39;X Label&amp;#39;)
-plt.ylabel(&amp;#39;Y Label&amp;#39;)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;or in ggplot2 in R using:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;  labs(title = &amp;quot;Plot Title&amp;quot;) +
-  ylab(&amp;quot;X Label&amp;quot;) +
-  xlab(&amp;quot;Y Label&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;ul&gt;
-&lt;li&gt;The problem of too many overlapping lines or points can be solved in various ways depending on the data. Sometimes, changing the colors and alpha of the points might be enough. 
-In other cases, it&amp;#39;s best to separate out the information into a table of plots.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;For example, below is the original plot from my research showing the intensity of different molecules across velocities. The plot places all four molecules on the same graph with a key indicating which is which. In color, this graphic might make more sense, but it is still hard to make out the individual curves. Plus, the key is small and referring back to it is time consuming and annoying.&lt;/p&gt;
-
-&lt;div style=&quot;width:image width px; font-size:80%;text-align:center;&quot;&gt;&lt;img src=&quot;/images/spectrapel.png&quot; alt=&quot;Velocity spectra for the Pelican Pillar.&quot;/&gt;
-&lt;figcaption&gt;Velocity spectra for the Pelican Pillar.&lt;/figcaption&gt;
-&lt;/div&gt;
-
-&lt;p&gt;In fixing the graphic, while also including more information from my other sources,
-I separated out the each of the molecules and sources into a table of spectra. 
-This un-clutters the plot and allows you to more easily visualize trends in the sources. 
-(Notice how the plot is missing axes labels - shame on me!) &lt;/p&gt;
-
-&lt;div style=&quot;width:image width px; font-size:80%;text-align:center;&quot;&gt;&lt;img src=&quot;/images/spectra2.png&quot; alt=&quot;Velocity spectra for the pillars show brightness temperature against velocity in km/s. The spectra were taken in the heads of the pillars at the peak brightness and averaged over a beam size.&quot;/&gt;
-&lt;figcaption&gt;Velocity spectra for the pillars show brightness temperature against velocity in km/s. The spectra were taken in the heads of the pillars at the peak brightness and averaged over a beam size.&lt;/figcaption&gt;
-&lt;/div&gt;
-
-&lt;p&gt;The code for this plot was done in IDL - a language mostly used only by astronomers (after looking at the code, you&amp;#39;ll see why no one else joined in the fun...)
-If you&amp;#39;re interested, you can check it out &lt;a href=&quot;https://github.com/eringrand/idlcodes/blob/master/plotspectra.pro&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;For the future, I want to try and remake some of my research plots in R for better practice with R and ggplot2, using something along these lines:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;data %&amp;gt;%
-ggplot(aes(x=vel,y=tb)) + 
-geom_line() + 
-facet_wrap(~pillar)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;ul&gt;
-&lt;li&gt;In attempts to not waste space, you should examine the size and scale of the axes. This often shows up as a problem when an outlier or two that expand the axes such that much of the plot is empty. In these cases, you can crop the plot to the main data and include an arrow to show where the outlier is. &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Most importantly, don&amp;#39;t display empty plots like &lt;a href=&quot;https://www.biostat.wisc.edu/~kbroman/topten_worstgraphs/wittke_thompson_fig1CD.jpg&quot;&gt;this infamous plot &lt;/a&gt; from Wittke-Thompson JK and Pluzhnikov A, Cox NJ (2005). &lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Sometimes, to save room or otherwise, it&amp;#39;s best to display the information in a table format instead of bar graphs. For example, this plot from a science article titled &lt;a href=&quot;http://arxiv.org/abs/1403.3091&quot;&gt;&amp;quot;Studying Gender in Conference Talks -- data from the 223rd meeting of the American Astronomical Society&amp;quot;&lt;/a&gt; shows the large difference in number questions asked by males vs number asked by females, given a male or female chair. 
-This plot displays the most significant finding from the analysis: a strong dependence on session chair gender. Still, this information could have easily been shown in a table instead of a graph.  This would be a useful plot for a presentation on the subject, but not needed in the article.&lt;br&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/chairs_questions.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-
-&lt;hr&gt;
-
-&lt;h3&gt;Color in academic graphics:&lt;/h3&gt;
-
-&lt;p&gt;Color can be a huge issue in scientific articles. This is largely because most journals charge more for printing in color, but will present colored versions of plots in the online versions on the articles. This means that authors need to make sure that they have plots that work well in color and in black and white, which gives way to some graphics which are very hard to read. &lt;/p&gt;
-
-&lt;h4&gt;Common color problems.&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Eye piercing bight colors and/or use of rainbow colors.
-We&amp;#39;ve discussed the problems with the rainbow in class, but as a reminder: 
-the rainbow color scheme includes colors which are hard to see, doesn&amp;#39;t have a universally understood order, artificially exaggerates differences in color while softening the differences between others and (importantly for print) doesn&amp;#39;t convert well to black and white. &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Contrast is one of THE biggest problems I see in academic figures.  Things like cyan or yellow on white, red on blue, navy on black... these cause major problems (and headaches) when reading text or trying to discern between lines. Your plot doesn&amp;#39;t have to be pretty, but it does have to be legible!&lt;/p&gt;
-
-&lt;p&gt;Color in astronomy maps often tags along with Color-coded image of the molecular cloud&lt;/p&gt;
-
-&lt;hr&gt;
-
-&lt;h3&gt;Graph Critique and Fix&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/bad.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-
-&lt;p&gt;The image from an article titled &amp;quot;MOLECULAR CLOUDS IN THE NORTH AMERICAN AND PELICAN NEBULAE: STRUCTURES&amp;quot; by Shaobo Zhang, Ye Xu and Ji Yang,
-displays the locations of clumps, as well as their velocity and size. From the image caption &amp;quot;The circles indicate the clump positions on the integrated intensity map of 13 CO. The colors of the circles represent the velocities the clumps, while the circles are scaled according to the sizes of clumps.&amp;quot; &lt;/p&gt;
-
-&lt;p&gt;This is a perfect example of trying to show too much in one plot such that it&amp;#39;s no longer understandable. A different color scheme would help the eye more easily see the trends in velocity. I would also like to see the circles filled in, and the background map a bit darker. Also, The graph extends too far up so that the color legend is clear, but leaves too much empty space in the graph. The axes and tick marks could also be smaller. &lt;/p&gt;
-
-&lt;p&gt;I didn&amp;#39;t have their data, but I remade a similar type of plot pulling points, velocities and sizes from normal distributions (see code below). 
-&lt;img src=&quot;http://eringrand.github.io/images/Rplot.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-
-&lt;p&gt;This image fixes some of the problem by using GGPLOT default color scheme, which keeps the hue in blue and changes the brightness. I&amp;#39;ve filled in the circle in make the difference in sizes more clear, and I made sure that the circles are scaled by area, as to not conflate radius and area. &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;&lt;/span&gt;library(ggplot2) 
-
-xvar &amp;lt;- sample(-100:100,100,replace=T)
-yvar &amp;lt;- sample(-100:100,100,replace=T)
-v &amp;lt;-  sort(rnorm(100,0,1))
-s &amp;lt;- abs(rnorm(100))
-
-data &amp;lt;- data.frame(xvar,yvar,v,s)
-data &amp;lt;- data[order(data$v),]
-data$x &amp;lt;- rnorm(100,0,50)
-data$y &amp;lt;- rnorm(100,0,50)
-
-ggplot(data,aes(x=x,y=y), legend=FALSE)+
-  stat_density2d(aes(alpha=..level..), geom=&amp;quot;polygon&amp;quot;, show_guide=FALSE) +
-  scale_alpha_continuous(limits=c(-2,10), breaks=seq(0,1,by=1)) + 
-  geom_point(aes(x=xvar, y=yvar, size=s, color=v), alpha=0.8, show_guide=FALSE) + 
-  scale_colour_gradient(limits=c(-4,4)) +
-  scale_size_area(max_size=10)   + 
-  theme_bw() + 
-  theme(legend.title=element_blank()) 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;hr&gt;
-
-&lt;h3&gt;Conclusions:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Always remember to think about the story your telling and how your graphic fits in. &lt;/li&gt;
-&lt;li&gt;Label your plots correctly, but don&amp;#39;t clog the plot with text. Keep your labels short, and rotate them if needed to to be read. &lt;/li&gt;
-&lt;li&gt;If displaying all of your data looks cluttered, think about if you really need to show all of it, and if so if there&amp;#39;s a better way to display it. &lt;/li&gt;
-&lt;li&gt;Watch out for color! We like pretty graphs, but only if we can still read them. &lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Tue, 24 Mar 2015 00:00:00 -0400</pubDate>
-        <link>http://eringrand.github.io/sciencegraphics/</link>
-        <guid isPermaLink="true">http://eringrand.github.io/sciencegraphics/</guid>
       </item>
     
   </channel>
