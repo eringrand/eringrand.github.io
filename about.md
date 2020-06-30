@@ -15,7 +15,7 @@ permalink: /about/
 ---
 
 ##<a name="info"></a>Bio
-Erin joined Uncommon Schools as an Associate Director of Data Analytics in the summer of 2016. Prior to Uncommon, she worked as a Data Scientist at Crisis Text Line and a software programmer at NASA. She recently completed her masters in Data Science at Columbia University. In the past, Erin researched star formation and taught introductory courses in astronomy and physics. In her free time, Erin enjoys reading, dancing and singing loudly to musical theatre.
+Erin works as a Data Scientist at Uncommon Schools where she trains coworkers in R as well as maintaining two R packages. Prior to Uncommon, she worked as a Data Scientist at Crisis Text Line and a software programmer at NASA while completing her Data Science degress at Columbia University. Before data science, Erin researched star formation and taught introductory courses in astronomy and physics at the University of Maryland.
 
 
 ###Degrees: 
@@ -30,7 +30,7 @@ Erin joined Uncommon Schools as an Associate Director of Data Analytics in the s
 
 
 ### Organizations
-* [R-Ladies](https://rladies.org/)
+* [R-Ladies Global](https://rladies.org/) and [R-Ladies NYC](https://www.rladiesnyc.org/)
 * [NASA Datanauts](https://open.nasa.gov/explore/datanauts/)
 [Top](#top)
 
@@ -39,8 +39,10 @@ Erin joined Uncommon Schools as an Associate Director of Data Analytics in the s
 ---
 ##<a name="experience"></a>
 
-###Uncommon Schools (Associate Director of Data Analytics)
-
+###Uncommon Schools (Data Scientist)
+* Produced high-quality analytics work around student and staff data, including prediction models around student state exams, student enrollment, and staff recruitment.
+* Lead 6+ group trainings on the R programming language for 10+ coworkers
+Automated manual state exam reporting process saving 6+ hours of processing time
 
 ###Crisis Text Line (Data Scientist)
 * Working at Crisis Text Line as a Data Scientist. You can read about my transition to Data Science at Crisis Text Line [here](http://datascience.columbia.edu/q-erin-grand-data-scientist-crisis-text-line).
@@ -68,7 +70,7 @@ Erin joined Uncommon Schools as an Associate Director of Data Analytics in the s
 ---
 
 ##<a name="hire"></a>Hiring
-* [Resume](https://www.dropbox.com/s/8vit837qrfepnpq/resume.pdf?dl=0)
+* [Resume](https://github.com/eringrand/cv/blob/main/resume.pdf)
 * Teaching:
 	*  I've been a teacher's assistant for several introductory astronomy classes 
 	and a physics tutor for friends. 
