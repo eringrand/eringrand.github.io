@@ -7,6 +7,23 @@
     <atom:link href="http://eringrand.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Data science jobs in the non-profit sector</title>
+        <description>&lt;p&gt;I&amp;#39;ve been a data scientist in the non-profit sector for 5+ years. In an earlier conversation with people starting their transition into data science, we talked about how non-profit data can be an excellent place to start. There are some cons to beginning at a non-profit - but I love it.&lt;/p&gt;
+
+&lt;p&gt;In my experience, non-profits data roles have similarities with start-up positions. A non-profit data role may involve doing more work than described in the job description (e.g., analysis and project management at the same time). Due to a lack of funding, non-profits cannot hire individual people for all the needed work, so a new hire can end up filling many job roles at once. This early experience in more extensive work is a magnificent step for learning on the job. &amp;quot;Personally, I think non-profit DS is the perfect place to start a career :) so much messy data, and so many wins, even from &amp;quot;basic&amp;quot; models.&amp;quot; (Caitlin Hudon) In larger for profit-tech companies, In for-profit tech companies, people are not wearing some many hats. In non-profits, you end up being more cross trained. &lt;/p&gt;
+
+&lt;p&gt;On the other hand, a possible con to joining a smaller non-profit OR start-up is that you may be one of the first data people in the company. Data Science teams often don&amp;#39;t exist at non-profits, and as the first or early data person, you are forced to grow your skills quickly on the job, but it also means you won&amp;#39;t have an on-site mentor on the job. &amp;quot;In my current position, my manager is self-taught in coding... He does most things in SQL.&amp;quot; - Kevin Gilds. In chapter 9 of their book, Building a Career in Data Science, Emily Robison &amp;amp; Jaqueline Nolis talk more about being the first or only data person on the job. When there is a data team in place, non-profits often have smaller data teams. The day-to-day work is likely to be more aligned with reporting/analysis than machine learning. If you are looking specifically to get involved in modeling ASAP, a non-profit will not be the best place to start. That said, the messy data difficulties in a non-profit can often lead to quick wins for automation and coding. &lt;/p&gt;
+
+&lt;p&gt;In companies without a dedicated data team, data structures and cleaning become crucial as data is likely in spreadsheets. SQL and Excel skills are more appreciated than complicated programming skills.  I have loved working with messy data as it has allowed me to shape the policies and work to create more organized structures. &amp;quot;You will never find better datasets to cut your teeth on than working with non-profit data.&amp;quot; (Caitlin Hudon)  Given the often early data stages, you can do quick magic with a spreadsheet. Apply some automation in an excel macro or a pivot table gives you an early win with the data and stakeholders. Teaching others how to do a vlookup could make a difference between them spending 5min vs. 1-2 hours on a task.&lt;/p&gt;
+
+&lt;p&gt;The clear win or difference, for me, at a non-profit is that everyone is passionately mission-driven. Non-profit employees are not there just for the money (though, hey - let&amp;#39;s pay people what they&amp;#39;re worth, please). Tech and data skills can be uniquely used in a mission-driven space to do fantastic work to make the world better. For example, in an education company, working with student data can directly influence how a teacher can help them perform even better on SATs, enabling them access to a better college. At a mental health company, data work provides information for counselors to better help their clients - literally saving lives. &lt;/p&gt;
+</description>
+        <pubDate>Wed, 14 Apr 2021 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/datasciencejobs/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/datasciencejobs/</guid>
+      </item>
+    
+      <item>
         <title>Twitter's Favorite Lesser Known Packages</title>
         <description>&lt;p&gt;At the 2018 December NYC R Ladies meetup (yes this post has been sitting in my drafts for over a year), a group started talking about how a few tiny functions in a lesser-known package can provide you with serious magic. The problem is finding those packages and functions! With so many amazing packages on CRAN and GitHub, how do you even begin to search?  One way - ask all your twitter followers what they think, and twitter did not disappoint - so here are some examples of &lt;em&gt;amazing&lt;/em&gt; packages and functions you might want to learn about.&lt;/p&gt;
 
@@ -1012,40 +1029,6 @@ Colors on computers don&amp;#39;t work the same way we&amp;#39;re taught in 5th 
         <pubDate>Wed, 01 Apr 2015 00:00:00 -0400</pubDate>
         <link>http://eringrand.github.io/suggestionsfrommarch/</link>
         <guid isPermaLink="true">http://eringrand.github.io/suggestionsfrommarch/</guid>
-      </item>
-    
-      <item>
-        <title>Suggested Links from Spring and Summer 2015</title>
-        <description>&lt;h2&gt;Articles:&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;This article is about a year old, but I still find it fascinating. 
-&lt;a href=&quot;http://www.educause.edu/ero/article/what-makes-online-instructional-video-compelling?utm_source=Informz&amp;utm_medium=Email+marketing&amp;utm_campaign=EDUCAUSE&quot;&gt;What Makes Online Instructional Video Compelling&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://www.authorea.com/users/23/articles/8762/_show_article&quot;&gt;The &amp;quot;Paper&amp;quot; of the Future&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://www.analyticsvidhya.com/blog/2015/07/github-special-data-scientists-to-follow-best-tutorials/&quot;&gt;Data Science Tutorials&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2&gt;Tutorials:&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://sqlschool.modeanalytics.com/&quot;&gt;Learn SQL&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2&gt;Fun Applications:&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://recode.net/2015/04/20/textio-spell-checks-for-gender-bias/&quot;&gt;Textio: Spell Check for Gender Bias&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2&gt;Cool GitHub Projects:&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/gpoore/pythontex&quot;&gt;Pythontex&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Wed, 01 Apr 2015 00:00:00 -0400</pubDate>
-        <link>http://eringrand.github.io/aprilreading/</link>
-        <guid isPermaLink="true">http://eringrand.github.io/aprilreading/</guid>
       </item>
     
   </channel>
