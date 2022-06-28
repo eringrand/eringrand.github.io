@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- htmlwidgets dependencies --> 
+    
+    
+    
+
+    
+
+    <title>R Notebook – Erin Grand – Interested in data science and education</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="Interested in data science and education">
+    <meta property="og:description" content="Interested in data science and education" />
+    
+    <meta name="author" content="Erin Grand" />
+
+    
+    <meta property="og:title" content="R Notebook" />
+    <meta property="twitter:title" content="R Notebook" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Erin Grand - Interested in data science and education" href="/feed.xml" />
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/6360871?v=3" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Erin Grand</a></h1>
+            <p class="site-description">Interested in data science and education</p>
+          </div>
+
+          <nav>
+            <a href="/">Blog</a>
+            <a href="/about">About</a>
+            <a href="/projects">Projects</a>
+            <a href="/archive">Archive</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      
+
+<article class="post">
+<h1>R Notebook</h1>
+
+
+<div>
+<ul class="tag_list_in_post">
+<emph> Tags: </emph>
+
+ <a class="tag_list_link" href="/tag/data">data</a>
+
+</ul>
+</div>
+
+
+
+
+<p id="post-meta"></p>
+
+  <div class="entry">
+    ```{r message=TRUE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(lubridate)
+library(tidytext)
+library(hunspell)
+library(ggrepel)
+library(cowplot)
+library(ggrepel)
+```
+
+I downloaded all my past Live Journal entities to a folder on my desktop in the same CSV format, so that I could easily load them in for analysis. I am pleasantly surprised that Live Journal made it so easy to download my history like this!
+
+```{r}
+lj_files <- list.files("~/github/LJ/", pattern = "stumpthegreat", full.names = TRUE)
+
+lj_df <- map_dfr(lj_files, read_csv, col_types = cols(
+  itemid = col_character(),
+  eventtime = col_character(),
+  logtime = col_character(),
+  subject = col_character(),
+  event = col_character(),
+  security = col_character(),
+  allowmask = col_character(),
+  current_music = col_character(),
+  current_mood = col_character() )
+) %>%
+  distinct()
+```
+
+The next step is to take every journal and separate out the individual words using '[tidytext](https://cran.r-project.org/web/packages/tidytext/vignettes/tidytext.html).' Importantly, I also use the \`strip_url = TRUE\` argument to clean out any hyperlinks in my journal.
+
+```{r}
+lj_words <- lj_df %>%
+  select(itemid, eventtime, logtime, subject, current_music, current_mood, event) %>%
+  mutate(across(c(eventtime, logtime), ymd_hms),
+         year = year(logtime),
+         month = month(logtime),
+         ) %>%
+  unnest_tokens(word, event, format = "html", strip_url = TRUE, strip_punc = TRUE) 
+```
+
+Not included in this blog post, for privacy of my teenage friends, I also cleaned and changed names of my friends and locations to clean the data and protect their privacy. I call the list of words `words_not_in_dic`.
+
+```{r include=FALSE, echo = FALSE}
+words_not_in_dic <- c("melissa", "erin", "danielle", "jason",
+                      "loki", "german", "norse", "odin", "firefaerie",
+                      "bon", "jovi", "jeff", "mara", "tara", "laura",
+                      "jess", "kevin", "kyle", "sam", "gaiman", "boro",
+                      "abbie",
+                      "flyingarmadillo", "meg", "megkips", "kykenobi", "hayley",
+                      "neopets", "stumpthegreat", "thisangelinhell", "zarephathcs",
+                      "photobucket", "mia", "marla", "jon", "linda", "lotr")
+```
+
+I was (and continue to be) terrible at spelling words correctly and also terrible at checking what I've typed after the fact. I use 'hunspell' here in an attempt to fix some of the most common issues.
+
+```{r}
+lj_words_spell_check <- lj_words %>%
+  anti_join(stop_words, by = "word") %>%
+  count(word) %>%
+  rowwise() %>%
+  mutate(spell_check = hunspell(word, ignore = words_not_in_dic)) %>%
+  filter(length(spell_check) == 1) %>%
+  mutate(suggest = hunspell_suggest(spell_check)) 
+
+lj_correct <- lj_words_spell_check %>%
+  filter(length(suggest) > 0) %>%
+  mutate(suggest_pick = pluck(suggest, 1)) %>% # just pick the first one because I am lazy
+  unnest(suggest_pick) %>%
+  select(word, suggest = suggest_pick) %>%
+  bind_rows(tibble(word  = c("don", "dont"), 
+                   suggest = c("don't") 
+                   )
+            ) 
+
+lj_words_corrected <- lj_words %>%
+  left_join(lj_correct, by = "word") %>%
+  mutate(word = coalesce(suggest, word)) %>%
+  unnest_tokens(output = "word", input = word) # used because sometimes the correction is actually 2+ words now
+```
+
+```{r}
+lj_words_corrected %>%
+  count(year, word) %>% 
+  tidytext::bind_tf_idf(word, year, n) %>%
+  group_by(year) %>%
+  top_n(n = 10, wt = tf_idf) %>%
+  ungroup() %>%
+  filter(n >= 2) %>%
+  ggplot(aes(x = tf_idf, y = reorder_within(word, by = tf_idf, within = year), 
+             fill = factor(year)) ) +
+  geom_col() +
+  scale_y_reordered() +
+  guides(fill = FALSE) +
+  viridis::scale_fill_viridis(discrete = TRUE, end = 0.9, option = "D") +
+  scale_x_continuous(breaks = NULL) +
+  facet_wrap(~year, scales = "free") +
+  labs(x = "", 
+       y = "",
+       title = "TF-IDF of My Live Journal Posts",
+       subtitle = "Years 2003-2010")
+```
+
+```{r}
+df_plot <- lj_words_corrected %>%
+  left_join (get_sentiments("bing") ) %>%
+  rename(bing_sentiment = sentiment) %>%
+  left_join (get_sentiments("nrc") ) %>%
+  rename(nrc_sentiment = sentiment) %>%
+  pivot_longer(cols = c(bing_sentiment, nrc_sentiment), 
+               names_to = "sentiment_type", values_to = "sentiment") %>%
+  count(sentiment_type, year, sentiment) %>%
+  filter(! is.na(sentiment) ) %>%
+  rename(count = n ) %>%
+  group_by(sentiment_type, year) %>%
+  mutate(total = sum(count)) %>%
+  ungroup() %>%
+  mutate(percent = count / total,
+         year_month = ymd(str_c(year, "01", "01", sep = "-"))
+         ) 
+
+
+df_plot %>%
+  ggplot(aes(x = year_month, y = percent, color = sentiment, label = sentiment)) +
+  geom_line() +
+  geom_point() +
+  geom_text_repel(
+    data = filter(df_plot, min(year_month) == year_month),
+    nudge_x      = -1,
+    direction    = "y",
+    hjust        = 1,
+    segment.size = 0.2,
+    xlim = c(-Inf, ymd("2002-12-01") )
+  ) +
+  scale_y_continuous(label = scales::percent) +
+  scale_x_date(breaks = scales::pretty_breaks(12), 
+               expand = expansion(mult = c(0.20, 0.05)),
+               ) +
+  guides(color = FALSE) +
+  labs(x = "", y = "", title = "% of words of positive sentiment") +
+  facet_wrap(~sentiment_type, scales = "free_y", nrow = 2) +
+  cowplot::theme_cowplot()
+```
+
+```{r}
+extra_sentiemnt <- tibble::tribble(
+       ~word, ~sentiment,
+            "amused",  "positive",
+             "blank",  "negative", 
+              "busy",  "negative",
+     "contemplative",  "negative",
+     "indescribable",  "negative",
+            "mellow",  "negative",
+              "okay",  "positive",
+            "pissed",  "negative",
+               "off",  "negative",
+          "stressed",  "negative",
+           "working",  "negative",
+           "content",  "positive"
+     )
+
+lj_words_corrected %>%
+  left_join (get_sentiments("bing") ) %>%
+  separate_rows(current_mood) %>%
+  left_join ( bind_rows(get_sentiments("bing"), extra_sentiemnt), by = c("current_mood" = "word") ) %>%
+  rename(mood_sentiment = sentiment.y) %>%
+  filter(! is.na(sentiment.x), ! is.na(mood_sentiment)) %>%
+  group_by(year, mood_sentiment) %>%
+  summarise(percent = sum(mood_sentiment == sentiment.x, na.rm = TRUE) / n() ) %>%
+  ungroup()  -> df_plot
+
+
+  ggplot(df_plot, aes(x = year, y = percent, color = mood_sentiment, label = mood_sentiment)) +
+  geom_line() +
+  geom_point() +
+  geom_text_repel(
+        data = filter(df_plot, min(year) == year),
+        nudge_x      = -1,
+        direction    = "y",
+        hjust        = 1,
+        segment.size = 0.2) +
+  scale_y_continuous(label = scales::percent) +
+  scale_x_continuous(breaks = scales::pretty_breaks(7),
+               expand = expansion(mult = c(0.20, 0.05)),
+               ) +
+  guides(color = FALSE) +
+  labs(x = "", y = "", title = "Percent of words that match the sentiement of current mood") +
+  cowplot::theme_cowplot()
+```
+
+```{r}
+lj_words_corrected %>%
+  distinct(itemid, current_music) %>%
+  count(current_music, sort = TRUE)
+```
+
+  </div>
+
+  <div class="date">
+    Written on 
+  </div>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+    
+	    var disqus_shortname = 'astroeringrand'; 
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+<a href="mailto:eringrand@gmail.com"><i class="svg-icon email"></i></a>
+
+
+<a href="https://github.com/eringrand"><i class="svg-icon github"></i></a>
+<a href="https://instagram.com/astroeringrand"><i class="svg-icon instagram"></i></a>
+<a href="https://www.linkedin.com/in/eringrand"><i class="svg-icon linkedin"></i></a>
+
+
+<a href="https://www.twitter.com/astroeringrand"><i class="svg-icon twitter"></i></a>
+
+<a href="https://youtube.com/channel/UCAMkBTcL3PAjgnETfWWKkCQ"><i class="svg-icon youtube"></i></a>
+
+        </footer>
+      </div>
+    </div>
+
+    
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		
+		ga('create', 'UA-59780775-1', 'auto');
+		ga('send', 'pageview', {
+		  'page': '/Rmds/2022-06-28-LJ.Rmd',
+		  'title': 'R Notebook'
+		});
+	</script>
+	<!-- End Google Analytics -->
+
+
+  </body>
+</html>
+
+
+
