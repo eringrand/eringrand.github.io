@@ -7,6 +7,142 @@
     <atom:link href="http://eringrand.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Reviewing my old live journal posts</title>
+        <description>&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tidyverse&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;lubridate&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;tidytext&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;hunspell&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;ggrepel&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;cowplot&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I’m about to BARE MY SOUL to the internet. Well, the soul of my teenage
+self… Get ready!&lt;/p&gt;
+
+&lt;p&gt;I downloaded all my past Live Journal entities to a folder on my desktop
+in the same CSV format, so that I could easily load them in for
+analysis. I am pleasantly surprised that Live Journal made it so easy to
+download my history like this! I did have to click the same button a ton
+of time - but I did get all my data.&lt;/p&gt;
+
+&lt;p&gt;The next step was to take every journal and separate out the individual
+words using
+‘&lt;a href=&quot;https://cran.r-project.org/web/packages/tidytext/vignettes/tidytext.html&quot;&gt;tidytext&lt;/a&gt;.’&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span&gt;&lt;/span&gt;lj_words &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; lj_df &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;itemid&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; eventtime&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; logtime&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; subject&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; current_music&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; current_mood&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; event&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;across&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;eventtime&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; logtime&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; ymd_hms&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         year &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; year&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;logtime&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         month &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; month&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;logtime&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;event &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; str_remove_all&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;event&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;#39;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  unnest_tokens&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; event&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; token &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;words&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; format &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;html&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; strip_url &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Not included in this blog post, for privacy of my teenage friends, I
+also cleaned and changed names of my friends and locations to clean the
+data and protect their privacy. For example, instead of the name “Linda”
+you may see “nameofsister”.&lt;/p&gt;
+
+&lt;p&gt;I was (and continue to be) terrible at spelling words correctly and also
+terrible at checking what I’ve typed after the fact. I use ‘Hunspell’
+here in an attempt to fix some of the most common issues. Does this
+spell check get everything? No! But alas, I am a terrible speller and we
+move on in life.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span&gt;&lt;/span&gt;lj_words_spell_check &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; lj_words_protect &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  anti_join&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;my_stop_words&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; by &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;word&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  count&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  rowwise&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;spell_check &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; hunspell&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;spell_check&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;suggest &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; hunspell_suggest&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;spell_check&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span&gt;&lt;/span&gt;lj_correct &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; lj_words_spell_check &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;suggest&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;suggest_pick &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; pluck&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;suggest&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# just pick the first one because I am lazy&lt;/span&gt;
+  ungroup&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  unnest&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;suggest_pick&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  select&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; suggest_pick&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span&gt;&lt;/span&gt;lj_words_corrected &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; lj_words_protect &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  left_join&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;lj_correct&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; by &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;word&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; coalesce&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;suggest_pick&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; word&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  unnest_tokens&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;output &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;word&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; input &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; word&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# used because sometimes the correction is actually 2+ words now &lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Now we move on to actaul analysis!&lt;/h2&gt;
+
+&lt;p&gt;The data is clean, or at least as clean as it is going to get today.&lt;/p&gt;
+
+&lt;h3&gt;Word counts&lt;/h3&gt;
+
+&lt;p&gt;I start with TF-IDF. The goal here is to see what I was talking about
+each year and how it may differ as I got older. As a reminder, I have
+changed the names of all my friends and family for privacy. That way you
+don’t know who “nameofbestfriend” is and why I stopped mentioning
+“nameofbestfriend” in 2006. (We had a bit of a falling out at the end of
+HS.)&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span&gt;&lt;/span&gt;tfidf &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; lj_words_corrected &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  count&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; word&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; 
+  tidytext&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;bind_tf_idf&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;word&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; n&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  anti_join&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;stop_words&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; by &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;word&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  group_by&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  top_n&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;n &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; wt &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; tf_idf&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  ungroup&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;n &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-12-1.png&quot; alt=&quot;&quot;&gt;
+Look at the 2009 - clearly my only entries were my Norse myth college
+class.&lt;/p&gt;
+
+&lt;p&gt;We can look at the differences between TF-IDF and a regular word count,
+while accounting for stop words.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span&gt;&lt;/span&gt;wordcount &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; lj_words_corrected &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  count&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; word&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  anti_join&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;stop_words&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; by &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;word&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  group_by&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  top_n&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;n &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; wt &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; n&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  ungroup&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;n &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-14-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;Sentiment&lt;/h3&gt;
+
+&lt;p&gt;Next I look at sentiment. I remember using live journal to be super
+&lt;em&gt;angsty&lt;/em&gt;. I assumed that I would largely see negative sentiment and
+words across the years.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span&gt;&lt;/span&gt;df_plot &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; lj_words_corrected &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  left_join &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;get_sentiments&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;bing&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; by &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;word&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  rename&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;bing_sentiment &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; sentiment&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  left_join &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;get_sentiments&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;nrc&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; by &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;word&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  rename&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;nrc_sentiment &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; sentiment&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  pivot_longer&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;cols &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;bing_sentiment&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; nrc_sentiment&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; 
+               names_to &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;sentiment_type&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; values_to &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;sentiment&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  count&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;sentiment_type&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; sentiment&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;is.na&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;sentiment&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  rename&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;count &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; n &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  group_by&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;sentiment_type&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; year&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;total &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;count&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  ungroup&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;percent &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; count &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; total&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+         year_month &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; ymd&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;str_c&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;year&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;01&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;01&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; sep &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;-&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Instead, it seems my words were largely more positive then negative.
+(Outside of 2009 - where you can see my anxiety attack in the data.) Not
+as ansgty as I remember!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-16-1.png&quot; alt=&quot;&quot;&gt;
+Ah, but did I mark my “current mood” / how are you feeling” part as
+positive as my words are?&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-18-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;End :)&lt;/h2&gt;
+
+&lt;p&gt;So there you have it. Was teenage Erin as emo as I thought? Maybe not! Or maybe I wrote all the most emo journals in my physical diary. The world will never know (because those diaries have been lost).&lt;/p&gt;
+</description>
+        <pubDate>Tue, 28 Jun 2022 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/LJ/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/LJ/</guid>
+      </item>
+    
+      <item>
         <title>Data science jobs in the non-profit sector</title>
         <description>&lt;p&gt;I&amp;#39;ve been a data scientist in the non-profit sector for 5+ years. In an earlier conversation with people starting their transition into data science, we talked about how non-profit data can be an excellent place to start. There are some cons to beginning at a non-profit - but I love it.&lt;/p&gt;
 
@@ -987,48 +1123,6 @@ Some of cast of Lizzie Bennet Diaries and me. Vidcon 2014&lt;/p&gt;
         <pubDate>Fri, 22 May 2015 00:00:00 -0400</pubDate>
         <link>http://eringrand.github.io/profname/</link>
         <guid isPermaLink="true">http://eringrand.github.io/profname/</guid>
-      </item>
-    
-      <item>
-        <title>Reading Suggestions from March 2015</title>
-        <description>&lt;h2&gt;Articles and Blog posts&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://arxiv.org/pdf/1503.01104v2.pdf&quot;&gt;The Epidemiology and Statistical Mechanics of Zombies&lt;/a&gt;
-by Alexander A. Alemi, Matthew Bierbaum, Christopher R. Myers, James P. Sethna
-Laboratory of Atomic and Solid State Physics, Cornell University, Ithaca, NY 14853
-A research paper about zombies!&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://technology.stitchfix.com/blog/2015/03/17/grammar-of-data-science/?utm_content=buffer2b99d&amp;utm_medium=social&amp;utm_source=twitter.com&amp;utm_campaign=buffer&quot;&gt;The Grammar of Data Science&lt;/a&gt;
-by Deep Ganguli: 
-Another look into using Python vs R as a data scientist from the perspective of a Pandas to dpylr converter. &lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.citylab.com/housing/2015/03/why-most-twitter-maps-cant-be-trusted/388586/?utm_source=SFTwitter&quot;&gt;Why Most Twitter Maps Can&amp;#39;t Be Trusted&lt;/a&gt;
-by Aarian Marshall: 
-A look into the perils of drawing information from Twitter maps. 
-Twitter is an easy, cheap way to make social, political, and other claims about from data from the Twitter API.  However, makers of twitter maps aren&amp;#39;t always as representative of the &amp;quot;real world&amp;quot; as we&amp;#39;d like. &lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.christianpeccei.com/musicmap/&quot;&gt;Mapping Your Music Collection&lt;/a&gt;
-by Christian Peccei:
-How to make a pretty visualization of similarity measures of your iTunes music collection. &lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.improbable.com/2015/03/24/the-physics-of-a-falling-slinky/&quot;&gt;The physics of a falling slinky&lt;/a&gt;
-by Marc Abrahams:
-Slinkies! &lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://enterprise.import.io/why-data-science-is-the-fastest-growing-industry-in-tech-right-now/&quot;&gt;Why Data Science Is the Fastest Growing Industry in Tech Right Now&lt;/a&gt;
-Even if employers don&amp;#39;t seem to have a universal definition of what makes someone a data scientist, it cannot be argued that the field in growing, so much so that it is one of the few fields in which there are more available jobs than applicants. &lt;/p&gt;
-
-&lt;h2&gt;Youtube Videos:&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=jexnhNfOzHg&quot;&gt;Science of that Dress&lt;/a&gt; 
-Remember &amp;quot;the dress&amp;quot; that was everywhere at the beginning of the month? If you are still wondering why you see the dress one way and not another, watch this Sci Show episode to see why people can see the thing thing differently. &lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=LKnqECcg6Gw&quot;&gt;Computer Colors&lt;/a&gt;
-Colors on computers don&amp;#39;t work the same way we&amp;#39;re taught in 5th grade art class. With so much of our data/results/pictures being shown widely on computers, it&amp;#39;s important to understand how it all works. &lt;/p&gt;
-</description>
-        <pubDate>Wed, 01 Apr 2015 00:00:00 -0400</pubDate>
-        <link>http://eringrand.github.io/suggestionsfrommarch/</link>
-        <guid isPermaLink="true">http://eringrand.github.io/suggestionsfrommarch/</guid>
       </item>
     
   </channel>
