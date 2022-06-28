@@ -90,9 +90,9 @@ HS.)&lt;/p&gt;
   ungroup&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
   filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;n &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-12-1.png&quot; alt=&quot;&quot;&gt;
-Look at the 2009 - clearly my only entries were my Norse myth college
-class.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-12-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;Look at 2009 - clearly my only entries were my Norse myth college class. I remember I put a few of my class papers on my Live Journal.&lt;/p&gt;
 
 &lt;p&gt;We can look at the differences between TF-IDF and a regular word count,
 while accounting for stop words.&lt;/p&gt;
