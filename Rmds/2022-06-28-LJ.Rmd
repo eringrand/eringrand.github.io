@@ -209,6 +209,7 @@ correct_spell_check <- tibble::tribble(
          "aint",      "ain't",
            "im",        "i'm",
          "boro",  "hillsborough",
+     "dint", "didn't",
      "u", "you"
      )
 ```
