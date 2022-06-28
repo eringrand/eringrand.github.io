@@ -15,7 +15,7 @@ permalink: /about/
 ---
 
 ##<a name="info"></a>Bio
-Erin works as a Data Scientist at Uncommon Schools where she trains coworkers in R as well as maintaining two R packages. Prior to Uncommon, she worked as a Data Scientist at Crisis Text Line and a software programmer at NASA while completing her Data Science degress at Columbia University. Before data science, Erin researched star formation and taught introductory courses in astronomy and physics at the University of Maryland.
+Erin works as a Senior Data Scientist at Uncommon Schools where she trains coworkers in R as well as maintaining two R packages. Prior to Uncommon, she worked as a Data Scientist at Crisis Text Line and a software programmer at NASA while completing her Data Science degrees at Columbia University. Before data science, Erin researched star formation and taught introductory courses in astronomy and physics at the University of Maryland.
 
 
 ###Degrees: 
@@ -26,7 +26,7 @@ Erin works as a Data Scientist at Uncommon Schools where she trains coworkers in
 ###Links
 * [LinkedIn](https://www.linkedin.com/in/eringrand)
 * [Twitter](https://www.twitter.com/astroeringrand)
-* [Resume](https://www.dropbox.com/s/8vit837qrfepnpq/resume.pdf?dl=0)
+* [Resume](https://github.com/eringrand/cv/blob/5f1fab23b261af60931c04036f6955abbd2e09a1/resume.pdf)
 
 
 ### Organizations
