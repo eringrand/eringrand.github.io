@@ -86,7 +86,7 @@ HS.)&lt;/p&gt;
   ungroup&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
   filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;n &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-12-1.png&quot; alt=&quot;&quot;&gt;
+&lt;p&gt;&lt;img src=&quot;/images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-12-1.png&quot; alt=&quot;&quot;&gt;
 Look at the 2009 - clearly my only entries were my Norse myth college
 class.&lt;/p&gt;
 
@@ -100,7 +100,7 @@ while accounting for stop words.&lt;/p&gt;
   ungroup&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
   filter&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;n &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-14-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-14-1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 
 &lt;h3&gt;Sentiment&lt;/h3&gt;
 
@@ -128,7 +128,7 @@ words across the years.&lt;/p&gt;
 (Outside of 2009 - where you can see my anxiety attack in the data.) Not
 as ansgty as I remember!&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-16-1.png&quot; alt=&quot;&quot;&gt;
+&lt;p&gt;&lt;img src=&quot;/images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-16-1.png&quot; alt=&quot;&quot;&gt;
 Ah, but did I mark my “current mood” / how are you feeling” part as
 positive as my words are?&lt;/p&gt;
 
