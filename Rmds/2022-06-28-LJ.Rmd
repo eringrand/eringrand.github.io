@@ -326,7 +326,7 @@ df_plot <- lj_words_corrected %>%
 
 Instead, it seems my words were larely more positive then negative. (Outside of 2009 - where you can see my anxiety attack in the data.) Not as ansgty as I remember!
 
-```{r echo = FALSE}
+```{r echo=FALSE, fig.height=8}
 df_plot %>%
   ggplot(aes(x = year_month, y = percent, 
              color = sentiment)) +
@@ -363,7 +363,7 @@ df_plot %>%
   facet_wrap(~sentiment_type, scales = "free_y", nrow = 2) +
   cowplot::theme_cowplot()
 ```
-Ah, but did I mark my "current mood" / how are you feeling" part as postive as my words are?
+Ah, but did I mark my "current mood" / how are you feeling" part as positive as my words are?
 
 ```{r echo = FALSE}
 extra_sentiemnt <- tibble::tribble(
