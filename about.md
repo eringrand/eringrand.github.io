@@ -26,7 +26,7 @@ Erin works as a Senior Data Scientist at Uncommon Schools where she trains cowor
 ### Links
 * [LinkedIn](https://www.linkedin.com/in/eringrand)
 * [Twitter](https://www.twitter.com/astroeringrand)
-* [Resume](https://github.com/eringrand/cv/blob/5f1fab23b261af60931c04036f6955abbd2e09a1/resume.pdf)
+* [Resume](https://github.com/eringrand/cv/blob/main/resume.pdf)
 
 
 ### Organizations
