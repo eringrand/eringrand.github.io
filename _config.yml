@@ -62,7 +62,7 @@ rss_path : /rss.xml
 
 BASE_PATH: "/"
 
-markdown: redcarpet
+markdown: kramdown
 highlighter: pygments
 permalink: /:title/
 
