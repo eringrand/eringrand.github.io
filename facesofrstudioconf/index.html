@@ -87,68 +87,71 @@
   <div class="entry">
     <p>I was reminded today by <a href="https://twitter.com/d4tagirl">Daniela</a> that everyone should blog - and on top of that you can totally blog something small and simple just to get something out there.</p>
 
-<p>In the spirit of small and simple, last week I tweeted out this cool image...</p>
+<p>In the spirit of small and simple, last week I tweeted out this cool image…</p>
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I am writing up my notes from <a href="https://twitter.com/hashtag/rstduiconf?src=hash&amp;ref_src=twsrc%5Etfw">#rstduiconf</a> (blog post coming!) and wanted to have a quick picture to go with my thoughts. Remembering <a href="https://twitter.com/ma_salmon?ref_src=twsrc%5Etfw">@ma_salmon</a> &#39;s post on Faces of R (here: <a href="https://t.co/C1sRW3hwVL">https://t.co/C1sRW3hwVL</a> ), I decided to make a Faces of Rstudioconf! <a href="https://t.co/vtNVn2RyHV">pic.twitter.com/vtNVn2RyHV</a></p>&mdash; Erin Grand (@astroeringrand) <a href="https://twitter.com/astroeringrand/status/961466502821052416?ref_src=twsrc%5Etfw">February 8, 2018</a></blockquote>
-
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 <p>I have not yet organized all my thoughts from the conference (spoilers, it was awesome, I learned so much!), but that will not stop by from posting the code I borrowed from <a href="https://twitter.com/ma_salmon">Maelle</a> to create the pretty image. So, here you go!</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kn">library</span><span class="p">(</span>rtweet<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>magick<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>gmp<span class="p">)</span>
-</code></pre></div><div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>search_terms <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;rstudioconf&quot;</span><span class="p">,</span> <span class="s">&quot;rstudioconf2018&quot;</span><span class="p">)</span>
 
-tweets <span class="o">&lt;-</span> purrr<span class="o">::</span>map_df<span class="p">(</span>search_terms<span class="p">,</span> search_tweets<span class="p">,</span> n<span class="o">=</span><span class="m">2000</span><span class="p">,</span> include_rts<span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span> parse<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span> 
+<pre><code class="language-r">library(rtweet)
+library(magick)
+library(tidyverse)
+library(gmp)
+</code></pre>
 
-users_tweets <span class="o">&lt;-</span> lookup_users<span class="p">(</span><span class="kp">unique</span><span class="p">(</span>tweets<span class="o">$</span>user_id<span class="p">))</span>
+<pre><code class="language-{r}">search_terms &lt;- c("rstudioconf", "rstudioconf2018")
 
-users <span class="o">&lt;-</span> users_tweets <span class="o">%&gt;%</span>
-  select<span class="p">(</span>user_id<span class="p">,</span> 
-         profile_image_url<span class="p">,</span> 
-         screen_name<span class="p">,</span>
-         name<span class="p">,</span> 
-         followers_count<span class="p">,</span> 
+tweets &lt;- purrr::map_df(search_terms, search_tweets, n=2000, include_rts=FALSE, parse=TRUE) 
+
+users_tweets &lt;- lookup_users(unique(tweets$user_id))
+
+users &lt;- users_tweets %&gt;%
+  select(user_id, 
+         profile_image_url, 
+         screen_name,
+         name, 
+         followers_count, 
          profile_image_url
-         <span class="p">)</span> <span class="o">%&gt;%</span>
-  distinct<span class="p">()</span>
+         ) %&gt;%
+  distinct()
 
-save_image <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>df<span class="p">){</span>
-  image <span class="o">&lt;-</span> <span class="kp">try</span><span class="p">(</span>image_read<span class="p">(</span>df<span class="o">$</span>profile_image_url<span class="p">),</span> silent <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
-  <span class="kr">if</span><span class="p">(</span><span class="kp">class</span><span class="p">(</span>image<span class="p">)[</span><span class="m">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&quot;try-error&quot;</span><span class="p">){</span>
-    image <span class="o">%&gt;%</span>
-      image_scale<span class="p">(</span><span class="s">&quot;50x50&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-      image_write<span class="p">(</span><span class="kp">paste0</span><span class="p">(</span><span class="s">&quot;~pictures/&quot;</span><span class="p">,</span> df<span class="o">$</span>screen_name<span class="p">,</span><span class="s">&quot;.jpg&quot;</span><span class="p">))</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+save_image &lt;- function(df){
+  image &lt;- try(image_read(df$profile_image_url), silent = FALSE)
+  if(class(image)[1] != "try-error"){
+    image %&gt;%
+      image_scale("50x50") %&gt;%
+      image_write(paste0("~pictures/", df$screen_name,".jpg"))
+  }
+}
 
-users <span class="o">&lt;-</span> filter<span class="p">(</span>users<span class="p">,</span> <span class="o">!</span><span class="kp">is.na</span><span class="p">(</span>profile_image_url<span class="p">))</span>
-users_list <span class="o">&lt;-</span> <span class="kp">split</span><span class="p">(</span>users<span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="kp">nrow</span><span class="p">(</span>users<span class="p">))</span>
-walk<span class="p">(</span>users_list<span class="p">,</span> save_image<span class="p">)</span>
+users &lt;- filter(users, !is.na(profile_image_url))
+users_list &lt;- split(users, 1:nrow(users))
+walk(users_list, save_image)
 
 
-files <span class="o">&lt;-</span> <span class="kp">dir</span><span class="p">(</span><span class="s">&quot;pictures/&quot;</span><span class="p">,</span> full.names <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
-<span class="kp">set.seed</span><span class="p">(</span><span class="m">42</span><span class="p">)</span>
-files <span class="o">&lt;-</span> <span class="kp">sample</span><span class="p">(</span>files<span class="p">,</span> <span class="kp">length</span><span class="p">(</span>files<span class="p">))</span>
-gmp<span class="o">::</span>factorize<span class="p">(</span><span class="kp">length</span><span class="p">(</span>files<span class="p">))</span>
+files &lt;- dir("pictures/", full.names = TRUE)
+set.seed(42)
+files &lt;- sample(files, length(files))
+gmp::factorize(length(files))
 
-no_rows <span class="o">&lt;-</span> <span class="m">14</span>
-no_cols <span class="o">&lt;-</span> <span class="m">31</span>
+no_rows &lt;- 14
+no_cols &lt;- 31
 
-make_column <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>i<span class="p">,</span> files<span class="p">,</span> no_rows<span class="p">){</span>
-  image_read<span class="p">(</span>files<span class="p">[(</span>i<span class="o">*</span>no_rows<span class="m">+1</span><span class="p">)</span><span class="o">:</span><span class="p">((</span>i<span class="m">+1</span><span class="p">)</span><span class="o">*</span>no_rows<span class="p">)])</span> <span class="o">%&gt;%</span>
-  image_append<span class="p">(</span>stack <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span> <span class="o">%&gt;%</span>
-    image_write<span class="p">(</span><span class="kp">paste0</span><span class="p">(</span><span class="s">&quot;cols/&quot;</span><span class="p">,</span> i<span class="p">,</span> <span class="s">&quot;.jpg&quot;</span><span class="p">))</span>
-<span class="p">}</span>
+make_column &lt;- function(i, files, no_rows){
+  image_read(files[(i*no_rows+1):((i+1)*no_rows)]) %&gt;%
+  image_append(stack = TRUE) %&gt;%
+    image_write(paste0("cols/", i, ".jpg"))
+}
 
-walk<span class="p">(</span><span class="m">0</span><span class="o">:</span><span class="p">(</span>no_cols<span class="m">-1</span><span class="p">),</span> make_column<span class="p">,</span> files <span class="o">=</span> files<span class="p">,</span> no_rows <span class="o">=</span> no_rows<span class="p">)</span>
+walk(0:(no_cols-1), make_column, files = files, no_rows = no_rows)
 
-image_read<span class="p">(</span><span class="kp">dir</span><span class="p">(</span><span class="s">&quot;cols/&quot;</span><span class="p">,</span> full.names <span class="o">=</span> <span class="kc">TRUE</span><span class="p">))</span> <span class="o">%&gt;%</span>
-image_append<span class="p">(</span>stack <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  image_write<span class="p">(</span><span class="s">&quot;2018-02-7-facesofrstudioconf.jpg&quot;</span><span class="p">)</span>
-</code></pre></div>
-<p><img src="https://github.com/eringrand/projects/blob/master/Rstudio%20Conf%20Twitter%20Pictures/2018-02-7-facesofnasadatanauts.jpg?raw=true" alt=""></p>
+image_read(dir("cols/", full.names = TRUE)) %&gt;%
+image_append(stack = FALSE) %&gt;%
+  image_write("2018-02-7-facesofrstudioconf.jpg")
+</code></pre>
+
+<p><img src="https://github.com/eringrand/projects/blob/master/Rstudio%20Conf%20Twitter%20Pictures/2018-02-7-facesofnasadatanauts.jpg?raw=true" alt="" /></p>
 
   </div>
 

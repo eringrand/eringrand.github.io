@@ -88,130 +88,138 @@
     <p>I recently gave a <a href="/Presentations/rladies-nyc/data-education.html">r-ladies presentation</a> about my work cleaning and working with really messy education data. This blog post is an attempt at summarizing the main points of the <a href="/Presentations/rladies-nyc/data-education.html">talk</a>.</p>
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Excited for <a href="https://twitter.com/astroeringrand?ref_src=twsrc%5Etfw">@astroeringrand</a>’s <a href="https://twitter.com/RLadiesNYC?ref_src=twsrc%5Etfw">@RLadiesNYC</a> talk on <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> in education! <a href="https://t.co/wX3PT7F2KI">pic.twitter.com/wX3PT7F2KI</a></p>&mdash; Emily Robinson (@robinson_es) <a href="https://twitter.com/robinson_es/status/940730589077999617?ref_src=twsrc%5Etfw">December 12, 2017</a></blockquote>
-
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 <p><em>Look how cool I am. Go me! The slides are <a href="/Presentations/rladies-nyc/data-education.html">here</a> in case you missed them.</em></p>
 
-<h1>Uncommon Schools</h1>
-
-<p>I&#39;ve been an Associate Director of Data Analytics at Uncommon Schools for almost a year and a half now. Part of my job at Uncommon has been working with and teaching R to my fellow data analysts.  As such, I&#39;ve developed a sense of what works best for the type of messy data we&#39;re constantly analyzing.</p>
+<h1 id="uncommon-schools">Uncommon Schools</h1>
+<p>I’ve been an Associate Director of Data Analytics at Uncommon Schools for almost a year and a half now. Part of my job at Uncommon has been working with and teaching R to my fellow data analysts.  As such, I’ve developed a sense of what works best for the type of messy data we’re constantly analyzing.</p>
 
 <p>As a bit of background, Uncommon Schools is a Charter Management Organization (CMO), or network of 52 public <a href="http://www.uncommonschools.org/our-approach/faq-what-is-charter-school">charter schools</a> across Massachusetts, New Jersey, and New York. The oldest school (North Star Academy in Newark) was established in 1997 and the CMO was formed in 2005. For a more in depth history of Uncommon Schools, check out our <a href="http://www.uncommonschools.org/our-approach/our-history">website</a>.</p>
 
-<p><img src="http://www.uncommonschools.org/sites/default/files/datagraphics_063017.jpg" alt="uncommon-schools"></p>
+<p><img src="http://www.uncommonschools.org/sites/default/files/datagraphics_063017.jpg" alt="uncommon-schools" /></p>
 
-<h2>What kind of data do we work with?</h2>
+<h2 id="what-kind-of-data-do-we-work-with">What kind of data do we work with?</h2>
+<p>The Data Analytics team focuses at the overall picture, so while we don’t work on reporting data directly back to the state (our regional teams have excellent people working on this) we do get to work with most of the data the organization collects.</p>
 
-<p>The Data Analytics team focuses at the overall picture, so while we don&#39;t work on reporting data directly back to the state (our regional teams have excellent people working on this) we do get to work with most of the data the organization collects. </p>
-
-<p>The data we work with generally fits into one of these buckets...</p>
+<p>The data we work with generally fits into one of these buckets…</p>
 
 <ul>
-<li><strong>Assessments</strong>: Interim assessments are taken as practice tests through out the school year.</li>
-<li><strong>Exams</strong>: Common Core aligned state exams, SAT, PSAT, APs, ...etc</li>
-<li><strong>Classroom</strong>: Assignment grades, attendance, suspensions, ...etc</li>
-<li><strong>Teacher</strong>: student - course - teacher linkage information</li>
-<li><strong>Staff Data</strong>: HR and Recruitment</li>
+  <li><strong>Assessments</strong>: Interim assessments are taken as practice tests through out the school year.</li>
+  <li><strong>Exams</strong>: Common Core aligned state exams, SAT, PSAT, APs, …etc</li>
+  <li><strong>Classroom</strong>: Assignment grades, attendance, suspensions, …etc</li>
+  <li><strong>Teacher</strong>: student - course - teacher linkage information</li>
+  <li><strong>Staff Data</strong>: HR and Recruitment</li>
 </ul>
 
 <p>Unfortunately, given the amount of data we have and the number of sources it may be coming from, we have a ton of data challenges to overcome in every analysis.</p>
 
-<p>Of course, every piece of data has its own challenges and &quot;messy nature,&quot;  but there are patterns.</p>
+<p>Of course, every piece of data has its own challenges and “messy nature,”  but there are patterns.</p>
 
 <ul>
-<li>Missing/Incomplete data</li>
-<li>Different data sources without matching IDs (i.e HR to Teacher to Student)</li>
-<li>Movement between schools and courses of students and teachers</li>
-<li>Alignment of data and data processes across all schools and regions</li>
-<li>Student IDs that change</li>
-<li>Human data reporting error</li>
-<li>Historical data quality</li>
+  <li>Missing/Incomplete data</li>
+  <li>Different data sources without matching IDs (i.e HR to Teacher to Student)</li>
+  <li>Movement between schools and courses of students and teachers</li>
+  <li>Alignment of data and data processes across all schools and regions</li>
+  <li>Student IDs that change</li>
+  <li>Human data reporting error</li>
+  <li>Historical data quality</li>
 </ul>
 
-<p>Some of these challenges are easy to fix and some are harder. For example, a messy excel sheet can be cleaned (by hand or by code). We&#39;ve developed (or are developing in some cases) systems to work with most of these types of challenges.</p>
+<p>Some of these challenges are easy to fix and some are harder. For example, a messy excel sheet can be cleaned (by hand or by code). We’ve developed (or are developing in some cases) systems to work with most of these types of challenges.</p>
 
 <ul>
-<li>Messy excel sheets (historical or human entered)</li>
-<li>Column names that don&#39;t apply anymore</li>
-<li>Lack of historical documentation</li>
-<li>Finding duplicate tests</li>
-<li>Students that take half of one test and the other half of another</li>
-<li>Vanishing leading zeros</li>
-<li>Tracking of student IDs that change</li>
-<li>Lack of common definitions (i.e &quot;cohort&quot;)</li>
-<li>How to refer to school years or school abbreviations</li>
-<li>Data audits</li>
+  <li>Messy excel sheets (historical or human entered)</li>
+  <li>Column names that don’t apply anymore</li>
+  <li>Lack of historical documentation</li>
+  <li>Finding duplicate tests</li>
+  <li>Students that take half of one test and the other half of another</li>
+  <li>Vanishing leading zeros</li>
+  <li>Tracking of student IDs that change</li>
+  <li>Lack of common definitions (i.e “cohort”)</li>
+  <li>How to refer to school years or school abbreviations</li>
+  <li>Data audits</li>
 </ul>
 
-<h1>The <code>janitor</code> Package</h1>
+<h1 id="the-janitor-package">The <code>janitor</code> Package</h1>
 
 <p>I really like this explanation by package author, Sam Firke. <em><a href="https://github.com/sfirke/janitor">Janitor</a> was built with beginning-to-intermediate R users in mind and is optimized for user-friendliness. Advanced users can already do everything covered here, but they can do it faster with janitor and save their thinking for more fun tasks.</em></p>
 
-<p>Meaning, if you&#39;re experienced with the Tidyverse in general, you should be able to do everything inside <code>janitor</code> on your own. However, we don&#39;t always have the time to always clean up data without some help.</p>
+<p>Meaning, if you’re experienced with the Tidyverse in general, you should be able to do everything inside <code>janitor</code> on your own. However, we don’t always have the time to always clean up data without some help.</p>
 
 <div align="center">
-<img src = "http://media3.giphy.com/media/3oKIPCSX4UHmuS41TG/giphy-downsized.gif" width="100px"/>
+<img src="http://media3.giphy.com/media/3oKIPCSX4UHmuS41TG/giphy-downsized.gif" width="100px" />
 </div>
 
-<p>I like using <code>janitor</code> over writing my own code because, (1) functions are well tested, (2) I can turn multiple lines of code into one or two, and (3) the <code>janitor</code> functions are written to be pipe-able to work in the tidyverse space. It&#39;s a pretty cool bonus that Sam works in the education space, so the functions were created to handle the education data problems I constantly face.</p>
+<p>I like using <code>janitor</code> over writing my own code because, (1) functions are well tested, (2) I can turn multiple lines of code into one or two, and (3) the <code>janitor</code> functions are written to be pipe-able to work in the tidyverse space. It’s a pretty cool bonus that Sam works in the education space, so the functions were created to handle the education data problems I constantly face.</p>
 
-<h2>An example, using <code>janitor</code> to clean a messy excel file.</h2>
+<h2 id="an-example-using-janitor-to-clean-a-messy-excel-file">An example, using <code>janitor</code> to clean a messy excel file.</h2>
 
-<p>I&#39;m often tasked with cleaning roster files, which contain entry and exit data for students. These files can be very messy due to students who moved between schools or were not exited properly from the system, causing duplicates. </p>
+<p>I’m often tasked with cleaning roster files, which contain entry and exit data for students. These files can be very messy due to students who moved between schools or were not exited properly from the system, causing duplicates.</p>
 
-<p>To clean this data, first I read it in with <code>read_excel</code> and use <code>janitor&#39;s</code> <code>clean_names</code> to convert all the column names to something I can use. <code>remove_empty_cols</code> and <code>remove_empty_rows</code> remove entire columns or rows that are NA as excel sometimes can&#39;t tell where there is data and where there isn&#39;t. </p>
+<p>To clean this data, first I read it in with <code>read_excel</code> and use <code>janitor's</code> <code>clean_names</code> to convert all the column names to something I can use. <code>remove_empty_cols</code> and <code>remove_empty_rows</code> remove entire columns or rows that are NA as excel sometimes can’t tell where there is data and where there isn’t.</p>
 
-<p>I choose to use <code>col_type = &quot;text&quot;</code> in my <code>read_excel</code> statement, because I sometimes have to deal with leading zeros, NAs that are not written as NAs, or other text fields in my numerical columns. Reading in as text and converting later allows me to find and correct problems before they become NAs. I use <code>mutate_at</code> to convert these columns back to numbers after examining that everything looks good.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>students <span class="o">&lt;-</span> readxl<span class="o">::</span>read_excel<span class="p">(</span>filepath<span class="p">,</span> sheet<span class="o">=</span><span class="s">&quot;Sheet1&quot;</span><span class="p">,</span> col_types <span class="o">=</span> <span class="s">&quot;text&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  janitor<span class="o">::</span>clean_names<span class="p">()</span> <span class="o">%&gt;%</span>
-  janitor<span class="o">::</span>remove_empty_cols<span class="p">()</span> <span class="o">%&gt;%</span>
-  janitor<span class="o">::</span>remove_empty_rows<span class="p">()</span> <span class="o">%&gt;%</span>
-  dplyr<span class="o">::</span>mutate_at<span class="p">(</span>vars<span class="p">(</span>entrydate<span class="p">,</span> exitdate<span class="p">,</span> student_id<span class="p">,</span> yearsinuncommon<span class="p">),</span> <span class="kp">as.numeric</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  dplyr<span class="o">::</span>mutate_at<span class="p">(</span>vars<span class="p">(</span>entrydate<span class="p">,</span> exitdate<span class="p">),</span> excel_numeric_to_date<span class="p">)</span> 
-</code></pre></div>
+<p>I choose to use <code>col_type = "text"</code> in my <code>read_excel</code> statement, because I sometimes have to deal with leading zeros, NAs that are not written as NAs, or other text fields in my numerical columns. Reading in as text and converting later allows me to find and correct problems before they become NAs. I use <code>mutate_at</code> to convert these columns back to numbers after examining that everything looks good.</p>
+
+<pre><code class="language-r">students &lt;- readxl::read_excel(filepath, sheet="Sheet1", col_types = "text") %&gt;%
+  janitor::clean_names() %&gt;%
+  janitor::remove_empty_cols() %&gt;%
+  janitor::remove_empty_rows() %&gt;%
+  dplyr::mutate_at(vars(entrydate, exitdate, student_id, yearsinuncommon), as.numeric) %&gt;%
+  dplyr::mutate_at(vars(entrydate, exitdate), excel_numeric_to_date) 
+</code></pre>
+
 <p>The next step in data cleaning is to look for duplicates. Luckily, <code>janitor</code> has a super helpful <code>get_dupes()</code> function which does just that!</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>students <span class="o">%&gt;%</span> 
-  get_dupes<span class="p">(</span>student_id<span class="p">)</span>
-</code></pre></div><div class="highlight"><pre><code class="language-text" data-lang="text"><span></span># A tibble: 2 x 6
+
+<pre><code class="language-r">students %&gt;% 
+  get_dupes(student_id)
+</code></pre>
+
+<pre><code># A tibble: 2 x 6
   student_id dupe_count grade yearsinuncommon  entrydate   exitdate
        &lt;dbl&gt;      &lt;int&gt; &lt;dbl&gt;           &lt;dbl&gt;     &lt;date&gt;     &lt;date&gt;
 1    2342675          2    10               1 2017-11-11 2017-12-11
 2    2342675          2    11               1 2017-11-11 2017-12-11
-</code></pre></div>
-<p>In this example data, I have one student with duplicate information. They&#39;re in two different grades, ugh! Now, I have to choose a method to correct this student in my data. </p>
+</code></pre>
 
-<h3>There are three main ways I use to correct dupes.</h3>
+<p>In this example data, I have one student with duplicate information. They’re in two different grades, ugh! Now, I have to choose a method to correct this student in my data.</p>
 
-<h4>1. Correct the dupes individually with <code>if_else</code> or <code>case_when</code>.</h4>
+<h3 id="there-are-three-main-ways-i-use-to-correct-dupes">There are three main ways I use to correct dupes.</h3>
 
-<p>If there are only a few duplicates, or they&#39;re all in one grade or class room, a quick set of <em>if</em> statements will do the trick to make the rows perfectly duplicated. From there, use <code>distinct</code> to get only distinct rows and remove the duplicates.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>mutate<span class="p">(</span>students<span class="p">,</span> grade <span class="o">=</span> if_else<span class="p">(</span>student_id <span class="o">==</span> <span class="m">2342675</span><span class="p">,</span> <span class="m">10</span><span class="p">,</span> grade<span class="p">))</span>
-</code></pre></div>
-<h4>2. Summarize by taking minimum date / grade to choose one row to keep.</h4>
+<h4 id="1-correct-the-dupes-individually-with-if_else-or-case_when">1. Correct the dupes individually with <code>if_else</code> or <code>case_when</code>.</h4>
+<p>If there are only a few duplicates, or they’re all in one grade or class room, a quick set of <em>if</em> statements will do the trick to make the rows perfectly duplicated. From there, use <code>distinct</code> to get only distinct rows and remove the duplicates.</p>
 
-<p>This is helpful if you just need one of the rows, and don&#39;t really care which row is the one you keep. For example, our exit and enter date information is not usually great, so I&#39;m okay with the &#39;just pick one&#39; version as long as the student&#39;s grade and teacher information is the same in both rows.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>group_by<span class="p">(</span>students<span class="p">,</span> student_id<span class="p">)</span> <span class="o">%&gt;%</span> summarize<span class="p">(</span>grade <span class="o">=</span> <span class="kp">min</span><span class="p">(</span>grade<span class="p">))</span>
-</code></pre></div>
-<h4>3. Output the duplicates and manually choose which version to keep.</h4>
+<pre><code class="language-r">mutate(students, grade = if_else(student_id == 2342675, 10, grade))
+</code></pre>
 
+<h4 id="2-summarize-by-taking-minimum-date--grade-to-choose-one-row-to-keep">2. Summarize by taking minimum date / grade to choose one row to keep.</h4>
+<p>This is helpful if you just need one of the rows, and don’t really care which row is the one you keep. For example, our exit and enter date information is not usually great, so I’m okay with the ‘just pick one’ version as long as the student’s grade and teacher information is the same in both rows.</p>
+
+<pre><code class="language-r">group_by(students, student_id) %&gt;% summarize(grade = min(grade))
+</code></pre>
+
+<h4 id="3-output-the-duplicates-and-manually-choose-which-version-to-keep">3. Output the duplicates and manually choose which version to keep.</h4>
 <p>This involves the most manual work, so I usually grab help when I need to do this, yay teammates!</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>dupes_correct <span class="o">&lt;-</span> read_csv<span class="p">(</span><span class="s">&quot;dupes_correct.csv&quot;</span><span class="p">)</span>
-left_join<span class="p">(</span>students<span class="p">,</span> dupes_correct<span class="p">)</span> <span class="o">%&gt;%</span>
-  replace_na<span class="p">(</span><span class="kt">list</span><span class="p">(</span>keep <span class="o">=</span> <span class="m">0</span><span class="p">))</span> <span class="o">%&gt;%</span>
-  assert<span class="p">(</span>not_na<span class="p">,</span> keep<span class="p">)</span> <span class="o">%&gt;%</span>
-  filter<span class="p">(</span>keep <span class="o">=</span> <span class="m">0</span><span class="p">)</span>
-</code></pre></div>
-<h3>Managing Data Changes</h3>
 
-<p>As data is updated, there might be more duplicates to worry about. A great way to check for duplicate updates is to use the 1:2 punch of <strong>janitor&#39;s</strong> <code>get_dupes</code> and <strong>assertr&#39;s</strong> <code>verify()</code>. This allows you to put checks in place in case the data changes.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text"><span></span>check &lt;- students %&gt;% 
+<pre><code class="language-r">dupes_correct &lt;- read_csv("dupes_correct.csv")
+left_join(students, dupes_correct) %&gt;%
+  replace_na(list(keep = 0)) %&gt;%
+  assert(not_na, keep) %&gt;%
+  filter(keep = 0)
+</code></pre>
+
+<h3 id="managing-data-changes">Managing Data Changes</h3>
+
+<p>As data is updated, there might be more duplicates to worry about. A great way to check for duplicate updates is to use the 1:2 punch of <strong>janitor’s</strong> <code>get_dupes</code> and <strong>assertr’s</strong> <code>verify()</code>. This allows you to put checks in place in case the data changes.</p>
+
+<pre><code>check &lt;- students %&gt;% 
   get_dupes(student_id) %&gt;% 
   verify(nrow(.) == 0)
-</code></pre></div>
+</code></pre>
+
 <p>If new duplicates occur the code will HALT at this step alerting that something is wrong.</p>
 
-<h1>An Example Project: State Test Analysis</h1>
+<h1 id="an-example-project-state-test-analysis">An Example Project: State Test Analysis</h1>
 
 <p>The largest impact project the data analytics team is in charge of all year is our annual state test analysis. We gather and all the raw results data for each of our schools, clean it, and combine the information into one cohesive story.</p>
 
@@ -219,22 +227,23 @@ left_join<span class="p">(</span>students<span class="p">,</span> dupes_correct<
 
 <p>This year we completed an overhaul of the process with R scripts, that clean and QC the data, add variables we need for analysis, combine with historical state test results, and output tableau ready inputs. The entire state test analyses from raw data to dashboard can now be completed with the press of a few buttons.</p>
 
-<p><img src = "/Presentations/rladies-nyc/process.png" height = 100px></p>
+<p><img src="/Presentations/rladies-nyc/process.png" height="100px" /></p>
 
 <p>Using <code>PURRR</code> code to read and combined multiple files into one data frame has been the saving grace of this analysis. We have each grade/subject/school combination in a separate file, and with just a few lines of code R can bring them together for further cleaning.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>files <span class="o">&lt;-</span> <span class="kp">list.files</span><span class="p">(</span><span class="s">&quot;../Input/&quot;</span><span class="p">,</span> pattern <span class="o">=</span> <span class="s">&quot;.xlsx&quot;</span><span class="p">,</span> full.names <span class="o">=</span>  <span class="kc">TRUE</span><span class="p">)</span>
-nys <span class="o">&lt;-</span> map_dfr<span class="p">(</span>files<span class="p">,</span> prep_nys_files<span class="p">)</span>
-</code></pre></div>
-<p>If you&#39;re curious to other parts of the code that really changed this process (for example <code>assertr</code> or <code>tidyr</code>) please feel free to ask! </p>
 
-<h1>Wrap Up</h1>
+<pre><code class="language-r">files &lt;- list.files("../Input/", pattern = ".xlsx", full.names =  TRUE)
+nys &lt;- map_dfr(files, prep_nys_files)
+</code></pre>
 
-<p>These changes didn&#39;t come easy for my team. I work with a group of extremely smart people, but before I started with Uncommon most people on my team didn&#39;t code at all let alone use R. It&#39;s been part of my job to teach everyone to write in R, and make sure we&#39;re all using best practices. One day I will write a longer blog post about some of the learnings I&#39;ve had throughout this process, so stay tuned for that! In the mean time, I offer you some closing remarks on what I&#39;ve found to work best.</p>
+<p>If you’re curious to other parts of the code that really changed this process (for example <code>assertr</code> or <code>tidyr</code>) please feel free to ask!</p>
+
+<h1 id="wrap-up">Wrap Up</h1>
+<p>These changes didn’t come easy for my team. I work with a group of extremely smart people, but before I started with Uncommon most people on my team didn’t code at all let alone use R. It’s been part of my job to teach everyone to write in R, and make sure we’re all using best practices. One day I will write a longer blog post about some of the learnings I’ve had throughout this process, so stay tuned for that! In the mean time, I offer you some closing remarks on what I’ve found to work best.</p>
 
 <ul>
-<li>Choose the packages to teach that are needed every day. (For me, this was <code>janitor</code> and <code>dplyr</code>)</li>
-<li>Have someone that is active in R community, so that you can be on the cutting edge of best practices and new packages.</li>
-<li>The more practice someone has, the faster they&#39;ll learn. Pair professional development sessions with coding projects. </li>
+  <li>Choose the packages to teach that are needed every day. (For me, this was <code>janitor</code> and <code>dplyr</code>)</li>
+  <li>Have someone that is active in R community, so that you can be on the cutting edge of best practices and new packages.</li>
+  <li>The more practice someone has, the faster they’ll learn. Pair professional development sessions with coding projects.</li>
 </ul>
 
 <p>Introducing my team to the <code>tidyverse</code> and <code>janitor</code> have been a really big help for getting my team members on board and excited about learning and using R. A quick demonstration of <code>group_by()</code> and <code>get_dupes()</code> was really all I needed to motivate big changes in our analysis process.</p>

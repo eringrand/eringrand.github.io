@@ -90,17 +90,19 @@ self. Get ready!
     <p>I’m about to BARE MY SOUL to the internet. Well, the soul of my teenage
 self. Get ready!</p>
 
-<p>LiveJournal, you may remember, was(/is - it does still exist) was a blogging site before we really knew what blogging was. It was both a place to put diary entries and those quizzes that got passed around in the day. It was also used for FanFic and community gathering. I did NOT use my (main) account for fan gathering. (Though I did write some excellent/terrible fanfics. Didn&#39;t everyone have a Lord of Rings self-insert character?)</p>
+<p>LiveJournal, you may remember, was(/is - it does still exist) was a blogging site before we really knew what blogging was. It was both a place to put diary entries and those quizzes that got passed around in the day. It was also used for FanFic and community gathering. I did NOT use my (main) account for fan gathering. (Though I did write some excellent/terrible fanfics. Didn’t everyone have a Lord of Rings self-insert character?)</p>
 
-<p>I don&#39;t really remember when I started this idea, but I thought it would be fun to see just how emo I was in 2006. Let&#39;s go!</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span><span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>lubridate<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>tidytext<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>hunspell<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>ggrepel<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>cowplot<span class="p">)</span>
-</code></pre></div>
-<h2>Step 1: Clean the data</h2>
+<p>I don’t really remember when I started this idea, but I thought it would be fun to see just how emo I was in 2006. Let’s go!</p>
+
+<pre><code class="language-r">library(tidyverse)
+library(lubridate)
+library(tidytext)
+library(hunspell)
+library(ggrepel)
+library(cowplot)
+</code></pre>
+
+<h2 id="step-1-clean-the-data">Step 1: Clean the data</h2>
 
 <p>I downloaded all my past Live Journal entities to a folder on my desktop
 in the same CSV format, so that I could easily load them in for
@@ -111,15 +113,17 @@ of time - but I did get all my data.</p>
 <p>The next step was to take every journal and separate out the individual
 words using
 ‘<a href="https://cran.r-project.org/web/packages/tidytext/vignettes/tidytext.html">tidytext</a>.’</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>lj_words <span class="o">&lt;-</span> lj_df <span class="o">%&gt;%</span>
-  select<span class="p">(</span>itemid<span class="p">,</span> eventtime<span class="p">,</span> logtime<span class="p">,</span> subject<span class="p">,</span> current_music<span class="p">,</span> current_mood<span class="p">,</span> event<span class="p">)</span> <span class="o">%&gt;%</span>
-  mutate<span class="p">(</span>across<span class="p">(</span><span class="kt">c</span><span class="p">(</span>eventtime<span class="p">,</span> logtime<span class="p">),</span> ymd_hms<span class="p">),</span>
-         year <span class="o">=</span> year<span class="p">(</span>logtime<span class="p">),</span>
-         month <span class="o">=</span> month<span class="p">(</span>logtime<span class="p">),</span>
-         <span class="p">)</span> <span class="o">%&gt;%</span>
-  mutate<span class="p">(</span>event <span class="o">=</span> str_remove_all<span class="p">(</span>event<span class="p">,</span> <span class="s">&quot;&#39;&quot;</span><span class="p">))</span> <span class="o">%&gt;%</span>
-  unnest_tokens<span class="p">(</span>word<span class="p">,</span> event<span class="p">,</span> token <span class="o">=</span> <span class="s">&quot;words&quot;</span><span class="p">,</span> format <span class="o">=</span> <span class="s">&quot;html&quot;</span><span class="p">,</span> strip_url <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span> 
-</code></pre></div>
+
+<pre><code class="language-r">lj_words &lt;- lj_df %&gt;%
+  select(itemid, eventtime, logtime, subject, current_music, current_mood, event) %&gt;%
+  mutate(across(c(eventtime, logtime), ymd_hms),
+         year = year(logtime),
+         month = month(logtime),
+         ) %&gt;%
+  mutate(event = str_remove_all(event, "'")) %&gt;%
+  unnest_tokens(word, event, token = "words", format = "html", strip_url = FALSE) 
+</code></pre>
+
 <p>Not included in this blog post, for privacy of my teenage friends, I
 also cleaned and changed names of my friends and locations to clean the
 data and protect their privacy. For example, instead of the name “Linda”
@@ -130,29 +134,35 @@ terrible at checking what I’ve typed after the fact. I use ‘Hunspell’
 here in an attempt to fix some of the most common issues. Does this
 spell check get everything? No! But alas, I am a terrible speller and we
 move on in life.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>lj_words_spell_check <span class="o">&lt;-</span> lj_words_protect <span class="o">%&gt;%</span>
-  anti_join<span class="p">(</span>my_stop_words<span class="p">,</span> by <span class="o">=</span> <span class="s">&quot;word&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  count<span class="p">(</span>word<span class="p">)</span> <span class="o">%&gt;%</span>
-  rowwise<span class="p">()</span> <span class="o">%&gt;%</span>
-  mutate<span class="p">(</span>spell_check <span class="o">=</span> hunspell<span class="p">(</span>word<span class="p">))</span> <span class="o">%&gt;%</span>
-  filter<span class="p">(</span><span class="kp">length</span><span class="p">(</span>spell_check<span class="p">)</span> <span class="o">&gt;=</span> <span class="m">1</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  mutate<span class="p">(</span>suggest <span class="o">=</span> hunspell_suggest<span class="p">(</span>spell_check<span class="p">))</span> 
-</code></pre></div><div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>lj_correct <span class="o">&lt;-</span> lj_words_spell_check <span class="o">%&gt;%</span>
-  filter<span class="p">(</span><span class="kp">length</span><span class="p">(</span>suggest<span class="p">)</span> <span class="o">&gt;</span> <span class="m">0</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  mutate<span class="p">(</span>suggest_pick <span class="o">=</span> pluck<span class="p">(</span>suggest<span class="p">,</span> <span class="m">1</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="c1"># just pick the first one because I am lazy</span>
-  ungroup<span class="p">()</span> <span class="o">%&gt;%</span>
-  unnest<span class="p">(</span>suggest_pick<span class="p">)</span> <span class="o">%&gt;%</span>
-  select<span class="p">(</span>word<span class="p">,</span> suggest_pick<span class="p">)</span> 
-</code></pre></div><div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>lj_words_corrected <span class="o">&lt;-</span> lj_words_protect <span class="o">%&gt;%</span>
-  left_join<span class="p">(</span>lj_correct<span class="p">,</span> by <span class="o">=</span> <span class="s">&quot;word&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  mutate<span class="p">(</span>word <span class="o">=</span> coalesce<span class="p">(</span>suggest_pick<span class="p">,</span> word<span class="p">))</span> <span class="o">%&gt;%</span>
-  unnest_tokens<span class="p">(</span>output <span class="o">=</span> <span class="s">&quot;word&quot;</span><span class="p">,</span> input <span class="o">=</span> word<span class="p">)</span> <span class="c1"># used because sometimes the correction is actually 2+ words now </span>
-</code></pre></div>
-<h2>Step 2: Now we move on to analysis!</h2>
+
+<pre><code class="language-r">lj_words_spell_check &lt;- lj_words_protect %&gt;%
+  anti_join(my_stop_words, by = "word") %&gt;%
+  count(word) %&gt;%
+  rowwise() %&gt;%
+  mutate(spell_check = hunspell(word)) %&gt;%
+  filter(length(spell_check) &gt;= 1) %&gt;%
+  mutate(suggest = hunspell_suggest(spell_check)) 
+</code></pre>
+
+<pre><code class="language-r">lj_correct &lt;- lj_words_spell_check %&gt;%
+  filter(length(suggest) &gt; 0) %&gt;%
+  mutate(suggest_pick = pluck(suggest, 1)) %&gt;% # just pick the first one because I am lazy
+  ungroup() %&gt;%
+  unnest(suggest_pick) %&gt;%
+  select(word, suggest_pick) 
+</code></pre>
+
+<pre><code class="language-r">lj_words_corrected &lt;- lj_words_protect %&gt;%
+  left_join(lj_correct, by = "word") %&gt;%
+  mutate(word = coalesce(suggest_pick, word)) %&gt;%
+  unnest_tokens(output = "word", input = word) # used because sometimes the correction is actually 2+ words now 
+</code></pre>
+
+<h2 id="step-2-now-we-move-on-to-analysis">Step 2: Now we move on to analysis!</h2>
 
 <p>The data is clean, or at least as clean as it is going to get today.</p>
 
-<h3>Word counts</h3>
+<h3 id="word-counts">Word counts</h3>
 
 <p>I start with TF-IDF. The goal here is to see what I was talking about
 each year and how it may differ as I got older. As a reminder, I have
@@ -160,64 +170,70 @@ changed the names of all my friends and family for privacy. That way you
 don’t know who “nameofbestfriend” is and why I stopped mentioning
 “nameofbestfriend” in 2006. (We had a bit of a falling out at the end of
 HS.)</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>tfidf <span class="o">&lt;-</span> lj_words_corrected <span class="o">%&gt;%</span>
-  count<span class="p">(</span>year<span class="p">,</span> word<span class="p">)</span> <span class="o">%&gt;%</span> 
-  tidytext<span class="o">::</span>bind_tf_idf<span class="p">(</span>word<span class="p">,</span> year<span class="p">,</span> n<span class="p">)</span> <span class="o">%&gt;%</span>
-  anti_join<span class="p">(</span>stop_words<span class="p">,</span> by <span class="o">=</span> <span class="s">&quot;word&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  group_by<span class="p">(</span>year<span class="p">)</span> <span class="o">%&gt;%</span>
-  top_n<span class="p">(</span>n <span class="o">=</span> <span class="m">10</span><span class="p">,</span> wt <span class="o">=</span> tf_idf<span class="p">)</span> <span class="o">%&gt;%</span>
-  ungroup<span class="p">()</span> <span class="o">%&gt;%</span>
-  filter<span class="p">(</span>n <span class="o">&gt;=</span> <span class="m">2</span><span class="p">)</span> 
-</code></pre></div>
-<p><img src="/images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-12-1.png" alt=""></p>
+
+<pre><code class="language-r">tfidf &lt;- lj_words_corrected %&gt;%
+  count(year, word) %&gt;% 
+  tidytext::bind_tf_idf(word, year, n) %&gt;%
+  anti_join(stop_words, by = "word") %&gt;%
+  group_by(year) %&gt;%
+  top_n(n = 10, wt = tf_idf) %&gt;%
+  ungroup() %&gt;%
+  filter(n &gt;= 2) 
+</code></pre>
+
+<p><img src="/images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-12-1.png" alt="" /></p>
 
 <p>Look at 2009 - clearly my only entries were my Norse myth college class. I remember I put a few of my class papers on my Live Journal.</p>
 
 <p>We can look at the differences between TF-IDF and a regular word count,
 while accounting for stop words.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>wordcount <span class="o">&lt;-</span> lj_words_corrected <span class="o">%&gt;%</span>
-  count<span class="p">(</span>year<span class="p">,</span> word<span class="p">)</span> <span class="o">%&gt;%</span>
-  anti_join<span class="p">(</span>stop_words<span class="p">,</span> by <span class="o">=</span> <span class="s">&quot;word&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  group_by<span class="p">(</span>year<span class="p">)</span> <span class="o">%&gt;%</span>
-  top_n<span class="p">(</span>n <span class="o">=</span> <span class="m">10</span><span class="p">,</span> wt <span class="o">=</span> n<span class="p">)</span> <span class="o">%&gt;%</span>
-  ungroup<span class="p">()</span> <span class="o">%&gt;%</span>
-  filter<span class="p">(</span>n <span class="o">&gt;=</span> <span class="m">3</span><span class="p">)</span> 
-</code></pre></div>
-<p><img src="/images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-14-1.png" alt=""></p>
 
-<h3>Sentiment</h3>
+<pre><code class="language-r">wordcount &lt;- lj_words_corrected %&gt;%
+  count(year, word) %&gt;%
+  anti_join(stop_words, by = "word") %&gt;%
+  group_by(year) %&gt;%
+  top_n(n = 10, wt = n) %&gt;%
+  ungroup() %&gt;%
+  filter(n &gt;= 3) 
+</code></pre>
+
+<p><img src="/images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-14-1.png" alt="" /></p>
+
+<h3 id="sentiment">Sentiment</h3>
 
 <p>Next I look at sentiment. I remember using live journal to be super
 <em>angsty</em>. I assumed that I would largely see negative sentiment and
 words across the years.</p>
-<div class="highlight"><pre><code class="language-r" data-lang="r"><span></span>df_plot <span class="o">&lt;-</span> lj_words_corrected <span class="o">%&gt;%</span>
-  left_join <span class="p">(</span>get_sentiments<span class="p">(</span><span class="s">&quot;bing&quot;</span><span class="p">),</span> by <span class="o">=</span> <span class="s">&quot;word&quot;</span> <span class="p">)</span> <span class="o">%&gt;%</span>
-  rename<span class="p">(</span>bing_sentiment <span class="o">=</span> sentiment<span class="p">)</span> <span class="o">%&gt;%</span>
-  left_join <span class="p">(</span>get_sentiments<span class="p">(</span><span class="s">&quot;nrc&quot;</span><span class="p">),</span> by <span class="o">=</span> <span class="s">&quot;word&quot;</span> <span class="p">)</span> <span class="o">%&gt;%</span>
-  rename<span class="p">(</span>nrc_sentiment <span class="o">=</span> sentiment<span class="p">)</span> <span class="o">%&gt;%</span>
-  pivot_longer<span class="p">(</span>cols <span class="o">=</span> <span class="kt">c</span><span class="p">(</span>bing_sentiment<span class="p">,</span> nrc_sentiment<span class="p">),</span> 
-               names_to <span class="o">=</span> <span class="s">&quot;sentiment_type&quot;</span><span class="p">,</span> values_to <span class="o">=</span> <span class="s">&quot;sentiment&quot;</span><span class="p">)</span> <span class="o">%&gt;%</span>
-  count<span class="p">(</span>sentiment_type<span class="p">,</span> year<span class="p">,</span> sentiment<span class="p">)</span> <span class="o">%&gt;%</span>
-  filter<span class="p">(</span><span class="o">!</span> <span class="kp">is.na</span><span class="p">(</span>sentiment<span class="p">)</span> <span class="p">)</span> <span class="o">%&gt;%</span>
-  rename<span class="p">(</span>count <span class="o">=</span> n <span class="p">)</span> <span class="o">%&gt;%</span>
-  group_by<span class="p">(</span>sentiment_type<span class="p">,</span> year<span class="p">)</span> <span class="o">%&gt;%</span>
-  mutate<span class="p">(</span>total <span class="o">=</span> <span class="kp">sum</span><span class="p">(</span>count<span class="p">))</span> <span class="o">%&gt;%</span>
-  ungroup<span class="p">()</span> <span class="o">%&gt;%</span>
-  mutate<span class="p">(</span>percent <span class="o">=</span> count <span class="o">/</span> total<span class="p">,</span>
-         year_month <span class="o">=</span> ymd<span class="p">(</span>str_c<span class="p">(</span>year<span class="p">,</span> <span class="s">&quot;01&quot;</span><span class="p">,</span> <span class="s">&quot;01&quot;</span><span class="p">,</span> sep <span class="o">=</span> <span class="s">&quot;-&quot;</span><span class="p">))</span>
-         <span class="p">)</span> 
-</code></pre></div>
+
+<pre><code class="language-r">df_plot &lt;- lj_words_corrected %&gt;%
+  left_join (get_sentiments("bing"), by = "word" ) %&gt;%
+  rename(bing_sentiment = sentiment) %&gt;%
+  left_join (get_sentiments("nrc"), by = "word" ) %&gt;%
+  rename(nrc_sentiment = sentiment) %&gt;%
+  pivot_longer(cols = c(bing_sentiment, nrc_sentiment), 
+               names_to = "sentiment_type", values_to = "sentiment") %&gt;%
+  count(sentiment_type, year, sentiment) %&gt;%
+  filter(! is.na(sentiment) ) %&gt;%
+  rename(count = n ) %&gt;%
+  group_by(sentiment_type, year) %&gt;%
+  mutate(total = sum(count)) %&gt;%
+  ungroup() %&gt;%
+  mutate(percent = count / total,
+         year_month = ymd(str_c(year, "01", "01", sep = "-"))
+         ) 
+</code></pre>
+
 <p>Instead, it seems my words were largely more positive then negative.
 (Outside of 2009 - which is either largely from my anxiety attacks that year or Norse mythology is just super depressing.) Not as ansgty as I remember!</p>
 
-<p><img src="/images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-16-1.png" alt=""></p>
+<p><img src="/images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-16-1.png" alt="" /></p>
 
 <p>Ah, but did I mark my “current mood” / how are you feeling” part as
 positive as my words are? You be the judge.</p>
 
-<p><img src="/images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-18-1.png" alt=""></p>
+<p><img src="/images/2022-06-28-LJ_files/figure-markdown_github/unnamed-chunk-18-1.png" alt="" /></p>
 
-<h2>End :)</h2>
+<h2 id="end-">End :)</h2>
 
 <p>So there you have it. Was teenage Erin as emo as I thought? Maybe not! Or maybe I wrote all the most emo journals in my physical diary. The world will never know (because those diaries have been lost).</p>
 
