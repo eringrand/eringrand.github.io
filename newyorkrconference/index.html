@@ -16,563 +16,9 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
 
     
-    <meta name="description" content="Last weekend was the 2017 RStatsNYC conference. I had a great time talking to friends and meeting new friends throughout the weekend. The speakers covered a variety of topics from data ethics to cloud cloud computing. I&#39;ve complied my notes, plus some of popular tweets from the conference below.
-
-Day 1
-
-How R Helps Airbnb Make the Most of Its Data
-
-Ricardo Bion, Airbnb
-
-
-AirBnD started in 2008 with 1 city and 1 room, now there are 3M homes in 71K cities
-100+ data scietists using a mix of lanaguages mostly R, but lots of python
-Why to use an R Packages:
-
-
-Passing around functions required duplication of work, where as a package can include data, test, add-ins, vignettes, R markdown and notebook templates
-The AirBnB packages have consistent API, branded visualization, branded templates, and of course function functions
-
-Education:
-
-
-made a difference in confidence of R stats
-new hire buddy
-intro classes at datacamp if interested, sponsored by airbnb
-peer support with office hours, code review, R slack group
-learning lunch, journal club, offsites
-
-Reproducibility:
-
-
-scale knowedlge
-knowledge repo
-posts have tags with topics, date, then served as a web ui
-uses github for peer review
-branded template
-incorprate best practices from academia and software
-
-
-
-Hearing about reproducibility and R packages at Airbnb from @ricardobion at NYR #rstatsnyc pic.twitter.com/uGSZwtX1XM&mdash; Julia Silge (@juliasilge) April 21, 2017
-
-
-
-Fine Grained Visual Category Recognition and Perceptual Embedding
-
-Serge Belongie, Cornell University
-
-
-Really intersting talk on using Stochastic Neighbor algorithm with crowd sourcing to get a visual similarity of images.
-Motivation of humans and computers working together
-His talk focused on detecting what type of bird was in an image
-Detecting that there is a bird in the picture is getting easy for computer, but detecting the exact name of the bird is much more difficult
-
-
-.@SergeBelongie showing a stochastic neighbor algorithm with crowd sourcing to get a visual similarity of images #rstatsnyc pic.twitter.com/TRuIruTELS&mdash; Erin Grand (@astroeringrand) April 21, 2017
-
-
-
-An R Cloud Computing Lifeline: The Missing Manual for Running R on Amazon Cloud
-
-Kelly O&#39;Briant, B23 
-
-
-Working with R in the cloud is different from working with Rstudio on your computer, you have to install all your favroite packages again every time you start up a new server
- bigger instances sizes, analysis while sleeping, running multiple R servers at the same time, instances themselves are disaposable and renewable resources
-able to use tools in a more powerful manor
-
-
-@b23kelly created a custom R package to set up new projects/deployed servers fast without having to reconfigure anew each time #rstatsnyc&mdash; Alec Barrett (@alecbarrett) April 21, 2017
-
-
-
-R Makes the World Go &#39;Round: Data-Driven Decision Making at JetBlue
-
-Catherine Zhou, JetBlue
-
-One of the interesting take always throughout the conference was that you can start coding in R pretty quickly, if you start with the right ideas and tools about what R is. Most intro stats classes (mine included) treat R and other programming languages as a calculator. But R is so much more than that! Catherine Z made a point about giving people templates with tidyverse functions to produce their own analyses. In my own work, I&#39;m helping my coworker think of tidyverse in a similar way to computing excel tasks, i.e group_by()  %&gt;% summarise() is equivalent to a pivot table, and mutate() adds a new column the same you way you might by drag-and-dropping an excel equation.
-
-There were also several good comments on how you can learn slowly by doing something small in R (such as doing a bit of cleaning) and then porting it back out to excel or tableau to finish your analysis. Best takeaway? Not everyone needs to be fluent in R. - Catherine 
-
-.@catherinezh Easy sells: Automation and reproducibility, but not everyone needs to be fluent. pic.twitter.com/EancCU2eWb&mdash; Erin Grand (@astroeringrand) April 21, 2017
-
-
-
-Fun with R
-
-Jared P. Lander, Lander Analytics
-
-Harnessing the Power of JavaScript for Data Science
-
-Ramnath Vaidyanathan, DataCamp
-
-
-Ramnath switched talk time with Dan, so my order is slightly different from what you may see online.
-
-
-We R What We Ask: The Landscape of R Users on Stack Overflow
-
-David Robinson, Stack Overflow
-
-
-Stack Overflow susers
-
-
-
-
-Theoretical Statistics is the Theory of Applied Statistics: How to Think About What We Do
-
-Andrew Gelman, Columbia
-
-Reiterating Andrew Gelman&#39;s point about how p-value statistical testing is actually a pretty bad framework for hypothesis testing most of the time. time to really brush up on Bayesian stats. I also liked the general point that you should have to state what you expect to find (alternate hypotheses, estimated effect sizes, whatever) before you go barging around looking for anything and act like whatever you end up with is what you were searching for all along.
-
-The Unreasonable Effectiveness of Empathy - The killer skill needed for a successful technical career
-
-JD Long, RenaissanceRe
-
-
-Analysis doesn&#39;t end at result delivery - it ends at developing and proselytizing new business strategies and innovation.
-Automating Excel workflows can be a first step towards bringing R to a team.
-Agile development tells user stories as an empathy hack.
-
-As a ______
-I want ______
-So I can ______ 
-
-
-Person-level stories (the near) are always more meaningful than data stories (the far). We need to balance both as Data Scientists.
-In development, we need to have an actual user in mind, rather than a theoretical user who wants everything.
-
-
-&quot;As you tell your data stories, think about the individual people in your data and your consumers&quot; - @CMastication #rstatsnyc pic.twitter.com/f9DZGCprDO&mdash; Emily Robinson (@robinson_es) April 21, 2017
-
-
-
-Experience R in the Cloud: Empower Insurance Operations from Insights to Action
-
-Catherine Cao, IBM
-
-R - From Backend to Production
-
-Reenah Nahum Muldavski, Bidalgo
-
-Things about the Future and the Future of Things
-
-Deborah Berebichez, Discovery Channel
-
-R in Financial Services: Challenges and Opportunities
-
-Lixun Zhang, Microsoft
-
-Day 2
-
-Publication Hacking: How We Answered a Research Question and Wrote a Manuscript in Only Two Days
-
-Sandy Griffith, Flatiron Health
-
-The Humble Programmer Data Scientist: Essence and Accident in Software Engineering Data Science
-
-Friederike Schuur, Fast Forward Labs
-
-So You Want to be a Data Scientist?
-
-Dan Chen, Virginia TechQL
-
-
-Working with SQL in R is easy with library(RPostgress)
-
-
-Using Human Mobility Data to Assess Public Circulation Health
-
-Michael Kane
-
-
-talking about cell phone tower data -&gt; homan ciculatory data
-anytime you are connecting or handing off to a cell phone tower, the data is logged
-secruity at: IDS are all hashed version of cell phones
-35 TB data set! big! 10 GB every day
-touching ALL of the day when doing analysis
-use R, with Hadoop
-using HMR in cluster (hapood)
-looks at inflow and outflow counts (flux)
-are providing reliable information on human mobility on storms
-want the learner that is the most REGULAR not the closest to accuracy
-
-
-From Agreeing to Marching to Organizing: OSS Needs You
-
-Mike Malecki and Neal Richardson
-
-
-Best ways to contribute to open source are to start with improving documentation
-Open source contributions: failing test with fix &gt; failing test &gt; bug report
-Remember to include sessionInfo()
-When releasing a package, release quickly, but also slowly - take time to fix dumb decisions
-
-
-Bring something new to the community, but don&#39;t reinvent the wheel 
-Tell people about your package (social media), then listen to how they&#39;re using it
-When thinking about a package: documentation &gt; usability &gt; performance &gt; features
-
-
-
-threejs: less cruft, more awesome!
-
-Bryan Lewis
-
-
-A talk not about mushrooms
-
-
-Enabling reproducibility at scale with R and Pachyderm
-
-Dan Whitenack
-
-True #reproducibility requires versioning of data not just code. #rstatsnyc #rstats @dwhitena pic.twitter.com/oXKBJ59FqU&mdash; Joyce Robbins (@jtrnyc) April 22, 2017
-
-
-
-Building a Predictive Early Intervention System to Prevent Adverse Police Incidents
-
-Jon Keane, Mattersight
-
-Better Packages through Peer Review: Lessons from rOpenSci.
-
-Noam Ross, ROpenSci
-
-Difference between peer review and code review: broad rather than narrow scope; legitimacy along with quality #rstatsnyc @noamross pic.twitter.com/nYVpREj4aq&mdash; David Robinson (@drob) April 22, 2017
-
-
-
-Towards Interoperable Data Frames
-
-Wes McKinney, Two Sigma
-
-Text Mining, the Tidy Way
-
-Julia Silge, Stack Overflow
-
-RStudio Tips and Tricks
-
-Sean Lopp, RStudio
-
-Don&#39;t Let Lawyers Ruin Your Analytics
-
-Jim Klucar, Immuta
-
-Automation + Systems
-
-Automating what you can:
-rationalizing plots/routine outputs saves SO much time and seems like it makes it so much easier to on-board new folks. (basically reiterating The Word that @catherine_pargeter preached on Tuesday)
-
-Introducing New People to R:
-
-
-keep a list of things you do
-port as much of the &quot;easy&quot; things you can into R
-data cleaning
-
-
-Once you&#39;ve built the ground work, you can move into doing more complicated analyses 
-
-Other Learnings
-
-I spent most of the conference chatting and meeting other members of the Rladies New York chapter. 
-
-
-
-Packages to Try Out
-
-
-RXKCD: add XKCD cartoons to stuff!
-trelliscope: many-panel data vis
-compareGroups: compare demographics and other aspects across groups
-goodpractice: does a variety of checking for good package development practice
-lintr: helps check for good code style
-devtools::spellcheck()
-emo
-broom: turn analytics output into tidy data frames
-
+    <meta name="description" content="Last weekend was the 2017 RStatsNYC conference. I had a great time talking to friends and meeting new friends throughout the weekend. The speakers covered a variety of topics from data ethics to cloud cloud computing. I’ve complied my notes, plus some of popular tweets from the conference below.
 " />
-    <meta property="og:description" content="Last weekend was the 2017 RStatsNYC conference. I had a great time talking to friends and meeting new friends throughout the weekend. The speakers covered a variety of topics from data ethics to cloud cloud computing. I&#39;ve complied my notes, plus some of popular tweets from the conference below.
-
-Day 1
-
-How R Helps Airbnb Make the Most of Its Data
-
-Ricardo Bion, Airbnb
-
-
-AirBnD started in 2008 with 1 city and 1 room, now there are 3M homes in 71K cities
-100+ data scietists using a mix of lanaguages mostly R, but lots of python
-Why to use an R Packages:
-
-
-Passing around functions required duplication of work, where as a package can include data, test, add-ins, vignettes, R markdown and notebook templates
-The AirBnB packages have consistent API, branded visualization, branded templates, and of course function functions
-
-Education:
-
-
-made a difference in confidence of R stats
-new hire buddy
-intro classes at datacamp if interested, sponsored by airbnb
-peer support with office hours, code review, R slack group
-learning lunch, journal club, offsites
-
-Reproducibility:
-
-
-scale knowedlge
-knowledge repo
-posts have tags with topics, date, then served as a web ui
-uses github for peer review
-branded template
-incorprate best practices from academia and software
-
-
-
-Hearing about reproducibility and R packages at Airbnb from @ricardobion at NYR #rstatsnyc pic.twitter.com/uGSZwtX1XM&mdash; Julia Silge (@juliasilge) April 21, 2017
-
-
-
-Fine Grained Visual Category Recognition and Perceptual Embedding
-
-Serge Belongie, Cornell University
-
-
-Really intersting talk on using Stochastic Neighbor algorithm with crowd sourcing to get a visual similarity of images.
-Motivation of humans and computers working together
-His talk focused on detecting what type of bird was in an image
-Detecting that there is a bird in the picture is getting easy for computer, but detecting the exact name of the bird is much more difficult
-
-
-.@SergeBelongie showing a stochastic neighbor algorithm with crowd sourcing to get a visual similarity of images #rstatsnyc pic.twitter.com/TRuIruTELS&mdash; Erin Grand (@astroeringrand) April 21, 2017
-
-
-
-An R Cloud Computing Lifeline: The Missing Manual for Running R on Amazon Cloud
-
-Kelly O&#39;Briant, B23 
-
-
-Working with R in the cloud is different from working with Rstudio on your computer, you have to install all your favroite packages again every time you start up a new server
- bigger instances sizes, analysis while sleeping, running multiple R servers at the same time, instances themselves are disaposable and renewable resources
-able to use tools in a more powerful manor
-
-
-@b23kelly created a custom R package to set up new projects/deployed servers fast without having to reconfigure anew each time #rstatsnyc&mdash; Alec Barrett (@alecbarrett) April 21, 2017
-
-
-
-R Makes the World Go &#39;Round: Data-Driven Decision Making at JetBlue
-
-Catherine Zhou, JetBlue
-
-One of the interesting take always throughout the conference was that you can start coding in R pretty quickly, if you start with the right ideas and tools about what R is. Most intro stats classes (mine included) treat R and other programming languages as a calculator. But R is so much more than that! Catherine Z made a point about giving people templates with tidyverse functions to produce their own analyses. In my own work, I&#39;m helping my coworker think of tidyverse in a similar way to computing excel tasks, i.e group_by()  %&gt;% summarise() is equivalent to a pivot table, and mutate() adds a new column the same you way you might by drag-and-dropping an excel equation.
-
-There were also several good comments on how you can learn slowly by doing something small in R (such as doing a bit of cleaning) and then porting it back out to excel or tableau to finish your analysis. Best takeaway? Not everyone needs to be fluent in R. - Catherine 
-
-.@catherinezh Easy sells: Automation and reproducibility, but not everyone needs to be fluent. pic.twitter.com/EancCU2eWb&mdash; Erin Grand (@astroeringrand) April 21, 2017
-
-
-
-Fun with R
-
-Jared P. Lander, Lander Analytics
-
-Harnessing the Power of JavaScript for Data Science
-
-Ramnath Vaidyanathan, DataCamp
-
-
-Ramnath switched talk time with Dan, so my order is slightly different from what you may see online.
-
-
-We R What We Ask: The Landscape of R Users on Stack Overflow
-
-David Robinson, Stack Overflow
-
-
-Stack Overflow susers
-
-
-
-
-Theoretical Statistics is the Theory of Applied Statistics: How to Think About What We Do
-
-Andrew Gelman, Columbia
-
-Reiterating Andrew Gelman&#39;s point about how p-value statistical testing is actually a pretty bad framework for hypothesis testing most of the time. time to really brush up on Bayesian stats. I also liked the general point that you should have to state what you expect to find (alternate hypotheses, estimated effect sizes, whatever) before you go barging around looking for anything and act like whatever you end up with is what you were searching for all along.
-
-The Unreasonable Effectiveness of Empathy - The killer skill needed for a successful technical career
-
-JD Long, RenaissanceRe
-
-
-Analysis doesn&#39;t end at result delivery - it ends at developing and proselytizing new business strategies and innovation.
-Automating Excel workflows can be a first step towards bringing R to a team.
-Agile development tells user stories as an empathy hack.
-
-As a ______
-I want ______
-So I can ______ 
-
-
-Person-level stories (the near) are always more meaningful than data stories (the far). We need to balance both as Data Scientists.
-In development, we need to have an actual user in mind, rather than a theoretical user who wants everything.
-
-
-&quot;As you tell your data stories, think about the individual people in your data and your consumers&quot; - @CMastication #rstatsnyc pic.twitter.com/f9DZGCprDO&mdash; Emily Robinson (@robinson_es) April 21, 2017
-
-
-
-Experience R in the Cloud: Empower Insurance Operations from Insights to Action
-
-Catherine Cao, IBM
-
-R - From Backend to Production
-
-Reenah Nahum Muldavski, Bidalgo
-
-Things about the Future and the Future of Things
-
-Deborah Berebichez, Discovery Channel
-
-R in Financial Services: Challenges and Opportunities
-
-Lixun Zhang, Microsoft
-
-Day 2
-
-Publication Hacking: How We Answered a Research Question and Wrote a Manuscript in Only Two Days
-
-Sandy Griffith, Flatiron Health
-
-The Humble Programmer Data Scientist: Essence and Accident in Software Engineering Data Science
-
-Friederike Schuur, Fast Forward Labs
-
-So You Want to be a Data Scientist?
-
-Dan Chen, Virginia TechQL
-
-
-Working with SQL in R is easy with library(RPostgress)
-
-
-Using Human Mobility Data to Assess Public Circulation Health
-
-Michael Kane
-
-
-talking about cell phone tower data -&gt; homan ciculatory data
-anytime you are connecting or handing off to a cell phone tower, the data is logged
-secruity at: IDS are all hashed version of cell phones
-35 TB data set! big! 10 GB every day
-touching ALL of the day when doing analysis
-use R, with Hadoop
-using HMR in cluster (hapood)
-looks at inflow and outflow counts (flux)
-are providing reliable information on human mobility on storms
-want the learner that is the most REGULAR not the closest to accuracy
-
-
-From Agreeing to Marching to Organizing: OSS Needs You
-
-Mike Malecki and Neal Richardson
-
-
-Best ways to contribute to open source are to start with improving documentation
-Open source contributions: failing test with fix &gt; failing test &gt; bug report
-Remember to include sessionInfo()
-When releasing a package, release quickly, but also slowly - take time to fix dumb decisions
-
-
-Bring something new to the community, but don&#39;t reinvent the wheel 
-Tell people about your package (social media), then listen to how they&#39;re using it
-When thinking about a package: documentation &gt; usability &gt; performance &gt; features
-
-
-
-threejs: less cruft, more awesome!
-
-Bryan Lewis
-
-
-A talk not about mushrooms
-
-
-Enabling reproducibility at scale with R and Pachyderm
-
-Dan Whitenack
-
-True #reproducibility requires versioning of data not just code. #rstatsnyc #rstats @dwhitena pic.twitter.com/oXKBJ59FqU&mdash; Joyce Robbins (@jtrnyc) April 22, 2017
-
-
-
-Building a Predictive Early Intervention System to Prevent Adverse Police Incidents
-
-Jon Keane, Mattersight
-
-Better Packages through Peer Review: Lessons from rOpenSci.
-
-Noam Ross, ROpenSci
-
-Difference between peer review and code review: broad rather than narrow scope; legitimacy along with quality #rstatsnyc @noamross pic.twitter.com/nYVpREj4aq&mdash; David Robinson (@drob) April 22, 2017
-
-
-
-Towards Interoperable Data Frames
-
-Wes McKinney, Two Sigma
-
-Text Mining, the Tidy Way
-
-Julia Silge, Stack Overflow
-
-RStudio Tips and Tricks
-
-Sean Lopp, RStudio
-
-Don&#39;t Let Lawyers Ruin Your Analytics
-
-Jim Klucar, Immuta
-
-Automation + Systems
-
-Automating what you can:
-rationalizing plots/routine outputs saves SO much time and seems like it makes it so much easier to on-board new folks. (basically reiterating The Word that @catherine_pargeter preached on Tuesday)
-
-Introducing New People to R:
-
-
-keep a list of things you do
-port as much of the &quot;easy&quot; things you can into R
-data cleaning
-
-
-Once you&#39;ve built the ground work, you can move into doing more complicated analyses 
-
-Other Learnings
-
-I spent most of the conference chatting and meeting other members of the Rladies New York chapter. 
-
-
-
-Packages to Try Out
-
-
-RXKCD: add XKCD cartoons to stuff!
-trelliscope: many-panel data vis
-compareGroups: compare demographics and other aspects across groups
-goodpractice: does a variety of checking for good package development practice
-lintr: helps check for good code style
-devtools::spellcheck()
-emo
-broom: turn analytics output into tidy data frames
-
+    <meta property="og:description" content="Last weekend was the 2017 RStatsNYC conference. I had a great time talking to friends and meeting new friends throughout the weekend. The speakers covered a variety of topics from data ethics to cloud cloud computing. I’ve complied my notes, plus some of popular tweets from the conference below.
 " />
     
     <meta name="author" content="Erin Grand" />
@@ -641,283 +87,164 @@ broom: turn analytics output into tidy data frames
 <p id="post-meta"></p>
 
   <div class="entry">
-    <p>Last weekend was the 2017 RStatsNYC conference. I had a great time talking to friends and meeting new friends throughout the weekend. The speakers covered a variety of topics from data ethics to cloud cloud computing. I&#39;ve complied my notes, plus some of popular tweets from the conference below.</p>
+    <p>Last weekend was the 2017 RStatsNYC conference. I had a great time talking to friends and meeting new friends throughout the weekend. The speakers covered a variety of topics from data ethics to cloud cloud computing. I’ve complied my notes, plus some of popular tweets from the conference below.</p>
 
-<h1>Day 1</h1>
+<h1 id="day-1">Day 1</h1>
 
-<h3>How R Helps Airbnb Make the Most of Its Data</h3>
+<h3 id="how-r-helps-airbnb-make-the-most-of-its-data">How R Helps Airbnb Make the Most of Its Data</h3>
 
 <p>Ricardo Bion, Airbnb</p>
 
 <ul>
-<li>AirBnD started in 2008 with 1 city and 1 room, now there are 3M homes in 71K cities</li>
-<li>100+ data scietists using a mix of lanaguages mostly R, but lots of python</li>
-<li>Why to use an R Packages:
-
-<ul>
-<li>Passing around functions required duplication of work, where as a package can include data, test, add-ins, vignettes, R markdown and notebook templates</li>
-<li>The AirBnB packages have consistent API, branded visualization, branded templates, and of course function functions</li>
-</ul></li>
-<li>Education:
-
-<ul>
-<li>made a difference in confidence of R stats</li>
-<li>new hire buddy</li>
-<li>intro classes at datacamp if interested, sponsored by airbnb</li>
-<li>peer support with office hours, code review, R slack group</li>
-<li>learning lunch, journal club, offsites</li>
-</ul></li>
-<li>Reproducibility:
-
-<ul>
-<li>scale knowedlge</li>
-<li>knowledge repo</li>
-<li>posts have tags with topics, date, then served as a web ui</li>
-<li>uses github for peer review</li>
-<li>branded template</li>
-<li>incorprate best practices from academia and software</li>
-</ul></li>
+  <li>AirBnD started in 2008 with 1 city and 1 room, now there are 3M homes in 71K cities</li>
+  <li>100+ data scietists using a mix of lanaguages mostly R, but lots of python</li>
+  <li>Why to use an R Packages:
+    <ul>
+      <li>Passing around functions required duplication of work, where as a package can include data, test, add-ins, vignettes, R markdown and notebook templates</li>
+      <li>The AirBnB packages have consistent API, branded visualization, branded templates, and of course function functions</li>
+    </ul>
+  </li>
+  <li>Education:
+    <ul>
+      <li>made a difference in confidence of R stats</li>
+      <li>new hire buddy</li>
+      <li>intro classes at datacamp if interested, sponsored by airbnb</li>
+      <li>peer support with office hours, code review, R slack group</li>
+      <li>learning lunch, journal club, offsites</li>
+    </ul>
+  </li>
+  <li>Reproducibility:
+    <ul>
+      <li>scale knowedlge</li>
+      <li>knowledge repo</li>
+      <li>posts have tags with topics, date, then served as a web ui</li>
+      <li>uses github for peer review</li>
+      <li>branded template</li>
+      <li>incorprate best practices from academia and software</li>
+    </ul>
+  </li>
 </ul>
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Hearing about reproducibility and R packages at Airbnb from <a href="https://twitter.com/ricardobion">@ricardobion</a> at NYR <a href="https://twitter.com/hashtag/rstatsnyc?src=hash">#rstatsnyc</a> <a href="https://t.co/uGSZwtX1XM">pic.twitter.com/uGSZwtX1XM</a></p>&mdash; Julia Silge (@juliasilge) <a href="https://twitter.com/juliasilge/status/855413199344209922">April 21, 2017</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-<h3>Fine Grained Visual Category Recognition and Perceptual Embedding</h3>
+<h3 id="fine-grained-visual-category-recognition-and-perceptual-embedding">Fine Grained Visual Category Recognition and Perceptual Embedding</h3>
 
 <p>Serge Belongie, Cornell University</p>
 
 <ul>
-<li>Really intersting talk on using Stochastic Neighbor algorithm with crowd sourcing to get a visual similarity of images.</li>
-<li>Motivation of humans and computers working together</li>
-<li>His talk focused on detecting what type of bird was in an image</li>
-<li>Detecting that there is a bird in the picture is getting easy for computer, but detecting the exact name of the bird is much more difficult</li>
+  <li>Really intersting talk on using Stochastic Neighbor algorithm with crowd sourcing to get a visual similarity of images.</li>
+  <li>Motivation of humans and computers working together</li>
+  <li>His talk focused on detecting what type of bird was in an image</li>
+  <li>Detecting that there is a bird in the picture is getting easy for computer, but detecting the exact name of the bird is much more difficult</li>
 </ul>
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">.<a href="https://twitter.com/SergeBelongie">@SergeBelongie</a> showing a stochastic neighbor algorithm with crowd sourcing to get a visual similarity of images <a href="https://twitter.com/hashtag/rstatsnyc?src=hash">#rstatsnyc</a> <a href="https://t.co/TRuIruTELS">pic.twitter.com/TRuIruTELS</a></p>&mdash; Erin Grand (@astroeringrand) <a href="https://twitter.com/astroeringrand/status/855420509344993282">April 21, 2017</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h3 id="an-r-cloud-computing-lifeline-the-missing-manual-for-running-r-on-amazon-cloud">An R Cloud Computing Lifeline: The Missing Manual for Running R on Amazon Cloud</h3>
 
-<h3>An R Cloud Computing Lifeline: The Missing Manual for Running R on Amazon Cloud</h3>
-
-<p>Kelly O&#39;Briant, B23 </p>
+<p>Kelly O’Briant, B23</p>
 
 <ul>
-<li>Working with R in the cloud is different from working with Rstudio on your computer, you have to install all your favroite packages again every time you start up a new server</li>
-<li> bigger instances sizes, analysis while sleeping, running multiple R servers at the same time, instances themselves are disaposable and renewable resources</li>
-<li>able to use tools in a more powerful manor</li>
+  <li>Working with R in the cloud is different from working with Rstudio on your computer, you have to install all your favroite packages again every time you start up a new server</li>
+  <li>bigger instances sizes, analysis while sleeping, running multiple R servers at the same time, instances themselves are disaposable and renewable resources</li>
+  <li>able to use tools in a more powerful manor</li>
 </ul>
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/b23kelly">@b23kelly</a> created a custom R package to set up new projects/deployed servers fast without having to reconfigure anew each time <a href="https://twitter.com/hashtag/rstatsnyc?src=hash">#rstatsnyc</a></p>&mdash; Alec Barrett (@alecbarrett) <a href="https://twitter.com/alecbarrett/status/855424336068530180">April 21, 2017</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-<h3>R Makes the World Go &#39;Round: Data-Driven Decision Making at JetBlue</h3>
+<h3 id="r-makes-the-world-go-round-data-driven-decision-making-at-jetblue">R Makes the World Go ‘Round: Data-Driven Decision Making at JetBlue</h3>
 
 <p>Catherine Zhou, JetBlue</p>
 
-<p>One of the interesting take always throughout the conference was that you can start coding in R pretty quickly, if you start with the right ideas and tools about what R is. Most intro stats classes (mine included) treat R and other programming languages as a calculator. But R is so much more than that! <a href="https://twitter.com/catherinezh">Catherine Z</a> made a point about giving people templates with tidyverse functions to produce their own analyses. In my own work, I&#39;m helping my coworker think of tidyverse in a similar way to computing excel tasks, i.e <code>group_by()</code>  %&gt;% <code>summarise()</code> is equivalent to a <em>pivot table</em>, and <code>mutate()</code> adds a new column the same you way you might by drag-and-dropping an excel equation.</p>
+<p>One of the interesting take always throughout the conference was that you can start coding in R pretty quickly, if you start with the right ideas and tools about what R is. Most intro stats classes (mine included) treat R and other programming languages as a calculator. But R is so much more than that! <a href="https://twitter.com/catherinezh">Catherine Z</a> made a point about giving people templates with tidyverse functions to produce their own analyses. In my own work, I’m helping my coworker think of tidyverse in a similar way to computing excel tasks, i.e <code>group_by()</code>  %&gt;% <code>summarise()</code> is equivalent to a <em>pivot table</em>, and <code>mutate()</code> adds a new column the same you way you might by drag-and-dropping an excel equation.</p>
 
-<p>There were also several good comments on how you can learn slowly by doing something small in R (such as doing a bit of cleaning) and then porting it back out to excel or tableau to finish your analysis. Best takeaway? <strong>Not everyone needs to be fluent in R. - <a href="https://twitter.com/catherinezh">Catherine</a></strong> </p>
+<p>There were also several good comments on how you can learn slowly by doing something small in R (such as doing a bit of cleaning) and then porting it back out to excel or tableau to finish your analysis. Best takeaway? <strong>Not everyone needs to be fluent in R. - <a href="https://twitter.com/catherinezh">Catherine</a></strong></p>
 
 <blockquote class="twitter-tweet" data-conversation="none" data-lang="en"><p lang="en" dir="ltr">.<a href="https://twitter.com/catherinezh">@catherinezh</a> Easy sells: Automation and reproducibility, but not everyone needs to be fluent. <a href="https://t.co/EancCU2eWb">pic.twitter.com/EancCU2eWb</a></p>&mdash; Erin Grand (@astroeringrand) <a href="https://twitter.com/astroeringrand/status/855438176269344769">April 21, 2017</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-<h3>Fun with R</h3>
-
-<p>Jared P. Lander, Lander Analytics</p>
-
-<h3>Harnessing the Power of JavaScript for Data Science</h3>
-
-<p>Ramnath Vaidyanathan, DataCamp</p>
-
-<ul>
-<li>Ramnath switched talk time with Dan, so my order is slightly different from what you may see online.</li>
-</ul>
-
-<h3>We R What We Ask: The Landscape of R Users on Stack Overflow</h3>
-
-<p>David Robinson, Stack Overflow</p>
-
-<ul>
-<li>Stack Overflow susers</li>
-</ul>
-
-<p><img src="https://pbs.twimg.com/media/C98_M0cW0AECCbI.jpg" alt=""></p>
-
-<h3>Theoretical Statistics is the Theory of Applied Statistics: How to Think About What We Do</h3>
+<h3 id="theoretical-statistics-is-the-theory-of-applied-statistics-how-to-think-about-what-we-do">Theoretical Statistics is the Theory of Applied Statistics: How to Think About What We Do</h3>
 
 <p>Andrew Gelman, Columbia</p>
 
-<p>Reiterating Andrew Gelman&#39;s point about how p-value statistical testing is actually a pretty bad framework for hypothesis testing most of the time. time to really brush up on Bayesian stats. I also liked the general point that you should have to state what you expect to find (alternate hypotheses, estimated effect sizes, whatever) before you go barging around looking for anything and act like whatever you end up with is what you were searching for all along.</p>
+<p>Reiterating Andrew Gelman’s point about how p-value statistical testing is actually a pretty bad framework for hypothesis testing most of the time. time to really brush up on Bayesian stats. I also liked the general point that you should have to state what you expect to find (alternate hypotheses, estimated effect sizes, whatever) before you go barging around looking for anything and act like whatever you end up with is what you were searching for all along.</p>
 
-<h3>The Unreasonable Effectiveness of Empathy - The killer skill needed for a successful technical career</h3>
+<h3 id="the-unreasonable-effectiveness-of-empathy---the-killer-skill-needed-for-a-successful-technical-career">The Unreasonable Effectiveness of Empathy - The killer skill needed for a successful technical career</h3>
 
 <p>JD Long, RenaissanceRe</p>
 
 <ul>
-<li>Analysis doesn&#39;t end at result delivery - it ends at developing and proselytizing new business strategies and innovation.</li>
-<li>Automating Excel workflows can be a first step towards bringing R to a team.</li>
-<li>Agile development tells user stories as an empathy hack.</li>
+  <li>Analysis doesn’t end at result delivery - it ends at developing and proselytizing new business strategies and innovation.</li>
+  <li>Automating Excel workflows can be a first step towards bringing R to a team.</li>
+  <li>Agile development tells user stories as an empathy hack.</li>
 </ul>
-<div class="highlight"><pre><code class="language-text" data-lang="text">As a ______
+
+<pre><code>As a ______
 I want ______
 So I can ______ 
-</code></pre></div>
+</code></pre>
+
 <ul>
-<li>Person-level stories (the near) are always more meaningful than data stories (the far). We need to balance both as Data Scientists.</li>
-<li>In development, we need to have an actual user in mind, rather than a theoretical user who wants everything.</li>
+  <li>Person-level stories (the near) are always more meaningful than data stories (the far). We need to balance both as Data Scientists.</li>
+  <li>In development, we need to have an actual user in mind, rather than a theoretical user who wants everything.</li>
 </ul>
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">&quot;As you tell your data stories, think about the individual people in your data and your consumers&quot; - <a href="https://twitter.com/CMastication">@CMastication</a> <a href="https://twitter.com/hashtag/rstatsnyc?src=hash">#rstatsnyc</a> <a href="https://t.co/f9DZGCprDO">pic.twitter.com/f9DZGCprDO</a></p>&mdash; Emily Robinson (@robinson_es) <a href="https://twitter.com/robinson_es/status/855500182586368002">April 21, 2017</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h1 id="day-2">Day 2</h1>
 
-<h3>Experience R in the Cloud: Empower Insurance Operations from Insights to Action</h3>
-
-<p>Catherine Cao, IBM</p>
-
-<h3>R - From Backend to Production</h3>
-
-<p>Reenah Nahum Muldavski, Bidalgo</p>
-
-<h3>Things about the Future and the Future of Things</h3>
-
-<p>Deborah Berebichez, Discovery Channel</p>
-
-<h3>R in Financial Services: Challenges and Opportunities</h3>
-
-<p>Lixun Zhang, Microsoft</p>
-
-<h1>Day 2</h1>
-
-<h3>Publication Hacking: How We Answered a Research Question and Wrote a Manuscript in Only Two Days</h3>
-
-<p>Sandy Griffith, Flatiron Health</p>
-
-<h3>The Humble Programmer Data Scientist: Essence and Accident in Software Engineering Data Science</h3>
-
-<p>Friederike Schuur, Fast Forward Labs</p>
-
-<h3>So You Want to be a Data Scientist?</h3>
-
-<p>Dan Chen, Virginia TechQL</p>
-
-<ul>
-<li>Working with SQL in R is easy with <code>library(RPostgress)</code></li>
-</ul>
-
-<h3>Using Human Mobility Data to Assess Public Circulation Health</h3>
-
+<h3 id="using-human-mobility-data-to-assess-public-circulation-health">Using Human Mobility Data to Assess Public Circulation Health</h3>
 <p>Michael Kane</p>
 
 <ul>
-<li>talking about cell phone tower data -&gt; homan ciculatory data</li>
-<li>anytime you are connecting or handing off to a cell phone tower, the data is logged</li>
-<li>secruity at: IDS are all hashed version of cell phones</li>
-<li>35 TB data set! big! 10 GB every day</li>
-<li>touching ALL of the day when doing analysis</li>
-<li>use R, with Hadoop</li>
-<li>using HMR in cluster (hapood)</li>
-<li>looks at inflow and outflow counts (flux)</li>
-<li>are providing reliable information on human mobility on storms</li>
-<li>want the learner that is the most REGULAR not the closest to accuracy</li>
+  <li>talking about cell phone tower data -&gt; homan ciculatory data</li>
+  <li>anytime you are connecting or handing off to a cell phone tower, the data is logged</li>
+  <li>secruity at: IDS are all hashed version of cell phones</li>
+  <li>35 TB data set! big! 10 GB every day</li>
+  <li>touching ALL of the day when doing analysis</li>
+  <li>use R, with Hadoop</li>
+  <li>using HMR in cluster (hapood)</li>
+  <li>looks at inflow and outflow counts (flux)</li>
+  <li>are providing reliable information on human mobility on storms</li>
+  <li>want the learner that is the most REGULAR not the closest to accuracy</li>
 </ul>
 
-<h3>From Agreeing to Marching to Organizing: OSS Needs You</h3>
-
+<h3 id="from-agreeing-to-marching-to-organizing-oss-needs-you">From Agreeing to Marching to Organizing: OSS Needs You</h3>
 <p>Mike Malecki and Neal Richardson</p>
 
 <ul>
-<li>Best ways to contribute to open source are to start with improving documentation</li>
-<li>Open source contributions: failing test with fix &gt; failing test &gt; bug report</li>
-<li>Remember to include sessionInfo()</li>
-<li>When releasing a package, release quickly, but also slowly - take time to fix dumb decisions
-
-<ul>
-<li>Bring something new to the community, but don&#39;t reinvent the wheel </li>
-<li>Tell people about your package (social media), then listen to how they&#39;re using it</li>
-<li>When thinking about a package: documentation &gt; usability &gt; performance &gt; features</li>
-</ul></li>
+  <li>Best ways to contribute to open source are to start with improving documentation</li>
+  <li>Open source contributions: failing test with fix &gt; failing test &gt; bug report</li>
+  <li>Remember to include sessionInfo()</li>
+  <li>When releasing a package, release quickly, but also slowly - take time to fix dumb decisions
+    <ul>
+      <li>Bring something new to the community, but don’t reinvent the wheel</li>
+      <li>Tell people about your package (social media), then listen to how they’re using it</li>
+      <li>When thinking about a package: documentation &gt; usability &gt; performance &gt; features</li>
+    </ul>
+  </li>
 </ul>
 
-<h3>threejs: less cruft, more awesome!</h3>
+<h1 id="other-learnings">Other Learnings</h1>
 
-<p>Bryan Lewis</p>
+<p>I spent most of the conference chatting and meeting other members of the Rladies New York chapter.</p>
 
-<ul>
-<li>A talk not about mushrooms</li>
-</ul>
+<p><img src="https://pbs.twimg.com/media/C-CEwTYXoAAqppX.jpg:large" alt="" /></p>
 
-<h3>Enabling reproducibility at scale with R and Pachyderm</h3>
-
-<p>Dan Whitenack</p>
-
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">True <a href="https://twitter.com/hashtag/reproducibility?src=hash">#reproducibility</a> requires versioning of data not just code. <a href="https://twitter.com/hashtag/rstatsnyc?src=hash">#rstatsnyc</a> <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a> <a href="https://twitter.com/dwhitena">@dwhitena</a> <a href="https://t.co/oXKBJ59FqU">pic.twitter.com/oXKBJ59FqU</a></p>&mdash; Joyce Robbins (@jtrnyc) <a href="https://twitter.com/jtrnyc/status/855849880555843586">April 22, 2017</a></blockquote>
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-<h3>Building a Predictive Early Intervention System to Prevent Adverse Police Incidents</h3>
-
-<p>Jon Keane, Mattersight</p>
-
-<h3>Better Packages through Peer Review: Lessons from rOpenSci.</h3>
-
-<p>Noam Ross, ROpenSci</p>
-
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Difference between peer review and code review: broad rather than narrow scope; legitimacy along with quality <a href="https://twitter.com/hashtag/rstatsnyc?src=hash">#rstatsnyc</a> <a href="https://twitter.com/noamross">@noamross</a> <a href="https://t.co/nYVpREj4aq">pic.twitter.com/nYVpREj4aq</a></p>&mdash; David Robinson (@drob) <a href="https://twitter.com/drob/status/855865825340907521">April 22, 2017</a></blockquote>
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-<h3>Towards Interoperable Data Frames</h3>
-
-<p>Wes McKinney, Two Sigma</p>
-
-<h3>Text Mining, the Tidy Way</h3>
-
-<p>Julia Silge, Stack Overflow</p>
-
-<h3>RStudio Tips and Tricks</h3>
-
-<p>Sean Lopp, RStudio</p>
-
-<h3>Don&#39;t Let Lawyers Ruin Your Analytics</h3>
-
-<p>Jim Klucar, Immuta</p>
-
-<h2>Automation + Systems</h2>
-
-<p>Automating what you can:
-rationalizing plots/routine outputs saves SO much time and seems like it makes it so much easier to on-board new folks. (basically reiterating The Word that @catherine_pargeter preached on Tuesday)</p>
-
-<h2>Introducing New People to R:</h2>
+<h1 id="packages-to-try-out">Packages to Try Out</h1>
 
 <ul>
-<li>keep a list of things you do</li>
-<li>port as much of the &quot;easy&quot; things you can into R</li>
-<li>data cleaning</li>
-</ul>
-
-<p>Once you&#39;ve built the ground work, you can move into doing more complicated analyses </p>
-
-<h1>Other Learnings</h1>
-
-<p>I spent most of the conference chatting and meeting other members of the <a href="LINKLINKLINK">Rladies New York chapter</a>. </p>
-
-<p><img src="https://pbs.twimg.com/media/C-CEwTYXoAAqppX.jpg:large" alt=""></p>
-
-<h1>Packages to Try Out</h1>
-
-<ul>
-<li>RXKCD: add XKCD cartoons to stuff!</li>
-<li>trelliscope: many-panel data vis</li>
-<li>compareGroups: compare demographics and other aspects across groups</li>
-<li>goodpractice: does a variety of checking for good package development practice</li>
-<li>lintr: helps check for good code style</li>
-<li>devtools::spellcheck()</li>
-<li>emo</li>
-<li>broom: turn analytics output into tidy data frames</li>
+  <li>RXKCD: add XKCD cartoons to stuff</li>
+  <li>trelliscope: many-panel data vis</li>
+  <li>compareGroups: compare demographics and other aspects across groups</li>
+  <li>goodpractice: does a variety of checking for good package development practice</li>
+  <li>lintr: helps check for good code style</li>
+  <li>emo</li>
+  <li>broom: turn analytics output into tidy data frames</li>
 </ul>
 
   </div>

@@ -1172,6 +1172,173 @@ Some of cast of Lizzie Bennet Diaries and me. Vidcon 2014&lt;/p&gt;
       </item>
     
       <item>
+        <title>New York Rstats Conference</title>
+        <description>&lt;p&gt;Last weekend was the 2017 RStatsNYC conference. I had a great time talking to friends and meeting new friends throughout the weekend. The speakers covered a variety of topics from data ethics to cloud cloud computing. I’ve complied my notes, plus some of popular tweets from the conference below.&lt;/p&gt;
+
+&lt;h1 id=&quot;day-1&quot;&gt;Day 1&lt;/h1&gt;
+
+&lt;h3 id=&quot;how-r-helps-airbnb-make-the-most-of-its-data&quot;&gt;How R Helps Airbnb Make the Most of Its Data&lt;/h3&gt;
+
+&lt;p&gt;Ricardo Bion, Airbnb&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;AirBnD started in 2008 with 1 city and 1 room, now there are 3M homes in 71K cities&lt;/li&gt;
+  &lt;li&gt;100+ data scietists using a mix of lanaguages mostly R, but lots of python&lt;/li&gt;
+  &lt;li&gt;Why to use an R Packages:
+    &lt;ul&gt;
+      &lt;li&gt;Passing around functions required duplication of work, where as a package can include data, test, add-ins, vignettes, R markdown and notebook templates&lt;/li&gt;
+      &lt;li&gt;The AirBnB packages have consistent API, branded visualization, branded templates, and of course function functions&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Education:
+    &lt;ul&gt;
+      &lt;li&gt;made a difference in confidence of R stats&lt;/li&gt;
+      &lt;li&gt;new hire buddy&lt;/li&gt;
+      &lt;li&gt;intro classes at datacamp if interested, sponsored by airbnb&lt;/li&gt;
+      &lt;li&gt;peer support with office hours, code review, R slack group&lt;/li&gt;
+      &lt;li&gt;learning lunch, journal club, offsites&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Reproducibility:
+    &lt;ul&gt;
+      &lt;li&gt;scale knowedlge&lt;/li&gt;
+      &lt;li&gt;knowledge repo&lt;/li&gt;
+      &lt;li&gt;posts have tags with topics, date, then served as a web ui&lt;/li&gt;
+      &lt;li&gt;uses github for peer review&lt;/li&gt;
+      &lt;li&gt;branded template&lt;/li&gt;
+      &lt;li&gt;incorprate best practices from academia and software&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Hearing about reproducibility and R packages at Airbnb from &lt;a href=&quot;https://twitter.com/ricardobion&quot;&gt;@ricardobion&lt;/a&gt; at NYR &lt;a href=&quot;https://twitter.com/hashtag/rstatsnyc?src=hash&quot;&gt;#rstatsnyc&lt;/a&gt; &lt;a href=&quot;https://t.co/uGSZwtX1XM&quot;&gt;pic.twitter.com/uGSZwtX1XM&lt;/a&gt;&lt;/p&gt;&amp;mdash; Julia Silge (@juliasilge) &lt;a href=&quot;https://twitter.com/juliasilge/status/855413199344209922&quot;&gt;April 21, 2017&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;h3 id=&quot;fine-grained-visual-category-recognition-and-perceptual-embedding&quot;&gt;Fine Grained Visual Category Recognition and Perceptual Embedding&lt;/h3&gt;
+
+&lt;p&gt;Serge Belongie, Cornell University&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Really intersting talk on using Stochastic Neighbor algorithm with crowd sourcing to get a visual similarity of images.&lt;/li&gt;
+  &lt;li&gt;Motivation of humans and computers working together&lt;/li&gt;
+  &lt;li&gt;His talk focused on detecting what type of bird was in an image&lt;/li&gt;
+  &lt;li&gt;Detecting that there is a bird in the picture is getting easy for computer, but detecting the exact name of the bird is much more difficult&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;.&lt;a href=&quot;https://twitter.com/SergeBelongie&quot;&gt;@SergeBelongie&lt;/a&gt; showing a stochastic neighbor algorithm with crowd sourcing to get a visual similarity of images &lt;a href=&quot;https://twitter.com/hashtag/rstatsnyc?src=hash&quot;&gt;#rstatsnyc&lt;/a&gt; &lt;a href=&quot;https://t.co/TRuIruTELS&quot;&gt;pic.twitter.com/TRuIruTELS&lt;/a&gt;&lt;/p&gt;&amp;mdash; Erin Grand (@astroeringrand) &lt;a href=&quot;https://twitter.com/astroeringrand/status/855420509344993282&quot;&gt;April 21, 2017&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;h3 id=&quot;an-r-cloud-computing-lifeline-the-missing-manual-for-running-r-on-amazon-cloud&quot;&gt;An R Cloud Computing Lifeline: The Missing Manual for Running R on Amazon Cloud&lt;/h3&gt;
+
+&lt;p&gt;Kelly O’Briant, B23&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Working with R in the cloud is different from working with Rstudio on your computer, you have to install all your favroite packages again every time you start up a new server&lt;/li&gt;
+  &lt;li&gt;bigger instances sizes, analysis while sleeping, running multiple R servers at the same time, instances themselves are disaposable and renewable resources&lt;/li&gt;
+  &lt;li&gt;able to use tools in a more powerful manor&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;&lt;a href=&quot;https://twitter.com/b23kelly&quot;&gt;@b23kelly&lt;/a&gt; created a custom R package to set up new projects/deployed servers fast without having to reconfigure anew each time &lt;a href=&quot;https://twitter.com/hashtag/rstatsnyc?src=hash&quot;&gt;#rstatsnyc&lt;/a&gt;&lt;/p&gt;&amp;mdash; Alec Barrett (@alecbarrett) &lt;a href=&quot;https://twitter.com/alecbarrett/status/855424336068530180&quot;&gt;April 21, 2017&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;h3 id=&quot;r-makes-the-world-go-round-data-driven-decision-making-at-jetblue&quot;&gt;R Makes the World Go ‘Round: Data-Driven Decision Making at JetBlue&lt;/h3&gt;
+
+&lt;p&gt;Catherine Zhou, JetBlue&lt;/p&gt;
+
+&lt;p&gt;One of the interesting take always throughout the conference was that you can start coding in R pretty quickly, if you start with the right ideas and tools about what R is. Most intro stats classes (mine included) treat R and other programming languages as a calculator. But R is so much more than that! &lt;a href=&quot;https://twitter.com/catherinezh&quot;&gt;Catherine Z&lt;/a&gt; made a point about giving people templates with tidyverse functions to produce their own analyses. In my own work, I’m helping my coworker think of tidyverse in a similar way to computing excel tasks, i.e &lt;code&gt;group_by()&lt;/code&gt;  %&amp;gt;% &lt;code&gt;summarise()&lt;/code&gt; is equivalent to a &lt;em&gt;pivot table&lt;/em&gt;, and &lt;code&gt;mutate()&lt;/code&gt; adds a new column the same you way you might by drag-and-dropping an excel equation.&lt;/p&gt;
+
+&lt;p&gt;There were also several good comments on how you can learn slowly by doing something small in R (such as doing a bit of cleaning) and then porting it back out to excel or tableau to finish your analysis. Best takeaway? &lt;strong&gt;Not everyone needs to be fluent in R. - &lt;a href=&quot;https://twitter.com/catherinezh&quot;&gt;Catherine&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-conversation=&quot;none&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;.&lt;a href=&quot;https://twitter.com/catherinezh&quot;&gt;@catherinezh&lt;/a&gt; Easy sells: Automation and reproducibility, but not everyone needs to be fluent. &lt;a href=&quot;https://t.co/EancCU2eWb&quot;&gt;pic.twitter.com/EancCU2eWb&lt;/a&gt;&lt;/p&gt;&amp;mdash; Erin Grand (@astroeringrand) &lt;a href=&quot;https://twitter.com/astroeringrand/status/855438176269344769&quot;&gt;April 21, 2017&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;h3 id=&quot;theoretical-statistics-is-the-theory-of-applied-statistics-how-to-think-about-what-we-do&quot;&gt;Theoretical Statistics is the Theory of Applied Statistics: How to Think About What We Do&lt;/h3&gt;
+
+&lt;p&gt;Andrew Gelman, Columbia&lt;/p&gt;
+
+&lt;p&gt;Reiterating Andrew Gelman’s point about how p-value statistical testing is actually a pretty bad framework for hypothesis testing most of the time. time to really brush up on Bayesian stats. I also liked the general point that you should have to state what you expect to find (alternate hypotheses, estimated effect sizes, whatever) before you go barging around looking for anything and act like whatever you end up with is what you were searching for all along.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-unreasonable-effectiveness-of-empathy---the-killer-skill-needed-for-a-successful-technical-career&quot;&gt;The Unreasonable Effectiveness of Empathy - The killer skill needed for a successful technical career&lt;/h3&gt;
+
+&lt;p&gt;JD Long, RenaissanceRe&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Analysis doesn’t end at result delivery - it ends at developing and proselytizing new business strategies and innovation.&lt;/li&gt;
+  &lt;li&gt;Automating Excel workflows can be a first step towards bringing R to a team.&lt;/li&gt;
+  &lt;li&gt;Agile development tells user stories as an empathy hack.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;As a ______
+I want ______
+So I can ______ 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Person-level stories (the near) are always more meaningful than data stories (the far). We need to balance both as Data Scientists.&lt;/li&gt;
+  &lt;li&gt;In development, we need to have an actual user in mind, rather than a theoretical user who wants everything.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;&amp;quot;As you tell your data stories, think about the individual people in your data and your consumers&amp;quot; - &lt;a href=&quot;https://twitter.com/CMastication&quot;&gt;@CMastication&lt;/a&gt; &lt;a href=&quot;https://twitter.com/hashtag/rstatsnyc?src=hash&quot;&gt;#rstatsnyc&lt;/a&gt; &lt;a href=&quot;https://t.co/f9DZGCprDO&quot;&gt;pic.twitter.com/f9DZGCprDO&lt;/a&gt;&lt;/p&gt;&amp;mdash; Emily Robinson (@robinson_es) &lt;a href=&quot;https://twitter.com/robinson_es/status/855500182586368002&quot;&gt;April 21, 2017&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;h1 id=&quot;day-2&quot;&gt;Day 2&lt;/h1&gt;
+
+&lt;h3 id=&quot;using-human-mobility-data-to-assess-public-circulation-health&quot;&gt;Using Human Mobility Data to Assess Public Circulation Health&lt;/h3&gt;
+&lt;p&gt;Michael Kane&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;talking about cell phone tower data -&amp;gt; homan ciculatory data&lt;/li&gt;
+  &lt;li&gt;anytime you are connecting or handing off to a cell phone tower, the data is logged&lt;/li&gt;
+  &lt;li&gt;secruity at: IDS are all hashed version of cell phones&lt;/li&gt;
+  &lt;li&gt;35 TB data set! big! 10 GB every day&lt;/li&gt;
+  &lt;li&gt;touching ALL of the day when doing analysis&lt;/li&gt;
+  &lt;li&gt;use R, with Hadoop&lt;/li&gt;
+  &lt;li&gt;using HMR in cluster (hapood)&lt;/li&gt;
+  &lt;li&gt;looks at inflow and outflow counts (flux)&lt;/li&gt;
+  &lt;li&gt;are providing reliable information on human mobility on storms&lt;/li&gt;
+  &lt;li&gt;want the learner that is the most REGULAR not the closest to accuracy&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;from-agreeing-to-marching-to-organizing-oss-needs-you&quot;&gt;From Agreeing to Marching to Organizing: OSS Needs You&lt;/h3&gt;
+&lt;p&gt;Mike Malecki and Neal Richardson&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Best ways to contribute to open source are to start with improving documentation&lt;/li&gt;
+  &lt;li&gt;Open source contributions: failing test with fix &amp;gt; failing test &amp;gt; bug report&lt;/li&gt;
+  &lt;li&gt;Remember to include sessionInfo()&lt;/li&gt;
+  &lt;li&gt;When releasing a package, release quickly, but also slowly - take time to fix dumb decisions
+    &lt;ul&gt;
+      &lt;li&gt;Bring something new to the community, but don’t reinvent the wheel&lt;/li&gt;
+      &lt;li&gt;Tell people about your package (social media), then listen to how they’re using it&lt;/li&gt;
+      &lt;li&gt;When thinking about a package: documentation &amp;gt; usability &amp;gt; performance &amp;gt; features&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;other-learnings&quot;&gt;Other Learnings&lt;/h1&gt;
+
+&lt;p&gt;I spent most of the conference chatting and meeting other members of the Rladies New York chapter.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://pbs.twimg.com/media/C-CEwTYXoAAqppX.jpg:large&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;packages-to-try-out&quot;&gt;Packages to Try Out&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;RXKCD: add XKCD cartoons to stuff&lt;/li&gt;
+  &lt;li&gt;trelliscope: many-panel data vis&lt;/li&gt;
+  &lt;li&gt;compareGroups: compare demographics and other aspects across groups&lt;/li&gt;
+  &lt;li&gt;goodpractice: does a variety of checking for good package development practice&lt;/li&gt;
+  &lt;li&gt;lintr: helps check for good code style&lt;/li&gt;
+  &lt;li&gt;emo&lt;/li&gt;
+  &lt;li&gt;broom: turn analytics output into tidy data frames&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sun, 30 Apr 2017 00:00:00 -0400</pubDate>
+        <link>http://eringrand.github.io/newyorkrconference/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/newyorkrconference/</guid>
+      </item>
+    
+      <item>
         <title>My Internship With Crisis Text Line</title>
         <description>&lt;p&gt;At the end of spring semester, I sent in my application to &lt;a href=&quot;https://www.dosomething.org/&quot;&gt;DoSomething.org&lt;/a&gt; for their Data Intern position. I found out about the position through a communication that started over Github, and thought it sounded interesting. I sent in my resume and cover letter and waited to see what would happen. I made it through to the next rounds. The last step was a phone interview where I gave a quick presentation on my analysis on some data, and talked about what the internship was about and what I was interested in. I mentioned that what brought me to Data Science was teaching, and how I hoped to be involved with research and education technology in the future. I didn’t get the job.&lt;/p&gt;
 
@@ -1200,38 +1367,6 @@ Some of cast of Lizzie Bennet Diaries and me. Vidcon 2014&lt;/p&gt;
         <pubDate>Sun, 06 Sep 2015 00:00:00 -0400</pubDate>
         <link>http://eringrand.github.io/ctlinternship/</link>
         <guid isPermaLink="true">http://eringrand.github.io/ctlinternship/</guid>
-      </item>
-    
-      <item>
-        <title>What Name Do Grad Students Refer to Their Professors As?</title>
-        <description>&lt;p&gt;At some point this past week, I came to the realization that of the professors I’ve had this year, I’ve only referred to the female professor by her first name in conversation with other students. I wondered if this was indicative of some larger issue, or if it’s just because she’s also our class adviser.&lt;/p&gt;
-
-&lt;p&gt;I put together a quick and dirty survey to see what other students’ experiences are, in how they refer to their professors. I posted the survey to twitter and Facebook.&lt;/p&gt;
-
-&lt;blockquote class=&quot;twitter-tweet&quot; lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;I am interested if this indicative of some larger issue, or if it&amp;#39;s just because she&amp;#39;s also our class adviser. (2/?)&lt;/p&gt;&amp;mdash; Erin Grand (@astroeringrand) &lt;a href=&quot;https://twitter.com/astroeringrand/status/600694453649682433&quot;&gt;May 19, 2015&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-&lt;blockquote class=&quot;twitter-tweet&quot; data-conversation=&quot;none&quot; lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;I&amp;#39;ve put together a quick survey to look into it. Please fill it out and/or pass it around! &lt;a href=&quot;http://t.co/N4t3sB57kn&quot;&gt;http://t.co/N4t3sB57kn&lt;/a&gt; (3/?)&lt;/p&gt;&amp;mdash; Erin Grand (@astroeringrand) &lt;a href=&quot;https://twitter.com/astroeringrand/status/600694784940990464&quot;&gt;May 19, 2015&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;In the first 24 hours of the survey being posted to Facebook and twitter there were 36 responses.&lt;/p&gt;
-
-&lt;p&gt;I also received lots of great responses outside of the survey online such as:&lt;/p&gt;
-&lt;blockquote class=&quot;twitter-tweet&quot; lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;&lt;a href=&quot;https://twitter.com/merrdiff&quot;&gt;@merrdiff&lt;/a&gt; &lt;a href=&quot;https://twitter.com/astroeringrand&quot;&gt;@astroeringrand&lt;/a&gt; I changed how I refer to them once I got into grad school.&lt;/p&gt;&amp;mdash; Laura Mayorga (@mayorgalc) &lt;a href=&quot;https://twitter.com/mayorgalc/status/600705464498659328&quot;&gt;May 19, 2015&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;and&lt;/p&gt;
-
-&lt;blockquote class=&quot;twitter-tweet&quot; data-conversation=&quot;none&quot; lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;&lt;a href=&quot;https://twitter.com/astroeringrand&quot;&gt;@astroeringrand&lt;/a&gt; I always called them Professor/Dr. Last Name unless they want to be called Professor/Dr. First name.&lt;/p&gt;&amp;mdash; David Hamilton (@D_avidH) &lt;a href=&quot;https://twitter.com/D_avidH/status/600697875400560641&quot;&gt;May 19, 2015&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async=&quot;&quot; src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Due to the end of the school year, and the start of my new internship I haven’t had the time to go through the survey results yet. As soon as I can give the time to this project, I will write an update with the results.&lt;/p&gt;
-
-&lt;p&gt;If you’re interested in going through the data yourself, I’ve made the results public to everyone at &lt;a href=&quot;https://docs.google.com/spreadsheets/d/1ya4_UxgW2oB1YXvE55QXQyEjgZBWpta3pjYujUKl3CQ/pubhtml&quot;&gt;this link&lt;/a&gt;.&lt;/p&gt;
-</description>
-        <pubDate>Fri, 22 May 2015 00:00:00 -0400</pubDate>
-        <link>http://eringrand.github.io/profname/</link>
-        <guid isPermaLink="true">http://eringrand.github.io/profname/</guid>
       </item>
     
   </channel>
