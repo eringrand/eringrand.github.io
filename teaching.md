@@ -5,13 +5,13 @@ permalink: /teaching/
 description: ""
 ---
 
-##Current Classes
+## Current Classes
 
 I am not currently teaching anything, but I am available for 
-tutoring in math, astronomy, statistics and physics. Contact me at eringrand@gmail.com for more information.
+tutoring in math, astronomy, statistics, and physics. Contact me at eringrand@gmail.com for more information.
 
 ---
-##Past Classes
+## Past Classes
 ---
 ![UMD]({{site.baseurl }}/images/UMDbanner.jpg)
 ---
