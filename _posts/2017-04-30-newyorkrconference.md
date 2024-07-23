@@ -151,5 +151,3 @@ I spent most of the conference chatting and meeting other members of the Rladies
 * compareGroups: compare demographics and other aspects across groups
 * goodpractice: does a variety of checking for good package development practice
 * lintr: helps check for good code style
-* emo
-* broom: turn analytics output into tidy data frames
