@@ -1329,8 +1329,6 @@ So I can ______
   &lt;li&gt;compareGroups: compare demographics and other aspects across groups&lt;/li&gt;
   &lt;li&gt;goodpractice: does a variety of checking for good package development practice&lt;/li&gt;
   &lt;li&gt;lintr: helps check for good code style&lt;/li&gt;
-  &lt;li&gt;emo&lt;/li&gt;
-  &lt;li&gt;broom: turn analytics output into tidy data frames&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Sun, 30 Apr 2017 00:00:00 -0400</pubDate>
