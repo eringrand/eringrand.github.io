@@ -12,7 +12,7 @@ For more on the tournament: [click here](http://www.tabforacause.org/blog/2015/0
 Uncertain by what Tab For a Cause is and why you should care? Continue reading! 
 
 
-##What is [Tab for a Cause](http://www.tabforacause.org/?r=11041284)?
+## What is [Tab for a Cause](http://www.tabforacause.org/?r=11041284)?
 
 Tab for a Cause is a free browser extension that raises money for charity with every new tab a user opens. 
 After the user downloads the extension, the new tab page will be a customizable backdrop with widgets and 
@@ -32,7 +32,7 @@ team;
 charity in the long term."
 ```
 
-##How Do Groups Work? 
+## How Do Groups Work? 
 Once you download the extension, you can see and join groups by going to your Dashboard (the speedometer button to the left on the page).  
 To find a group use the search bar on the top of the dashboard. 
 Once you have joined a group, your New Tab counts (heats) will be added to the group's total 
@@ -40,4 +40,4 @@ in attempt to climb the "Top Groups" leader board.
 You can also compete within your grop to see who is the "Top Tabber".
 
 
-####[Join me in this crazy competition to raise money for charity and see which school spends the most time randomly clicking around on the internet!](http://tabforacause.org/?r=11041284)
+#### [Join me in this crazy competition to raise money for charity and see which school spends the most time randomly clicking around on the internet!](http://tabforacause.org/?r=11041284)
