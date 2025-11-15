@@ -132,7 +132,7 @@ Using Janitor to Clean Excel
 <hr></hr>
 
 
-```r
+``` r
 read_excel(filepath, sheet="Sheet1", col_types = "text") %>%
   clean_names() %>%
   remove_empty_cols() %>%
@@ -150,7 +150,7 @@ Finding Duplicates
 <hr></hr>
 
 
-```r
+``` r
 library(tidyverse)
 library(janitor)
 library(readxl)
@@ -164,17 +164,17 @@ students <- read_excel(filepath, sheet="Sheet1", col_types = "text") %>%
 
 
 
-```r
+``` r
 students %>% 
   get_dupes(student_id)
 ```
 
 ```
-# A tibble: 2 x 6
-  student_id dupe_count grade yearsinuncommon  entrydate   exitdate
-       <dbl>      <int> <dbl>           <dbl>     <date>     <date>
-1    4137115          2     1               1 2017-12-02 2018-01-01
-2    4137115          2     2               1 2017-12-02 2018-01-01
+# A tibble: 2 × 6
+  student_id dupe_count grade yearsinuncommon entrydate  exitdate  
+       <dbl>      <int> <dbl>           <dbl> <date>     <date>    
+1    9471210          2     8               1 2025-02-21 2025-03-23
+2    9471210          2     9               1 2025-02-21 2025-03-23
 ```
 
 
@@ -187,20 +187,20 @@ Now What?
 - Correct the dupes individually with `if_else` or `case_when`
 
 ```
-mutate(students, grade = if_else(student_id == 4137115, 1, grade))
+mutate(students, grade = if_else(student_id == 9471210, 8, grade))
 ```
 
 - Summarize by taking minimum date / grade, if that is causing the problem
 
 
-```r
+``` r
 group_by(students, student_id) %>% summarize(grade = min(grade))
 ```
 
 - Output the duplicates and manually choose which version to keep
 
 
-```r
+``` r
 dupes_correct <- read_csv("dupes_correct.csv")
 left_join(students, dupes_correct) %>%
   replace_na(list(keep = 0)) %>%
@@ -256,7 +256,7 @@ Entire state test analyses from raw data to dashboard is done with scripts (push
 
 
 
-```r
+``` r
 files <- list.files("../Input/", pattern = ".xlsx", full.names =  TRUE)
 nys <- map_dfr(files, prep_nys_files)
 ```
@@ -270,7 +270,7 @@ left: 70%
 <hr></hr>
 
 
-```r
+``` r
 library(rpart)
 library(rpart.plot)
 
@@ -291,7 +291,7 @@ cut_score <- as.data.frame(fit$splits)$index
 <hr></hr>
 
 
-```r
+``` r
 # Plot Tree
 prp(fit, fallen.leaves = TRUE, type = 3, 
     extra = 1, under = TRUE, varlen=0, faclen=0)
