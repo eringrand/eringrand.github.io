@@ -8,9 +8,9 @@ editor_options:
 ---
 
 A few months ago, I gave a talk at the previously known as NYC R
-conference, now known as New York Data Science and
-AI[<https://rstats.ai/nyc>]. (Watch it
-here!)[youtube.com/watch?v=Cx-UxNCONaE&embeds_referring_euri=https%3A%2F%2Fdataconf.ai%2F&source_ve_path=Mjg2NjY]
+conference, now known as [New York Data Science and
+AI](https://rstats.ai/nyc){.uri}. ([Watch it
+here!](youtube.com/watch?v=Cx-UxNCONaE&embeds_referring_euri=https%3A%2F%2Fdataconf.ai%2F&source_ve_path=Mjg2NjY){.uri})
 My presentation focused on my favorite topic: handling duplicates in
 data, and the importance of data cleaning.
 
@@ -178,6 +178,8 @@ dupes_remove <- read_csv("../data/dupes_correct.csv") |>
 students_correct <- anti_join(students, dupes_remove) 
 ```
 
-### DOCUMENT DOCUMENT DOCUMENT. 
-Now that you've fixed the duplicates, whether in the database and/or code, DOCUMENT what you did and WHY, 
-so that when the data changes and new duplicates are found, the code still runs.
+### DOCUMENT DOCUMENT DOCUMENT.
+
+Now that you've fixed the duplicates, whether in the database and/or
+code, DOCUMENT what you did and WHY, so that when the data changes and
+new duplicates are found, the code still runs.
