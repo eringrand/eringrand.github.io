@@ -7,6 +7,186 @@
     <atom:link href="http://eringrand.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Best Practices for Cleaning Data in R</title>
+        <description>&lt;p&gt;A few months ago, I gave a talk at the previously known as NYC R
+conference, now known as New York Data Science and
+AI[&lt;a href=&quot;https://rstats.ai/nyc&quot;&gt;https://rstats.ai/nyc&lt;/a&gt;]. (Watch it
+here!)[youtube.com/watch?v=Cx-UxNCONaE&amp;amp;embeds_referring_euri=https%3A%2F%2Fdataconf.ai%2F&amp;amp;source_ve_path=Mjg2NjY]
+My presentation focused on my favorite topic: handling duplicates in
+data, and the importance of data cleaning.&lt;/p&gt;
+
+&lt;p&gt;The saying “90% of data science is cleaning the data” rings especially
+true for me. I love really love digging into the weeds of cleaning
+data - figuring out what went wrong, whether the errors were systematic
+or not, whether there were user input errors (always), etc.&lt;/p&gt;
+
+&lt;p&gt;I’ve spent the last 10+ years working in the education space, where
+messy data is everywhere and data-driven decisions have a real impact on
+a student’s success. The challenge is to get data as clean as possible
+to have a correct analysis to base the decisions on.&lt;/p&gt;
+
+&lt;p&gt;Some common data challenges I’ve seen are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Missing/Incomplete data&lt;/li&gt;
+  &lt;li&gt;Different data sources without matching IDs&lt;/li&gt;
+  &lt;li&gt;Incorrect/overlapping dates&lt;/li&gt;
+  &lt;li&gt;(Mis)-alignment of data and data processes across all schools and
+regions&lt;/li&gt;
+  &lt;li&gt;Changing student IDs (not many)&lt;/li&gt;
+  &lt;li&gt;Human data reporting error&lt;/li&gt;
+  &lt;li&gt;Historical data quality&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Tackling these and more messy data challenges is the 90% of the work
+that drives meaningful outcomes for students.&lt;/p&gt;
+
+&lt;h2 id=&quot;duplicates-oh-no-where-did-they-come-from&quot;&gt;Duplicates! Oh no! Where did they come from?&lt;/h2&gt;
+
+&lt;p&gt;Duplicates in data are everywhere. Any dataset has the potential for
+some level of duplication, and if you’re not on the lookout, they can
+persist and cause analysis errors.&lt;/p&gt;
+
+&lt;p&gt;Most data duplicates that I’ve seen are caused by inadequate processes.
+If your organization doesn’t have the right data processes to start
+with, messy data will continue to flow, no matter how much you code.
+Creating and training in structures and processes will help reduce
+errors across the board.&lt;/p&gt;
+
+&lt;p&gt;For example, let’s say we have a student named James, who moved from
+School A to School B mid-year.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Bad process example&lt;/em&gt;&lt;/strong&gt;: School B records James entering the school
+the week before he officially starts, to get started on his course
+schedule and other paperwork. School A doesn’t record his exit until a
+week after he left, because they got busy or wanted to wait to see if he
+changed his mind. As the data person, you don’t know which school James
+actually attended during the overlapping two weeks in the database.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Better process example&lt;/em&gt;&lt;/strong&gt;: Make sure the system of record allows
+forward and back dating such that School B records James in their system
+with the correct start date and School A records James as having left on
+his last day. If James comes back to School A, they will start a new
+record without overlapping dates. To ensure data uniqueness, the system
+should verify that James has the same ID in School A and School B.&lt;/p&gt;
+
+&lt;p&gt;This example and other data issues can be checked and rechecked through
+data audits. Even with identifiers, duplicates can still occur (e.g.,
+the same person with two different email addresses), so we use
+additional fields to audit for duplicates. Names, emails, birthdays,
+phone numbers, and home addresses are good places to check&lt;/p&gt;
+
+&lt;h2 id=&quot;duplicates-you-caused&quot;&gt;Duplicates you caused!&lt;/h2&gt;
+
+&lt;p&gt;Duplicates are not always the fault of the data itself. We can cause our
+own duplicates through incorrectly written code.&lt;/p&gt;
+
+&lt;p&gt;Joining – using the incorrect fields or edits to fields needed
+pivot_wider – including too many columns in the select pivot_longer –
+including too many columns in the pivot Integrating validation steps,
+unit testing, and code reviews into your work will reduce the number of
+“coder-caused” duplicates.&lt;/p&gt;
+
+&lt;h2 id=&quot;lets-take-a-look-at-some-r-code&quot;&gt;Let’s take a look at some R code…&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Janitor was built with beginning-to-intermediate R users in mind and
+is optimized for user-friendliness. Advanced users can already do
+everything covered here, but they can do it faster with Janitor and
+save their thinking for more fun tasks. (&lt;em&gt;Sam Firke&lt;/em&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;If you’re experienced with Tidyverse in general, you should be able to
+do everything inside Janitor on your own; however, it’s always nice to
+have a function do it for you.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-r&quot;&gt;library(tidyverse)
+library(janitor)
+library(readxl)
+
+# Set up fake student data
+# Your fake data might be different from mine, as it&apos;s totally random IDs.
+students &amp;lt;- tibble::tibble(student_id = round(runif(10, 1e6, 1e7-1), 0), 
+                           grade = round(runif(10, 1, 12)),
+                           entrydate = Sys.Date() - 30,
+                           exitdate = Sys.Date())
+
+students[3, 1]  &amp;lt;- students[5, 1] 
+students[3, 2]  &amp;lt;- students[5, 2] - 1 # set up duplicate
+
+students |&amp;gt;  get_dupes(student_id)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;# A tibble: 2 x 6
+  student_id dupe_count grade  entrydate        exitdate
+       &amp;lt;dbl&amp;gt;      &amp;lt;int&amp;gt;  &amp;lt;dbl&amp;gt;          &amp;lt;date&amp;gt;            &amp;lt;date&amp;gt;
+1    4137115          2         1             2017-12-02    2018-01-01
+2    4137115          2         2            2017-12-02    2018-01-01
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Using &lt;code&gt;get_dupes&lt;/code&gt; and &lt;code&gt;verify()&lt;/code&gt; from the &lt;strong&gt;assertr&lt;/strong&gt; package is a great
+way to add checks in case the data changes (which it inevitably will).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-r&quot;&gt;check &amp;lt;- students |&amp;gt; 
+  get_dupes(student_id) |&amp;gt; 
+  verify(nrow(.) == 0)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If a student ID changes or new duplicates occur, the code will stop at
+this step.&lt;/p&gt;
+
+&lt;h3 id=&quot;fixing-the-duplicates&quot;&gt;Fixing the duplicates&lt;/h3&gt;
+
+&lt;p&gt;Option 1:&lt;/p&gt;
+
+&lt;p&gt;Correct the dupes individually with &lt;code&gt;if_else&lt;/code&gt; or &lt;code&gt;case_when&lt;/code&gt;. This
+method is best for errors in one or 2 rows as a quick and easy fix.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-r&quot;&gt;correct_students &amp;lt;- students |&amp;gt;
+  mutate(grade = if_else(student_id == ______, CORRECT-GRADE, grade)) |&amp;gt;
+  distinct() 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Option 2:&lt;/p&gt;
+
+&lt;p&gt;Systematic errors can be fixed by taking a summarize on the incorrect
+column. In this case, we could assume that the lower grade-level is the
+correct one for all duplicate enrollments. This method works better for
+systematic issues that you know how to correct, such as taking the
+higher of two homework assignemtns.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-r&quot;&gt;correct_students &amp;lt;- students |&amp;gt;
+   group_by(student_id) |&amp;gt; 
+   summarize(grade = min(grade))
+
+correct_students
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Option 3:&lt;/p&gt;
+
+&lt;p&gt;Output the duplicates and manually choose which version to keep.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-r&quot;&gt;students |&amp;gt; 
+  get_dupes(student_id) |&amp;gt;
+  write_csv(&quot;../data/dupes.csv&quot;, na = &quot;&quot;)
+
+# Create this file in excel manually, often by asking your coworkers for help
+dupes_remove &amp;lt;- read_csv(&quot;../data/dupes_correct.csv&quot;) |&amp;gt; 
+  filter(delete == 1)
+
+students_correct &amp;lt;- anti_join(students, dupes_remove) 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;document-document-document&quot;&gt;DOCUMENT DOCUMENT DOCUMENT.&lt;/h3&gt;
+&lt;p&gt;Now that you’ve fixed the duplicates, whether in the database and/or code, DOCUMENT what you did and WHY, 
+so that when the data changes and new duplicates are found, the code still runs.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 14 Nov 2025 00:00:00 -0500</pubDate>
+        <link>http://eringrand.github.io/clean-data/</link>
+        <guid isPermaLink="true">http://eringrand.github.io/clean-data/</guid>
+      </item>
+    
+      <item>
         <title>Reviewing my old live journal posts</title>
         <description>&lt;p&gt;I’m about to BARE MY SOUL to the internet. Well, the soul of my teenage
 self. Get ready!&lt;/p&gt;
@@ -1334,37 +1514,6 @@ So I can ______
         <pubDate>Sun, 30 Apr 2017 00:00:00 -0400</pubDate>
         <link>http://eringrand.github.io/newyorkrconference/</link>
         <guid isPermaLink="true">http://eringrand.github.io/newyorkrconference/</guid>
-      </item>
-    
-      <item>
-        <title>My Internship With Crisis Text Line</title>
-        <description>&lt;p&gt;At the end of spring semester, I sent in my application to &lt;a href=&quot;https://www.dosomething.org/&quot;&gt;DoSomething.org&lt;/a&gt; for their Data Intern position. I found out about the position through a communication that started over Github, and thought it sounded interesting. I sent in my resume and cover letter and waited to see what would happen. I made it through to the next rounds. The last step was a phone interview where I gave a quick presentation on my analysis on some data, and talked about what the internship was about and what I was interested in. I mentioned that what brought me to Data Science was teaching, and how I hoped to be involved with research and education technology in the future. I didn’t get the job.&lt;/p&gt;
-
-&lt;p&gt;Instead, I got an email directing me to a Data Intern position available at &lt;a href=&quot;http://crisistextline.org&quot;&gt;Crisis Text Line&lt;/a&gt;, where I could work on data related to training crisis counselors. After an interview with Bob Filbin, Chief Data Scientist at CTL, I accepted the internship, and it was the most amazing job I’ve ever had (and I still work for NASA).&lt;/p&gt;
-
-&lt;p&gt;Crisis Text Line was born out of DoSomething.org, and the two companies share an office space. Crisis Text Line does two things: (1) provides free, 24/7 emotional support to people in crisis, by text. And, (2) uses the data to improve the service and the crisis space as a whole. As the Data Intern, I worked in providing data and metrics for products to make the service better. More specifically, I focused in two areas (1) getting more people through the volunteer application and (2) increasing the lifetime number of conversations our counselors take. I used hard numbers and ethnographic research such as interviews and observations to determine user needs and then suggested solutions to solve them. Over the 10 weeks, I successfully researched the major pain points in our application, determined the best way to remove them, wrote a new application, and launched it!&lt;/p&gt;
-
-&lt;p&gt;The experience I have gained from this internship has been invaluable to my career and to my person. I’ve gotten to work with the most wonderful people, and spent every day feeling I was doing meaningful work.&lt;/p&gt;
-
-&lt;p&gt;In addition to the many wonderful experiences I was given through this internship, I also made amazing friends with the DoSomething.org and Crisis Text Line interns. The interns at both DS and CTL shared the same set of middle tables, ate together, had meetings together… etc. Getting to know these folks was my absolute favorite part of the internship, and I miss them dearly.  To quote &lt;a href=&quot;http://blog.thekelvinliu.com/post/126196358593/internship-complete&quot;&gt;Kelvin&lt;/a&gt; (the data intern at DS) “I don’t think I’ve ever met people so interesting, relatable, and devoted to social change. As great as the professional growth provided by this internship was, these people were really the highlight.”&lt;/p&gt;
-
-&lt;p&gt;With the summer having ended, we’ve moved back to school, or other internships. Some have remained in the city (and we still hang out), but others I’ll only see over the internet. That doesn’t change the fact that these people are amazing, and I can’t wait to spend time with them again.&lt;/p&gt;
-
-&lt;p&gt;There were rough spots at the beginning of the internship as I was trying to get a hold of the flow of a tech based not-for-profit start-up, but I got there quick enough. At a regular internship, interns are given jobs that managers may not want to do because they are time consuming or boring. At Crisis Text Line, interns were treated (and acted) like staff. We were given important projects with lasting effects for the company. I used the chance to dive deep into my projects, working hard to get them done correctly.&lt;/p&gt;
-
-&lt;p&gt;I dived so deep into my work, that I couldn’t be pulled out. Luckily, I don’t have to stop! As of a couple weeks ago, I began my official job with Crisis Text Line as a part-time Data Scientist while I finish my last year of graduate school at Columbia. I feel so lucky to have been given this opportunity to continue working with these amazing people!&lt;/p&gt;
-
-&lt;hr /&gt;
-&lt;p&gt;If you have more questions on Crisis Text Line, and how you can get involved please visit 
-&lt;a href=&quot;http://www.crisistextline.org/join-our-efforts/volunteer/&quot;&gt;crisistextline.org/volunteer&lt;/a&gt;.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;Disclaimer: This was written at midnight and has not been spell-checked or grammar-checked. Please excuse all mistakes until further notice when I edit this.&lt;/p&gt;
-</description>
-        <pubDate>Sun, 06 Sep 2015 00:00:00 -0400</pubDate>
-        <link>http://eringrand.github.io/ctlinternship/</link>
-        <guid isPermaLink="true">http://eringrand.github.io/ctlinternship/</guid>
       </item>
     
   </channel>

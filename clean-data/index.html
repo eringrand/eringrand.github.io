@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- htmlwidgets dependencies --> 
+    
+    
+    
+
+    
+
+    <title>Best Practices for Cleaning Data in R – Erin Grand – Interested in data science and education</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="A few months ago, I gave a talk at the previously known as NYC R
+conference, now known as New York Data Science and
+AI[https://rstats.ai/nyc]. (Watch it
+here!)[youtube.com/watch?v=Cx-UxNCONaE&amp;embeds_referring_euri=https%3A%2F%2Fdataconf.ai%2F&amp;source_ve_path=Mjg2NjY]
+My presentation focused on my favorite topic: handling duplicates in
+data, and the importance of data cleaning.
+" />
+    <meta property="og:description" content="A few months ago, I gave a talk at the previously known as NYC R
+conference, now known as New York Data Science and
+AI[https://rstats.ai/nyc]. (Watch it
+here!)[youtube.com/watch?v=Cx-UxNCONaE&amp;embeds_referring_euri=https%3A%2F%2Fdataconf.ai%2F&amp;source_ve_path=Mjg2NjY]
+My presentation focused on my favorite topic: handling duplicates in
+data, and the importance of data cleaning.
+" />
+    
+    <meta name="author" content="Erin Grand" />
+
+    
+    <meta property="og:title" content="Best Practices for Cleaning Data in R" />
+    <meta property="twitter:title" content="Best Practices for Cleaning Data in R" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Erin Grand - Interested in data science and education" href="/feed.xml" />
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://avatars.githubusercontent.com/u/6360871?v=3" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Erin Grand</a></h1>
+            <p class="site-description">Interested in data science and education</p>
+          </div>
+
+          <nav>
+            <a href="/">Blog</a>
+            <a href="/about">About</a>
+            <a href="/archive">Archive</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      
+
+<article class="post">
+<h1>Best Practices for Cleaning Data in R</h1>
+
+
+<div>
+<ul class="tag_list_in_post">
+<emph> Tags: </emph>
+
+ <a class="tag_list_link" href="/tag/data">data</a>
+
+ <a class="tag_list_link" href="/tag/R">R</a>
+
+ <a class="tag_list_link" href="/tag/presentation">presentation</a>
+
+</ul>
+</div>
+
+
+
+
+<p id="post-meta"></p>
+
+  <div class="entry">
+    <p>A few months ago, I gave a talk at the previously known as NYC R
+conference, now known as New York Data Science and
+AI[<a href="https://rstats.ai/nyc">https://rstats.ai/nyc</a>]. (Watch it
+here!)[youtube.com/watch?v=Cx-UxNCONaE&amp;embeds_referring_euri=https%3A%2F%2Fdataconf.ai%2F&amp;source_ve_path=Mjg2NjY]
+My presentation focused on my favorite topic: handling duplicates in
+data, and the importance of data cleaning.</p>
+
+<p>The saying “90% of data science is cleaning the data” rings especially
+true for me. I love really love digging into the weeds of cleaning
+data - figuring out what went wrong, whether the errors were systematic
+or not, whether there were user input errors (always), etc.</p>
+
+<p>I’ve spent the last 10+ years working in the education space, where
+messy data is everywhere and data-driven decisions have a real impact on
+a student’s success. The challenge is to get data as clean as possible
+to have a correct analysis to base the decisions on.</p>
+
+<p>Some common data challenges I’ve seen are:</p>
+
+<ul>
+  <li>Missing/Incomplete data</li>
+  <li>Different data sources without matching IDs</li>
+  <li>Incorrect/overlapping dates</li>
+  <li>(Mis)-alignment of data and data processes across all schools and
+regions</li>
+  <li>Changing student IDs (not many)</li>
+  <li>Human data reporting error</li>
+  <li>Historical data quality</li>
+</ul>
+
+<p>Tackling these and more messy data challenges is the 90% of the work
+that drives meaningful outcomes for students.</p>
+
+<h2 id="duplicates-oh-no-where-did-they-come-from">Duplicates! Oh no! Where did they come from?</h2>
+
+<p>Duplicates in data are everywhere. Any dataset has the potential for
+some level of duplication, and if you’re not on the lookout, they can
+persist and cause analysis errors.</p>
+
+<p>Most data duplicates that I’ve seen are caused by inadequate processes.
+If your organization doesn’t have the right data processes to start
+with, messy data will continue to flow, no matter how much you code.
+Creating and training in structures and processes will help reduce
+errors across the board.</p>
+
+<p>For example, let’s say we have a student named James, who moved from
+School A to School B mid-year.</p>
+
+<p><strong><em>Bad process example</em></strong>: School B records James entering the school
+the week before he officially starts, to get started on his course
+schedule and other paperwork. School A doesn’t record his exit until a
+week after he left, because they got busy or wanted to wait to see if he
+changed his mind. As the data person, you don’t know which school James
+actually attended during the overlapping two weeks in the database.</p>
+
+<p><strong><em>Better process example</em></strong>: Make sure the system of record allows
+forward and back dating such that School B records James in their system
+with the correct start date and School A records James as having left on
+his last day. If James comes back to School A, they will start a new
+record without overlapping dates. To ensure data uniqueness, the system
+should verify that James has the same ID in School A and School B.</p>
+
+<p>This example and other data issues can be checked and rechecked through
+data audits. Even with identifiers, duplicates can still occur (e.g.,
+the same person with two different email addresses), so we use
+additional fields to audit for duplicates. Names, emails, birthdays,
+phone numbers, and home addresses are good places to check</p>
+
+<h2 id="duplicates-you-caused">Duplicates you caused!</h2>
+
+<p>Duplicates are not always the fault of the data itself. We can cause our
+own duplicates through incorrectly written code.</p>
+
+<p>Joining – using the incorrect fields or edits to fields needed
+pivot_wider – including too many columns in the select pivot_longer –
+including too many columns in the pivot Integrating validation steps,
+unit testing, and code reviews into your work will reduce the number of
+“coder-caused” duplicates.</p>
+
+<h2 id="lets-take-a-look-at-some-r-code">Let’s take a look at some R code…</h2>
+
+<blockquote>
+  <p>Janitor was built with beginning-to-intermediate R users in mind and
+is optimized for user-friendliness. Advanced users can already do
+everything covered here, but they can do it faster with Janitor and
+save their thinking for more fun tasks. (<em>Sam Firke</em>)</p>
+</blockquote>
+
+<p>If you’re experienced with Tidyverse in general, you should be able to
+do everything inside Janitor on your own; however, it’s always nice to
+have a function do it for you.</p>
+
+<pre><code class="language-r">library(tidyverse)
+library(janitor)
+library(readxl)
+
+# Set up fake student data
+# Your fake data might be different from mine, as it's totally random IDs.
+students &lt;- tibble::tibble(student_id = round(runif(10, 1e6, 1e7-1), 0), 
+                           grade = round(runif(10, 1, 12)),
+                           entrydate = Sys.Date() - 30,
+                           exitdate = Sys.Date())
+
+students[3, 1]  &lt;- students[5, 1] 
+students[3, 2]  &lt;- students[5, 2] - 1 # set up duplicate
+
+students |&gt;  get_dupes(student_id)
+</code></pre>
+
+<pre><code># A tibble: 2 x 6
+  student_id dupe_count grade  entrydate        exitdate
+       &lt;dbl&gt;      &lt;int&gt;  &lt;dbl&gt;          &lt;date&gt;            &lt;date&gt;
+1    4137115          2         1             2017-12-02    2018-01-01
+2    4137115          2         2            2017-12-02    2018-01-01
+</code></pre>
+
+<p>Using <code>get_dupes</code> and <code>verify()</code> from the <strong>assertr</strong> package is a great
+way to add checks in case the data changes (which it inevitably will).</p>
+
+<pre><code class="language-r">check &lt;- students |&gt; 
+  get_dupes(student_id) |&gt; 
+  verify(nrow(.) == 0)
+</code></pre>
+
+<p>If a student ID changes or new duplicates occur, the code will stop at
+this step.</p>
+
+<h3 id="fixing-the-duplicates">Fixing the duplicates</h3>
+
+<p>Option 1:</p>
+
+<p>Correct the dupes individually with <code>if_else</code> or <code>case_when</code>. This
+method is best for errors in one or 2 rows as a quick and easy fix.</p>
+
+<pre><code class="language-r">correct_students &lt;- students |&gt;
+  mutate(grade = if_else(student_id == ______, CORRECT-GRADE, grade)) |&gt;
+  distinct() 
+</code></pre>
+
+<p>Option 2:</p>
+
+<p>Systematic errors can be fixed by taking a summarize on the incorrect
+column. In this case, we could assume that the lower grade-level is the
+correct one for all duplicate enrollments. This method works better for
+systematic issues that you know how to correct, such as taking the
+higher of two homework assignemtns.</p>
+
+<pre><code class="language-r">correct_students &lt;- students |&gt;
+   group_by(student_id) |&gt; 
+   summarize(grade = min(grade))
+
+correct_students
+</code></pre>
+
+<p>Option 3:</p>
+
+<p>Output the duplicates and manually choose which version to keep.</p>
+
+<pre><code class="language-r">students |&gt; 
+  get_dupes(student_id) |&gt;
+  write_csv("../data/dupes.csv", na = "")
+
+# Create this file in excel manually, often by asking your coworkers for help
+dupes_remove &lt;- read_csv("../data/dupes_correct.csv") |&gt; 
+  filter(delete == 1)
+
+students_correct &lt;- anti_join(students, dupes_remove) 
+</code></pre>
+
+<h3 id="document-document-document">DOCUMENT DOCUMENT DOCUMENT.</h3>
+<p>Now that you’ve fixed the duplicates, whether in the database and/or code, DOCUMENT what you did and WHY, 
+so that when the data changes and new duplicates are found, the code still runs.</p>
+
+  </div>
+
+  <div class="date">
+    Written on November 14, 2025
+  </div>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+    
+	    var disqus_shortname = 'astroeringrand'; 
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+<a href="mailto:eringrand@gmail.com"><i class="svg-icon email"></i></a>
+
+
+<a href="https://github.com/eringrand"><i class="svg-icon github"></i></a>
+<a href="https://instagram.com/astroeringrand"><i class="svg-icon instagram"></i></a>
+<a href="https://www.linkedin.com/in/eringrand"><i class="svg-icon linkedin"></i></a>
+
+
+<a href="https://www.twitter.com/astroeringrand"><i class="svg-icon twitter"></i></a>
+
+<a href="https://youtube.com/channel/UCAMkBTcL3PAjgnETfWWKkCQ"><i class="svg-icon youtube"></i></a>
+
+        </footer>
+      </div>
+    </div>
+
+    
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		
+		ga('create', 'UA-59780775-1', 'auto');
+		ga('send', 'pageview', {
+		  'page': '/clean-data/',
+		  'title': 'Best Practices for Cleaning Data in R'
+		});
+	</script>
+	<!-- End Google Analytics -->
+
+
+  </body>
+</html>
+
+
+
