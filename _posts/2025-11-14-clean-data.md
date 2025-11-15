@@ -9,8 +9,8 @@ editor_options:
 
 A few months ago, I gave a talk at the previously known as NYC R
 conference, now known as [New York Data Science and
-AI](https://rstats.ai/nyc){.uri}. ([Watch it
-here!](youtube.com/watch?v=Cx-UxNCONaE&embeds_referring_euri=https%3A%2F%2Fdataconf.ai%2F&source_ve_path=Mjg2NjY){.uri})
+AI](https://rstats.ai/nyc). ([Watch it
+here!](youtube.com/watch?v=Cx-UxNCONaE&embeds_referring_euri=https%3A%2F%2Fdataconf.ai%2F&source_ve_path=Mjg2NjY))
 My presentation focused on my favorite topic: handling duplicates in
 data, and the importance of data cleaning.
 
