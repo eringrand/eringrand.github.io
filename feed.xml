@@ -76,7 +76,7 @@ the same person with two different email addresses), so we use
 additional fields to audit for duplicates. Names, emails, birthdays,
 phone numbers, and home addresses are good places to check&lt;/p&gt;
 
-&lt;h2 id=&quot;duplicates-you-caused&quot;&gt;Duplicates you caused!&lt;/h2&gt;
+&lt;h3 id=&quot;duplicates-you-caused&quot;&gt;Duplicates you caused!&lt;/h3&gt;
 
 &lt;p&gt;Duplicates are not always the fault of the data itself. We can cause our
 own duplicates through incorrectly written code.&lt;/p&gt;
