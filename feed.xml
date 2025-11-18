@@ -10,7 +10,7 @@
         <title>Best Practices for Cleaning Data in R</title>
         <description>&lt;p&gt;A few months ago, I gave a talk at the previously known as NYC R
 conference, now known as &lt;a href=&quot;https://rstats.ai/nyc&quot;&gt;New York Data Science and
-AI&lt;/a&gt;. (&lt;a href=&quot;youtube.com/watch?v=Cx-UxNCONaE&amp;amp;embeds_referring_euri=https%3A%2F%2Fdataconf.ai%2F&amp;amp;source_ve_path=Mjg2NjY&quot;&gt;Watch it
+AI&lt;/a&gt;. (&lt;a href=&quot;https://youtube.com/watch?v=Cx-UxNCONaE&amp;amp;embeds_referring_euri=https%3A%2F%2Fdataconf.ai%2F&amp;amp;source_ve_path=Mjg2NjY&quot;&gt;Watch it
 here!&lt;/a&gt;)
 My presentation focused on my favorite topic: handling duplicates in
 data, and the importance of data cleaning.&lt;/p&gt;
