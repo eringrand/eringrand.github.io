@@ -15,15 +15,12 @@ about:
       href: https://github.com/eringrand
 ---
 
-For any businesses interested in hiring a data scientist with over 10 years of work experience, be it for freelance, part time, or full time opportunities, please contact me at eringrand\@gmail.com
+For any businesses interested in hiring a data scientist with over 10 years of work experience, be it for freelance, part time, or full time opportunities, please contact me at *eringrand\@gmail.com*.
 
 ### <a name="top"></a>*Menu*
 
 -   [Bio](#info)
--   [Experience](#experience)
 -   [Research](#research)
--   [Hiring](#hire)
--   [Teaching](#teaching)
 -   [In the News](#press)
 
 ## <a name="info"></a>Bio
@@ -38,22 +35,6 @@ For any businesses interested in hiring a data scientist with over 10 years of w
 ### Organizations
 
 -   [R-Ladies Global](https://rladies.org/) and [R-Ladies NYC](https://www.rladiesnyc.org/)
--   [NASA Datanauts](https://open.nasa.gov/explore/datanauts/) [Top](#top)
-
-## <a name="experience"></a>
-
-### Uncommon Schools (Data Scientist)
-
--   Produced high-quality analytics work around student and staff data, including prediction models around student state exams, student enrollment, and staff recruitment.
--   Lead 6+ group trainings on the R programming language for 10+ coworkers Automated manual state exam reporting process saving 6+ hours of processing time
-
-### Crisis Text Line (Data Scientist)
-
--   Working at Crisis Text Line as a Data Scientist. You can read about my transition to Data Science at Crisis Text Line [here](http://datascience.columbia.edu/q-erin-grand-data-scientist-crisis-text-line).
--   Built and shipped a new volunteer application which has been used by 7600 applicants. Increased the completion rate from 40% to 90%.
--   My work has focused on identifying drop off points for trainers and supervisors. I produced cohort reports of training metrics and identified key differences among cohorts to provide trainers with new solutions. I identified counselor churn as the largest organizational priority, and setup tracking, reporting, and analysis of key metrics.
-
-[Top](#top)
 
 ## <a name="research"></a>Research {#research}
 
